@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+
+	<head>
+		<title>Synned</title>
+		<link href="css/bootstrap.css" rel="stylesheet" type="text/css"></link>
+		<link href="css/bootstrap-theme.css" rel="stylesheet" type="text/css"></link>
+		<link href="app/css/synned.css" rel="stylesheet" type="text/css"></link>
+	</head>
+	<body>
+
+		<div id="container">
+
+		</div>
+
+		<script id='template' type='text/ractive'>
+			<div id="debug">
+			{{game.ticks}}
+			</div>
+			
+			<div id="resources">
+				{{# types.itemsByComponent('raw') }}
+				<div class="resource">
+				<button data-type="{{name}}" on-tap="collectItem">{{name}}</button> <span class="resource-count">{{game.items[name].number}}</span>
+				{{/ types}}
+			</div>
+			
+		</script>
+
+		<script type="text/javascript" src="js/jquery-2.0.0.min.js"></script>
+		<script type="text/javascript" src="js/ractive.js"></script>
+		<script type="text/javascript" src="js/ractive-events-tap.js"></script>
+		<script type="text/javascript" src="app/js/synned.js"></script>
+		<script type="text/javascript" src="app/js/types.js"></script>
+		<script type="text/javascript" src="app/js/commands.js"></script>
+	</body>
+</html>
