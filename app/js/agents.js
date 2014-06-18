@@ -15,11 +15,16 @@ Synned.addTicker({
 					amount -= toAdd;
 
 					if (topic.knowledge >= topic.target) {
-						if (topic.level < this.maxLevel) {
-							topic.level ++;
-						}
 						topic.knowledge = 0;
-						topic.target = Math.pow(10, (topic.level + 2));
+						topic.target = Math.pow(10, (topic.level + 3));
+						
+						if (topic.level < this.maxLevel) {
+							topic.level++;
+							var topicType = Synned.types().topics[name];
+							if (topicType.levelUp) {
+								topicType.levelUp(topic.level);
+							}
+						}
 					}
 				}
 			}

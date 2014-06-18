@@ -4,7 +4,7 @@
 		ticks: 0,
 		items: {},
 		globalRates: {
-			mined: 10
+			mined: 30
 		},
 		topics: {
 			

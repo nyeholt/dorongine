@@ -104,29 +104,36 @@ Synned.addItem({
 
 
 Synned.addTopic({
+	increaseBy: 10,
 	name: 'Mining',
-	onLevelUp: function () {
+	levelUp: function (newLevel) {
+		if (Synned.game().globalRates.mined < 100) {
+			Synned.game().globalRates.mined += this.increaseBy;
+		}
+		if (Synned.game().globalRates.mined > 100) {
+			Synned.game().globalRates.mined = 100;
+		}
 		
 	}
 });
 
 Synned.addTopic({
 	name: 'Politics',
-	onLevelUp: function () {
+	levelUp: function () {
 		
 	}
 });
 
 Synned.addTopic({
 	name: 'Computers',
-	onLevelUp: function () {
+	levelUp: function () {
 		
 	}
 });
 
 Synned.addTopic({
 	name: 'Manufacturing',
-	onLevelUp: function () {
+	levelUp: function () {
 		
 	}
 });
