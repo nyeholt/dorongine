@@ -52,6 +52,7 @@ Synned.addItem({
 Synned.addItem({
 	name: 'Oil',
 	maximum: 1000000000,
+	rate: 0,
 	components: {'mined': true},
 	onAdd: function (number) {
 		
@@ -65,7 +66,7 @@ Synned.addItem({
 Synned.addItem({
 	name: 'Water',
 	maximum: 1000000000,
-	components: {'mined': true},
+	components: {'collected': true},
 	onAdd: function (number) {
 		
 	},
@@ -77,6 +78,7 @@ Synned.addItem({
 Synned.addItem({
 	name: 'Copper',
 	maximum: 1000000000,
+	rate: 0.2,
 	components: {'mined': true},
 	onAdd: function (number) {
 		
@@ -89,6 +91,7 @@ Synned.addItem({
 Synned.addItem({
 	name: 'Silicon',
 	maximum: 1000000000,
+	rate: 0.1,
 	components: {'mined': true},
 	onAdd: function (number) {
 		
@@ -101,6 +104,7 @@ Synned.addItem({
 Synned.addItem({
 	name: 'Gold',
 	maximum: 1000000000,
+	rate: 0.1,
 	components: {'mined': true},
 	onAdd: function (number) {
 		
@@ -114,6 +118,7 @@ Synned.addItem({
 Synned.addItem({
 	name: 'Iron',
 	maximum: 1000000000,
+	rate: 0.4,
 	components: {'mined': true},
 	onAdd: function (number) {
 		

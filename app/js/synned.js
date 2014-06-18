@@ -18,11 +18,15 @@
 			return items;
 		}
 	};
+	
+	// all commands that could be executed
+	var availableCommands = {
+		
+	};
 
 	function SynnedGame() {
 		this.name = 'default';
-		this.game = game;
-		
+		this.seed = 1;
 		this.commands = [];
 	};
 
@@ -31,6 +35,12 @@
 			if (window.console && window.console.log) {
 				console.log(msg);
 			}
+		},
+		types: function () {
+			return types;
+		},
+		game: function () {
+			return game;
 		},
 		addItem: function (item) {
 			if (!item.components) {
@@ -44,7 +54,18 @@
 			
 			this.ractive.set('types', types);
 		},
+		
 		addCommand: function (command) {
+			availableCommands[command.name] = command;
+		},
+		newCommand: function (name) {
+			var cmd = availableCommands[name];
+			if (cmd) {
+				var newCmd = jQuery.extend(true, {}, cmd);
+				return newCmd;
+			}
+		},
+		runCommand: function (command) {
 			this.commands.push(command);
 		},
 		addTech: function (tech) {
@@ -53,16 +74,17 @@
 		},
 		tick: function () {
 			++game.ticks;
-			
+			this.ractive.set('game', game);
+		},
+		processCommands: function () {
 			if (this.commands.length) {
 				var command = this.commands.shift();
 				while (command) {
 					command.execute();
 					command = this.commands.shift();
 				}
+				this.ractive.set('game', game);
 			}
-			
-			this.ractive.set('game', game);
 		},
 		save: function () {
 			var data = JSON.stringify(game);
@@ -71,6 +93,16 @@
 		load: function (name) {
 			var data = localStorage.getItem(name + '-game');
 			game = JSON.parse(data);
+		},
+		
+		random: function (min, max) {
+			var x = Math.sin(this.seed++) * 10000;
+			var rand = x - Math.floor(x);
+			
+			if (max) {
+				rand = Math.floor(rand * (max - min + 1)) + min;
+			}
+			return rand;
 		}
 	};
 
@@ -89,23 +121,14 @@
 		}
 	});
 
-	Synned.ractive.on('collectItem', function (button) {
-		if (button.context && button.context.components && button.context.components['raw']) {
-			var item = button.context;
-			
-			// todo - abstract this command create -> push
-			Synned.addCommand({
-				item: button.context,
-				execute: function () {
-					var current = game.items[this.item.name];
-					current.number++;
-				}
-			})
-		}
-	});
 	
 	var gameLoop = setInterval(function () {
 		Synned.tick();
 	}, 1000);
+	
+	var commandLoop = setInterval(function () {
+		Synned.processCommands();
+	}, 100);
+	
 })(jQuery);
 

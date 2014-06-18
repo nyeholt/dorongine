@@ -19,10 +19,38 @@
 			</div>
 			
 			<div id="resources">
-				{{# types.itemsByComponent('raw') }}
-				<div class="resource">
-				<button data-type="{{name}}" on-tap="collectItem">{{name}}</button> <span class="resource-count">{{game.items[name].number}}</span>
-				{{/ types}}
+				<div id="raw-resources">
+				<table>
+					{{# types.itemsByComponent('raw') }}
+					<tr>
+					<td width="60%">
+					<button data-type="{{name}}" on-tap="collectItem">{{name}}</button>
+					</td>
+					<td>
+					<span class="resource-count">{{game.items[name].number}}</span>
+					</td>
+					</tr>
+					{{/ types}}
+				</table>
+				</div>
+				
+				<div id="mined-resources">
+				<table>
+					<tr>
+					<td></td><td><button on-tap="mine">Mine</button></td>
+					</tr>
+					{{# types.itemsByComponent('mined') }}
+					<tr>
+					<td width="60%">
+					{{name}}
+					</td>
+					<td>
+					<span class="resource-count">{{game.items[name].number}}</span>
+					</td>
+					</tr>
+					{{/ types}}
+				</table>
+				</div>
 			</div>
 			
 		</script>
