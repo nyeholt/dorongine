@@ -68,7 +68,7 @@
 					{{# types.itemsByComponent('mined') }}
 					<tr>
 					<td width="60%">
-					{{name}}
+					{{name}} {{game.items[name].rates.mined}}% efficiency
 					</td>
 					<td>
 					<span class="resource-count">{{game.items[name].amount}}</span>
