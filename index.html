@@ -18,7 +18,7 @@
 			{{game.ticks}}
 			</div>
 			
-			<div id="knowledge">
+			<div id="knowledge" class="holder">
 				<table>
 				{{# game.topics :name}}
 				<tr>
@@ -39,7 +39,7 @@
 				</table>
 			</div>
 
-			<div id="resources">
+			<div id="resources" class="holder">
 				<div id="raw-resources">
 				<table>
 					{{# types.itemsByComponent('raw') }}
@@ -73,7 +73,46 @@
 				</table>
 				</div>
 			</div>
-			
+
+			<div id="creatable"  class="holder">
+			<h2>Items</h2>
+				<table>
+					<tr>
+					<th></th>
+					<th width="20%"></th>
+					<th></th>
+					<th>Requires</th>
+					<th width="60%"></th>
+					</tr>
+					{{# types.itemsByComponent('created') }}
+					<tr>
+					<td>
+						{{#canBuy(this)}}
+						<button on-tap="buyItem">Buy</button>
+						{{/canBuy}}
+					</td>
+					<td>
+					<span class="item-amount">{{game.items[name].amount}}</span>
+					</td>
+
+					<td>
+					{{name}}
+					</td>
+					
+					<td>
+					{{#components.created.consumes :resource}}
+					<p>{{resource}} {{this}}</p>
+					{{/components}}
+					</td>
+					<td>
+					{{#requires.topics :topic}}
+						<p>{{topic}} level {{this}}</p>
+					{{/ requires}}
+					</td>
+					</tr>
+					
+				</table>
+			</div>
 		</script>
 
 		<script type="text/javascript" src="js/jquery-2.0.0.min.js"></script>

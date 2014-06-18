@@ -66,12 +66,39 @@
 				}
 			}
 
+			item.canBuy = this.canBuyItem;
+
 			game.items[item.name] = {
 				amount: 0,
 				rates: rates
 			};
 
 			this.ractive.set('types', types);
+		},
+		canBuyItem: function (item, volume) {
+			if (!volume) {
+				volume = 1;
+			}
+			var okay = true;
+			if (item.components.created && item.components.created.consumes) {
+				for (var itemType in item.components.created.consumes) {
+					// check stock levels
+					var requiredAmount = item.components.created.consumes[itemType] * volume;
+					if (game.items[itemType].amount < requiredAmount) {
+						okay = false;
+						break;
+					}
+				}
+			}
+			if (okay && item.requires && item.requires.topics) {
+				for (var topic in item.requires.topics) {
+					if (game.topics[topic].level < item.requires.topics[topic]) {
+						okay = false;
+					}
+				}
+			}
+			
+			return okay;
 		},
 		addTopic: function (topic) {
 			types.topics[topic.name] = topic;
@@ -131,6 +158,7 @@
 			}
 
 			this.ractive.set('game', game);
+			this.ractive.set('types', types);
 		},
 		processCommands: function () {
 			if (this.commands.length) {

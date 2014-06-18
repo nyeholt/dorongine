@@ -1,41 +1,36 @@
 Synned.addItem({
 	name: 'People',
-	maximum: 1000000000,
-	requires: []
+	maximum: 1000000000
 });
 
 Synned.addItem({
 	name: 'Cash',
 	maximum: 1000000000,
-	components: {'raw': true},
-	requires: []
+	components: {'raw': true}
 });
 
 Synned.addItem({
 	name: 'Energy',
 	maximum: 1000000000,
-	components: {'raw': true},
-	requires: []
+	components: {'raw': true}
 });
 
 Synned.addItem({
 	name: 'Brainpower',
 	maximum: 1000000000,
-	components: {'raw': true},
-	requires: []
+	components: {'raw': true}
 });
 
 Synned.addItem({
 	name: 'Oil',
 	maximum: 1000000000,
-	components: {'mined': { rate: 0} }
+	components: {'mined': { rate: 0 } }
 });
-
 
 Synned.addItem({
 	name: 'Water',
 	maximum: 1000000000,
-	components: {'collected': true}
+	components: {raw: true, 'weather': true }
 });
 
 
@@ -73,9 +68,19 @@ Synned.addItem({
 Synned.addItem({
 	name: 'Steel',
 	maximum: 1000000000,
-	consumes: {
-		'Iron': 10
+	components: {
+		created: {
+			consumes: {
+				'Iron': 10
+			}
+		}
+	},
+	requires: {
+		topics: {
+			'Manufacturing': 1
+		}
 	}
+	
 });
 
 

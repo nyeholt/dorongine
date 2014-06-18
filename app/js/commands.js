@@ -10,6 +10,32 @@ Synned.addCommand({
 });
 
 Synned.addCommand({
+	name: 'buyItem',
+	execute: function () {
+		var item = this.context;
+		var volume = this.volume ? this.volume : 1;
+		
+		if (Synned.canBuyItem(item)) {
+			// wee do what we need to do
+			var allItems = Synned.game().items;
+			
+			if (item.components.created && item.components.created.consumes) {
+				for (var itemType in item.components.created.consumes) {
+					// check stock levels
+					var requiredAmount = item.components.created.consumes[itemType] * volume;
+					if (allItems[itemType].amount >= requiredAmount) {
+						allItems[itemType].amount -= requiredAmount;
+					} else {
+						Synned.log("Item " + itemType + " was checked for sufficient amount, but there doesn't seem to be enough now");
+					}
+				}
+			}
+			allItems[item.name].amount += volume;
+		}
+	}
+})
+
+Synned.addCommand({
 	name: 'mine',
 	execute: function (context) {
 		var nextRand = Synned.random() * 100;

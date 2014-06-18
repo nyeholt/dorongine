@@ -13,7 +13,7 @@ Synned.addTicker({
 					var toAdd = Math.floor((topic.percentage / 100) * amount);
 					topic.knowledge += toAdd;
 					amount -= toAdd;
-					
+
 					if (topic.knowledge >= topic.target) {
 						if (topic.level < this.maxLevel) {
 							topic.level ++;
