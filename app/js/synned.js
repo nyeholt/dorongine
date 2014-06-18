@@ -10,6 +10,8 @@
 			
 		}
 	};
+	
+	var tickers = [];
 
 	var types = {
 		items: {},
@@ -75,14 +77,26 @@
 			types.topics[topic.name] = topic;
 			game.topics[topic.name] = {
 				knowledge: 0,
-				level: 0
+				level: 0,
+				percentage: 0
 			};
-			
+			this.ractive.observe('game.topics.' + topic.name +'.percentage', this.updateTopics);
 			this.ractive.set('game', game);
+		},
+		
+		updateTopics: function () {
+			var currentAmount = 0;
+			for (var k in game.topics) {
+				var topic = game.topics[k];
+				topic.percentage = parseInt(topic.percentage);
+				currentAmount += topic.percentage;
+				if (currentAmount > 100) {
+					topic.percentage = 0;
+				}
+			}
 		},
 		addCommand: function (command) {
 			availableCommands[command.name] = command;
-
 
 			this.ractive.on(command.name, function (button) {
 				if (button.context) {
@@ -106,8 +120,15 @@
 			tech.researched = false;
 			types.techs[tech.name] = tech;
 		},
+		addTicker: function (listener) {
+			tickers.push(listener);
+		},
 		tick: function () {
 			++game.ticks;
+			for (var i = 0, c = tickers.length; i < c; i++) {
+				tickers[i].tick();
+			}
+
 			this.ractive.set('game', game);
 		},
 		processCommands: function () {

@@ -22,14 +22,23 @@
 				<table>
 				{{# game.topics :name}}
 				<tr>
-				<td>{{name}}</td>
-				<td>Level {{level}} - {{knowledge}}</td>
+				<td width="60%">{{name}} {{level}}</td>
+				<td>{{knowledge}}</td>
+				<td class="knowledge-input">
+					<select value="{{percentage}}">
+						<option value="0">0</option>
+						<option value="10">10</option>
+						<option value="20">20</option>
+						<option value="30">30</option>
+						<option value="40">40</option>
+						<option value="50">50</option>
+					</select>
+				</td>
 				</tr>
-
 				{{/ game.topics}}
 				</table>
 			</div>
-			
+
 			<div id="resources">
 				<div id="raw-resources">
 				<table>
@@ -71,6 +80,7 @@
 		<script type="text/javascript" src="js/ractive.js"></script>
 		<script type="text/javascript" src="js/ractive-events-tap.js"></script>
 		<script type="text/javascript" src="app/js/synned.js"></script>
+		<script type="text/javascript" src="app/js/agents.js"></script>
 		<script type="text/javascript" src="app/js/types.js"></script>
 		<script type="text/javascript" src="app/js/commands.js"></script>
 	</body>

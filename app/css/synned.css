@@ -11,3 +11,8 @@
 	width: 30%;
 	padding: 10px;
 }
+
+.knowledge-input input {
+	width: 40px;
+	float: right;
+}
