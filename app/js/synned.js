@@ -78,6 +78,7 @@
 			game.topics[topic.name] = {
 				knowledge: 0,
 				level: 0,
+				target: 100,
 				percentage: 0
 			};
 			this.ractive.observe('game.topics.' + topic.name +'.percentage', this.updateTopics);
