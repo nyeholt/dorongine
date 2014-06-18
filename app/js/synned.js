@@ -2,12 +2,21 @@
 	
 	var game = {
 		ticks: 0,
-		items: {}
+		items: {},
+		globalRates: {
+			mined: 10
+		},
+		topics: {
+			
+		}
 	};
 
 	var types = {
 		items: {},
 		techs: {},
+		topics: {
+			
+		},
 		itemsByComponent: function (component) {
 			var items = [];
 			for (var k in this.items) {
@@ -24,9 +33,9 @@
 		
 	};
 
-	function SynnedGame() {
+	function SynnedGame(seed) {
 		this.name = 'default';
-		this.seed = 1;
+		this.seed = seed ? seed : 1;
 		this.commands = [];
 	};
 
@@ -48,20 +57,45 @@
 			}
 			types.items[item.name] = item;
 
+			var rates = {};
+			for (var c in item.components) {
+				if (item.components[c].rate) {
+					rates[c] = item.components[c].rate;
+				}
+			}
+
 			game.items[item.name] = {
-				number: 0
+				amount: 0,
+				rates: rates
 			};
-			
+
 			this.ractive.set('types', types);
 		},
-		
+		addTopic: function (topic) {
+			types.topics[topic.name] = topic;
+			game.topics[topic.name] = {
+				knowledge: 0,
+				level: 0
+			};
+			
+			this.ractive.set('game', game);
+		},
 		addCommand: function (command) {
 			availableCommands[command.name] = command;
+
+
+			this.ractive.on(command.name, function (button) {
+				if (button.context) {
+					var cmd = Synned.newCommand(command.name, button.context);
+					Synned.runCommand(cmd);
+				}
+			});
 		},
-		newCommand: function (name) {
+		newCommand: function (name, context) {
 			var cmd = availableCommands[name];
 			if (cmd) {
 				var newCmd = jQuery.extend(true, {}, cmd);
+				newCmd.context = context;
 				return newCmd;
 			}
 		},
@@ -106,7 +140,9 @@
 		}
 	};
 
-	window.Synned = new SynnedGame();
+	var time = (new Date()).getTime() % 100000;
+
+	window.Synned = new SynnedGame(time);
 	
 	Synned.ractive = new Ractive({
 		// The `el` option can be a node, an ID, or a CSS selector.
@@ -120,7 +156,6 @@
 			types: types
 		}
 	});
-
 	
 	var gameLoop = setInterval(function () {
 		Synned.tick();

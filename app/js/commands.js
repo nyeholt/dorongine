@@ -2,42 +2,34 @@
 Synned.addCommand({
 	name: 'collectItem',
 	execute: function () {
-		var current = Synned.game().items[this.item.name];
-		current.number++;
-	}
-});
-
-
-Synned.addCommand({
-	name: 'mine',
-	execute: function (context) {
-		var minable = Synned.types().itemsByComponent('mined');
-		var rand = Synned.random(0, minable.length - 1);
-
-		var toMine = minable[rand];
-
-		var nextRand = Synned.random();
-
-		if (toMine && toMine.rate > nextRand) {
-			var current = Synned.game().items[toMine.name];
-			current.number++;
+		if (this.context.components && this.context.components['raw']) {
+			var current = Synned.game().items[this.context.name];
+			current.amount++;
 		}
 	}
 });
 
-
-Synned.ractive.on('collectItem', function (button) {
-	if (button.context && button.context.components && button.context.components['raw']) {
-		var item = button.context;
+Synned.addCommand({
+	name: 'mine',
+	execute: function (context) {
+		var nextRand = Synned.random() * 100;
 		
-		var cmd = Synned.newCommand('collectItem');
-		cmd.item = button.context;
-		Synned.runCommand(cmd);
+		if (nextRand >= Synned.game().globalRates.mined) {
+			return;
+		}
+		
+		var mineable = Synned.types().itemsByComponent('mined');
+		var rand = Synned.random(0, mineable.length - 1);
+
+		var mineType = mineable[rand];
+		
+		var toMine = Synned.game().items[mineType.name];
+		
+		nextRand = Synned.random() * 100;
+
+		if (toMine && toMine.rates.mined > nextRand) {
+			toMine.amount++;
+		}
 	}
 });
 
-
-Synned.ractive.on('mine', function () {
-	var cmd = Synned.newCommand('mine');
-	Synned.runCommand(cmd);
-});

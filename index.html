@@ -18,6 +18,18 @@
 			{{game.ticks}}
 			</div>
 			
+			<div id="knowledge">
+				<table>
+				{{# game.topics :name}}
+				<tr>
+				<td>{{name}}</td>
+				<td>Level {{level}} - {{knowledge}}</td>
+				</tr>
+
+				{{/ game.topics}}
+				</table>
+			</div>
+			
 			<div id="resources">
 				<div id="raw-resources">
 				<table>
@@ -27,7 +39,7 @@
 					<button data-type="{{name}}" on-tap="collectItem">{{name}}</button>
 					</td>
 					<td>
-					<span class="resource-count">{{game.items[name].number}}</span>
+					<span class="resource-count">{{game.items[name].amount}}</span>
 					</td>
 					</tr>
 					{{/ types}}
@@ -45,7 +57,7 @@
 					{{name}}
 					</td>
 					<td>
-					<span class="resource-count">{{game.items[name].number}}</span>
+					<span class="resource-count">{{game.items[name].amount}}</span>
 					</td>
 					</tr>
 					{{/ types}}
