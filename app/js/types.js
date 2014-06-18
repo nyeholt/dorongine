@@ -80,18 +80,26 @@ Synned.addItem({
 			'Manufacturing': 1
 		}
 	}
-	
 });
-
 
 Synned.addItem({
 	name: 'Chip',
 	maximum: 1000000000,
-	consumes: {
-		'Gold': 1,
-		'Silicon': 2,
-		'Copper': 5
+	components: {
+		created: {
+			consumes: {
+				'Gold': 1,
+				'Silicon': 2,
+				'Copper': 5
+			}
+		}
+	},
+	requires: {
+		topics: {
+			'Manufacturing': 3
+		}
 	}
+	
 });
 
 
