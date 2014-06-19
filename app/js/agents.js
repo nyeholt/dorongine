@@ -25,18 +25,17 @@ Synned.addTicker({
 			var worker = Synned.game().items[type.name];
 			
 			if (worker.amount > 0) {
-				if (!worker.ticks) {
-					worker.ticks = 0;
+				if (!worker.workTicks) {
+					worker.workTicks = 0;
 				}
-				worker.ticks++;
+				worker.workTicks++;
 
 				// actually do the work now
-				if (worker.ticks >= worker.rates.worker) {
+				if (worker.workTicks >= worker.rates.worker) {
 					if (type.components.worker.provides) {
 						for (var prov in type.components.worker.provides) {
 							// add it in to the relevant bits
 							var toAdd = worker.amount * type.components.worker.provides[prov];
-							
 							if (Synned.game().items[prov]) {
 								Synned.game().items[prov].amount += toAdd;
 							} else if (Synned.game().topics[prov]) {
@@ -44,7 +43,7 @@ Synned.addTicker({
 							}
 						}
 					}
-					worker.ticks = 0;
+					worker.workTicks = 0;
 				}
 			}
 		}
@@ -60,13 +59,13 @@ Synned.addTicker({
 			var worker = Synned.game().items[type.name];
 			
 			if (worker.amount > 0) {
-				if (!worker.ticks) {
-					worker.ticks = 0;
+				if (!worker.consumptionTicks) {
+					worker.consumptionTicks = 0;
 				}
-				worker.ticks++;
+				worker.consumptionTicks++;
 
 				// actually do the work now
-				if (worker.ticks >= worker.rates.consumer) {
+				if (worker.consumptionTicks >= worker.rates.consumer) {
 					if (type.components.consumer.consumes) {
 						for (var prov in type.components.consumer.consumes) {
 							// add it in to the relevant bits
@@ -78,7 +77,7 @@ Synned.addTicker({
 							}
 						}
 					}
-					worker.ticks = 0;
+					worker.consumptionTicks = 0;
 				}
 			}
 		}
@@ -144,3 +143,58 @@ Synned.addTicker({
 		}
 	}
 });
+
+Synned.addFastTicker({
+	name: 'Builder',
+	buildIndex: 0,
+	queueItem: function (item, volume) {
+		var steps = 1;
+		if (item.components.created.time) {
+			steps = item.components.created.time;
+		}
+		Synned.game().buildQueue.push({
+			totalSteps: steps,
+			currentStep: 0,
+			volume: volume,
+			item: item
+		})
+	},
+	tick: function () {
+		if (!this.current) {
+			if (!Synned.game().buildQueue) {
+				Synned.game().buildQueue = [];
+			}
+			if (Synned.game().buildQueue.length == 0) {
+				return;
+			}
+			this.current = Synned.game().buildQueue[this.buildIndex];
+		}
+
+		this.current.currentStep++;
+
+		if (this.current.currentStep >= this.current.totalSteps) {
+			this.finalise();
+			this.current = null;
+			delete Synned.game().buildQueue.splice(this.buildIndex, 1);
+		}
+	},
+	finalise: function () {
+		// wee do what we need to do
+		var allItems = Synned.game().items;
+		var item = this.current.item;
+		var volume = this.current.volume ? this.current.volume : 1;
+		
+		if (item.components.created && item.components.created.cost) {
+			for (var itemType in item.components.created.cost) {
+				// check stock levels
+				var requiredAmount = item.components.created.cost[itemType] * volume;
+				if (allItems[itemType].amount >= requiredAmount) {
+					allItems[itemType].amount -= requiredAmount;
+				} else {
+					Synned.log("Item " + itemType + " was checked for sufficient amount, but there doesn't seem to be enough now");
+				}
+			}
+		}
+		allItems[item.name].amount += volume;
+	}
+})

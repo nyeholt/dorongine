@@ -102,7 +102,7 @@
 			</div>
 
 			<div id="creatable"  class="holder">
-			<h2>Items</h2>
+				<h2>Items</h2>
 				<table>
 					<tr>
 					<th></th>
@@ -139,6 +139,14 @@
 					</tr>
 					{{/types}}
 				</table>
+			</div>
+			
+			<div id="creatable"  class="holder">
+				{{#game.buildQueue}}
+				<div class="buildQueueItem">
+				<div>{{item.name}} {{currentStep}} / {{totalSteps}}</div>
+				</div>
+				{{/game.buildQueue}}
 			</div>
 		</script>
 

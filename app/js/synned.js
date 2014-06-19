@@ -34,10 +34,12 @@ var objb = {
 		},
 		topics: {
 			
-		}
+		},
+		buildQueue: []
 	};
 	
 	var tickers = [];
+	var fastTickers = [];
 
 	var types = {
 		items: {},
@@ -136,7 +138,6 @@ var objb = {
 			this.ractive.observe('game.topics.' + topic.name +'.percentage', this.updateTopics);
 			this.ractive.set('game', game);
 		},
-		
 		updateTopics: function () {
 			var currentAmount = 0;
 			for (var k in game.topics) {
@@ -169,6 +170,14 @@ var objb = {
 		runCommand: function (command) {
 			this.commands.push(command);
 		},
+		queueBuild: function (item, volume) {
+			for (var i = 0, c = fastTickers.length; i < c; i++) {
+				if (fastTickers[i].name == 'Builder') {
+					fastTickers[i].queueItem(item, volume);
+					return;
+				}
+			}
+		},
 		addTech: function (tech) {
 			tech.researched = false;
 			types.techs[tech.name] = tech;
@@ -176,13 +185,15 @@ var objb = {
 		addTicker: function (listener) {
 			tickers.push(listener);
 		},
+		addFastTicker: function (listener) {
+			fastTickers.push(listener);
+		},
 		tick: function () {
 			++game.ticks;
 			for (var i = 0, c = tickers.length; i < c; i++) {
 				tickers[i].tick();
 			}
 
-			this.ractive.set('game', game);
 			this.ractive.set('types', types);
 		},
 		processCommands: function () {
@@ -192,8 +203,11 @@ var objb = {
 					command.execute();
 					command = this.commands.shift();
 				}
-				this.ractive.set('game', game);
 			}
+			for (var i = 0, c = fastTickers.length; i < c; i++) {
+				fastTickers[i].tick();
+			}
+			this.ractive.set('game', game);
 		},
 		save: function () {
 			var data = JSON.stringify(game);
@@ -204,7 +218,6 @@ var objb = {
 			game = JSON.parse(data);
 			game.byComponent = byComponent;
 		},
-		
 		random: function (min, max) {
 			var x = Math.sin(this.seed++) * 10000;
 			var rand = x - Math.floor(x);

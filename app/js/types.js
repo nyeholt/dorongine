@@ -15,6 +15,7 @@ Synned.addItem({
 			}
 		},
 		created: {
+			time: 2,
 			cost: {
 				Cash: 10,
 				People: 1
@@ -23,7 +24,7 @@ Synned.addItem({
 		consumer: { // consumers 
 			rate: 60,
 			consumes: {
-				Cash: 10,
+				Cash: 5,
 				Energy: 1
 			}
 		}
@@ -41,6 +42,7 @@ Synned.addItem({
 			}
 		},
 		created: {
+			time: 3,
 			cost: {
 				Cash: 50,
 				Employee: 1
@@ -67,6 +69,7 @@ Synned.addItem({
 			}
 		},
 		created: {
+			time: 5,
 			cost: {
 				Cash: 1000,
 				Employee: 1
@@ -174,6 +177,7 @@ Synned.addItem({
 	components: {
 		goods: true,
 		created: {
+			time: 20,
 			cost: {
 				'Gold': 1,
 				'Silicon': 2,
