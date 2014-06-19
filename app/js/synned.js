@@ -171,11 +171,11 @@
 			}
 		},
 		save: function () {
-			var data = JSON.stringify(game);
+			var data = JSON.stringify();
 			localStorage.setItem(this.name + '-game', data);
 		},
-		load: function (name) {
-			var data = localStorage.getItem(name + '-game');
+		load: function () {
+			var data = localStorage.getItem(this.name + '-game');
 			game = JSON.parse(data);
 		},
 		

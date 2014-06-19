@@ -15,6 +15,7 @@ Synned.addTicker({
 					amount -= toAdd;
 
 					if (topic.knowledge >= topic.target) {
+						amount += topic.knowledge - topic.target;
 						topic.knowledge = 0;
 						topic.target = Math.pow(10, (topic.level + 3));
 						
@@ -30,5 +31,24 @@ Synned.addTicker({
 			}
 		}
 		Synned.game().items.Brainpower.amount = amount;
+	}
+});
+
+Synned.addTicker({
+	numPerTick: 5,
+	name: 'Miner',
+	maxLevel: 10,
+	tick: function () {
+		var amount = Synned.game().items.Ore.amount;
+		if (amount > 0) {
+			var numToProcess = amount > this.numPerTick ? this.numPerTick : amount;
+			amount -= numToProcess;
+			Synned.game().items.Ore.amount = amount;
+			
+			for (var i = 0; i < numToProcess; i++) {
+				var cmd = Synned.newCommand('mine');
+				Synned.runCommand(cmd);
+			}
+		}
 	}
 });

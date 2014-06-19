@@ -4,7 +4,11 @@ Synned.addCommand({
 	execute: function () {
 		if (this.context.components && this.context.components['raw']) {
 			var current = Synned.game().items[this.context.name];
-			current.amount++;
+			var increase = 1;
+			if (current.rates.raw) {
+				increase = current.rates.raw;
+			}
+			current.amount += increase;
 		}
 	}
 });
@@ -37,7 +41,7 @@ Synned.addCommand({
 
 Synned.addCommand({
 	name: 'mine',
-	execute: function (context) {
+	execute: function () {
 		var nextRand = Synned.random() * 100;
 		
 		if (nextRand >= Synned.game().globalRates.mined) {

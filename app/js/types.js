@@ -6,33 +6,39 @@ Synned.addItem({
 Synned.addItem({
 	name: 'Cash',
 	maximum: 1000000000,
-	components: {'raw': true}
-});
-
-Synned.addItem({
-	name: 'Energy',
-	maximum: 1000000000,
-	components: {'raw': true}
+	components: {'raw': {rate: 1}}
 });
 
 Synned.addItem({
 	name: 'Brainpower',
 	maximum: 1000000000,
-	components: {'raw': true}
+	components: {'raw': {rate: 1}}
 });
+
+Synned.addItem({
+	name: 'Energy',
+	maximum: 1000000000,
+	components: {'raw': {rate: 1}}
+});
+
+Synned.addItem({
+	name: 'Ore',
+	maximum: 1000000000,
+	components: {'raw': {rate: 1}}
+});
+
+Synned.addItem({
+	name: 'Water',
+	maximum: 1000000000,
+	components: {raw: {rate: 1}, 'weather': true }
+});
+
 
 Synned.addItem({
 	name: 'Oil',
 	maximum: 1000000000,
 	components: {'mined': { rate: 0 } }
 });
-
-Synned.addItem({
-	name: 'Water',
-	maximum: 1000000000,
-	components: {raw: true, 'weather': true }
-});
-
 
 Synned.addItem({
 	name: 'Cement',
