@@ -1,6 +1,85 @@
 Synned.addItem({
 	name: 'People',
-	maximum: 1000000000
+	maximum: 10000000,
+	defaultAmount: 5
+});
+
+Synned.addItem({
+	name: 'Employee',
+	maximum: 5000,
+	components: {
+		worker: {
+			rate: 5,
+			provides: {
+				Cash: 1
+			}
+		},
+		created: {
+			cost: {
+				Cash: 10,
+				People: 1
+			}
+		},
+		consumer: { // consumers 
+			rate: 3600,
+			consumes: {
+				Cash: 10,
+				Energy: 1
+			}
+		}
+	}
+});
+
+Synned.addItem({
+	name: 'Miner',
+	maximum: 200,
+	components: {
+		worker: {
+			rate: 5,
+			provides: {
+				Ore: 1
+			}
+		},
+		created: {
+			cost: {
+				Cash: 50,
+				Employee: 1
+			}
+		},
+		consumer: { // consumers 
+			rate: 3600,
+			consumes: {
+				Cash: 20,
+				Energy: 1
+			}
+		}
+	}
+});
+
+Synned.addItem({
+	name: 'Scientist',
+	maximum: 100,
+	components: { 
+		worker: {
+			rate: 5,
+			provides: {
+				Brainpower: 1
+			}
+		},
+		created: {
+			cost: {
+				Cash: 1000,
+				Employee: 1
+			}
+		},
+		consumer: { // consumers 
+			rate: 3600,
+			consumes: {
+				Cash: 100,
+				Energy: 10
+			}
+		}
+	}
 });
 
 Synned.addItem({
@@ -75,8 +154,9 @@ Synned.addItem({
 	name: 'Steel',
 	maximum: 1000000000,
 	components: {
+		goods: true,
 		created: {
-			consumes: {
+			cost: {
 				'Iron': 10
 			}
 		}
@@ -92,8 +172,9 @@ Synned.addItem({
 	name: 'Chip',
 	maximum: 1000000000,
 	components: {
+		goods: true,
 		created: {
-			consumes: {
+			cost: {
 				'Gold': 1,
 				'Silicon': 2,
 				'Copper': 5
@@ -105,9 +186,7 @@ Synned.addItem({
 			'Manufacturing': 3
 		}
 	}
-	
 });
-
 
 Synned.addTopic({
 	increaseBy: 10,

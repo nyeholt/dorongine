@@ -23,10 +23,10 @@ Synned.addCommand({
 			// wee do what we need to do
 			var allItems = Synned.game().items;
 			
-			if (item.components.created && item.components.created.consumes) {
-				for (var itemType in item.components.created.consumes) {
+			if (item.components.created && item.components.created.cost) {
+				for (var itemType in item.components.created.cost) {
 					// check stock levels
-					var requiredAmount = item.components.created.consumes[itemType] * volume;
+					var requiredAmount = item.components.created.cost[itemType] * volume;
 					if (allItems[itemType].amount >= requiredAmount) {
 						allItems[itemType].amount -= requiredAmount;
 					} else {
@@ -47,8 +47,8 @@ Synned.addCommand({
 		if (nextRand >= Synned.game().globalRates.mined) {
 			return;
 		}
-		
-		var mineable = Synned.types().itemsByComponent('mined');
+
+		var mineable = Synned.types().byComponent('mined');
 		var rand = Synned.random(0, mineable.length - 1);
 
 		var mineType = mineable[rand];

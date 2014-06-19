@@ -1,5 +1,31 @@
+var func = function () {
+	console.log(this.name);
+}
+
+var obja = {
+	name: 'obsja',
+	func: func
+};
+
+
+var objb = {
+	name: 'obsjb',
+	func: func
+};
+
+
 ;(function ($) {
 	
+	var byComponent = function (component) {
+		var items = [];
+		for (var k in this.items) {
+			if (this.items[k].components[component]) {
+				items.push(this.items[k])
+			}
+		}
+		return items;
+	};
+
 	var game = {
 		ticks: 0,
 		items: {},
@@ -19,15 +45,7 @@
 		topics: {
 			
 		},
-		itemsByComponent: function (component) {
-			var items = [];
-			for (var k in this.items) {
-				if (this.items[k].components[component]) {
-					items.push(this.items[k])
-				}
-			}
-			return items;
-		}
+		byComponent: byComponent
 	};
 	
 	// all commands that could be executed
@@ -53,6 +71,9 @@
 		game: function () {
 			return game;
 		},
+		itemsByType: function (type) {
+			
+		},
 		addItem: function (item) {
 			if (!item.components) {
 				item.components = {};
@@ -72,6 +93,10 @@
 				amount: 0,
 				rates: rates
 			};
+			
+			if (item.defaultAmount) {
+				game.items[item.name].amount = item.defaultAmount;
+			}
 
 			this.ractive.set('types', types);
 		},
@@ -80,10 +105,10 @@
 				volume = 1;
 			}
 			var okay = true;
-			if (item.components.created && item.components.created.consumes) {
-				for (var itemType in item.components.created.consumes) {
+			if (item.components.created && item.components.created.cost) {
+				for (var itemType in item.components.created.cost) {
 					// check stock levels
-					var requiredAmount = item.components.created.consumes[itemType] * volume;
+					var requiredAmount = item.components.created.cost[itemType] * volume;
 					if (game.items[itemType].amount < requiredAmount) {
 						okay = false;
 						break;
@@ -171,12 +196,13 @@
 			}
 		},
 		save: function () {
-			var data = JSON.stringify();
+			var data = JSON.stringify(game);
 			localStorage.setItem(this.name + '-game', data);
 		},
 		load: function () {
 			var data = localStorage.getItem(this.name + '-game');
 			game = JSON.parse(data);
+			game.byComponent = byComponent;
 		},
 		
 		random: function (min, max) {

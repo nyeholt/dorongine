@@ -1,11 +1,68 @@
 
 Synned.addTicker({
+	name: 'Migration',
+	onTick: 60,
+	currentTick: 0,
+	tick: function () {
+		this.currentTick++;
+		
+		if (this.currentTick >= this.onTick) {
+			// add a person
+			Synned.game().items.People.amount++;
+			
+			this.currentTick = 0;
+		}
+	}
+});
+
+
+Synned.addTicker({
+	name: 'Worker',
+	tick: function () {
+		var workerTypes = Synned.types().byComponent('worker');
+		for (var i = 0, c = workerTypes.length; i < c; i++) {
+			var type = workerTypes[i];
+			var worker = Synned.game().items[type.name];
+			
+			if (worker.amount > 0) {
+				if (!worker.ticks) {
+					worker.ticks = 0;
+				}
+				worker.ticks++;
+
+				// actually do the work now
+				if (worker.ticks >= worker.rates.worker) {
+					if (type.components.worker.provides) {
+						for (var prov in type.components.worker.provides) {
+							// add it in to the relevant bits
+							var toAdd = worker.amount * type.components.worker.provides[prov];
+							
+							if (Synned.game().items[prov]) {
+								Synned.game().items[prov].amount += toAdd;
+							} else if (Synned.game().topics[prov]) {
+								Synned.game().topics[prov].knowledge += toAdd;
+							}
+						}
+					}
+					worker.ticks = 0;
+				}
+			}
+		}
+	}
+});
+
+
+
+
+/**
+ * Spreads Brainpower over the various areas of research
+ */
+Synned.addTicker({
 	name: 'Researcher',
 	maxLevel: 10,
 	tick: function () {
 		var amount = Synned.game().items.Brainpower.amount;
 		if (amount > 0) {
-			
 			for (var name in Synned.game().topics) {
 				var topic = Synned.game().topics[name];
 				
@@ -34,6 +91,9 @@ Synned.addTicker({
 	}
 });
 
+/**
+ * Converts ore into resources
+ */
 Synned.addTicker({
 	numPerTick: 5,
 	name: 'Miner',

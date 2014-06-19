@@ -17,6 +17,28 @@
 			<div id="debug">
 			{{game.ticks}}
 			</div>
+
+			<div id="population" class="holder">
+			<table>
+			<thead><tr><th width="60%"></th><th></th><th></th></thead>
+			<tbody>
+				<tr>
+				<td>Unemployed</td>
+				<td>{{game.items.People.amount}}</td>
+				</tr>
+				
+				{{# types.byComponent('worker') }}
+				
+				<tr>
+				<td>{{name}}</td>
+				<td>{{game.items[name].amount}}</td>
+				<td>{{#canBuy(this)}}<button on-tap="buyItem">Hire</button>{{/canBuy}}</td>
+				</tr>
+				
+				{{/types}}
+			</tbody>
+			</table>
+			</div>
 			
 			<div id="knowledge" class="holder">
 				<table>
@@ -47,7 +69,7 @@
 			<div id="resources" class="holder">
 				<div id="raw-resources">
 				<table>
-					{{# types.itemsByComponent('raw') }}
+					{{# types.byComponent('raw') }}
 					<tr>
 					<td width="60%">
 					<button data-type="{{name}}" on-tap="collectItem">{{name}}</button>
@@ -65,7 +87,7 @@
 					<tr>
 					<td></td><td><button on-tap="mine">Mining at {{game.globalRates.mined}}% efficiency</button></td>
 					</tr>
-					{{# types.itemsByComponent('mined') }}
+					{{# types.byComponent('mined') }}
 					<tr>
 					<td width="60%">
 					{{name}} {{game.items[name].rates.mined}}% efficiency
@@ -89,7 +111,7 @@
 					<th width="20%">Requires</th>
 					<th width="60%"></th>
 					</tr>
-					{{# types.itemsByComponent('created') }}
+					{{# types.byComponent('goods') }}
 					<tr>
 					<td>
 						{{#canBuy(this)}}
@@ -105,7 +127,7 @@
 					</td>
 					
 					<td>
-					{{#components.created.consumes :resource}}
+					{{#components.created.cost :resource}}
 					<p>{{resource}} {{this}}</p>
 					{{/components}}
 					</td>
@@ -115,7 +137,7 @@
 					{{/ requires}}
 					</td>
 					</tr>
-					
+					{{/types}}
 				</table>
 			</div>
 		</script>
