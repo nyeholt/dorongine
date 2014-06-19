@@ -17,7 +17,7 @@ Synned.addTicker({
 
 
 Synned.addTicker({
-	name: 'Worker',
+	name: 'Workers',
 	tick: function () {
 		var workerTypes = Synned.types().byComponent('worker');
 		for (var i = 0, c = workerTypes.length; i < c; i++) {
@@ -51,7 +51,39 @@ Synned.addTicker({
 	}
 });
 
+Synned.addTicker({
+	name: 'Consumers',
+	tick: function () {
+		var workerTypes = Synned.types().byComponent('consumer');
+		for (var i = 0, c = workerTypes.length; i < c; i++) {
+			var type = workerTypes[i];
+			var worker = Synned.game().items[type.name];
+			
+			if (worker.amount > 0) {
+				if (!worker.ticks) {
+					worker.ticks = 0;
+				}
+				worker.ticks++;
 
+				// actually do the work now
+				if (worker.ticks >= worker.rates.consumer) {
+					if (type.components.consumer.consumes) {
+						for (var prov in type.components.consumer.consumes) {
+							// add it in to the relevant bits
+							var toRemove = worker.amount * type.components.consumer.consumes[prov];
+							
+							if (Synned.game().items[prov]) {
+								// TODO - CHECK FOR NEGATIVES AND PUNISH
+								Synned.game().items[prov].amount -= toRemove;
+							}
+						}
+					}
+					worker.ticks = 0;
+				}
+			}
+		}
+	}
+});
 
 
 /**

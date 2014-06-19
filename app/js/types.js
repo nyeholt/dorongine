@@ -21,7 +21,7 @@ Synned.addItem({
 			}
 		},
 		consumer: { // consumers 
-			rate: 3600,
+			rate: 60,
 			consumes: {
 				Cash: 10,
 				Energy: 1
@@ -47,7 +47,7 @@ Synned.addItem({
 			}
 		},
 		consumer: { // consumers 
-			rate: 3600,
+			rate: 60,
 			consumes: {
 				Cash: 20,
 				Energy: 1
@@ -73,7 +73,7 @@ Synned.addItem({
 			}
 		},
 		consumer: { // consumers 
-			rate: 3600,
+			rate: 60,
 			consumes: {
 				Cash: 100,
 				Energy: 10
