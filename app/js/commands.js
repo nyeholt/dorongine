@@ -1,9 +1,9 @@
 
-Synned.addCommand({
+Clicker.addCommand({
 	name: 'collectItem',
 	execute: function () {
 		if (this.context.components && this.context.components['raw']) {
-			var current = Synned.game().items[this.context.name];
+			var current = Clicker.game().items[this.context.name];
 			var increase = 1;
 			if (current.rates.raw) {
 				increase = current.rates.raw;
@@ -13,32 +13,32 @@ Synned.addCommand({
 	}
 });
 
-Synned.addCommand({
+Clicker.addCommand({
 	name: 'buyItem',
 	execute: function () {
 		var item = this.context;
 		var volume = this.volume ? this.volume : 1;
 		if (item.canBuy(volume)) {
-			Synned.queueBuild(item, volume);
+			Clicker.queueBuild(item, volume);
 		}
 	}
 })
 
-Synned.addCommand({
+Clicker.addCommand({
 	name: 'mine',
 	execute: function () {
-		var nextRand = Synned.random() * 100;
+		var nextRand = Clicker.random() * 100;
 		
-		if (nextRand >= Synned.game().globalRates.mined) {
+		if (nextRand >= Clicker.game().globalRates.mined) {
 			return;
 		}
 
-		var mineable = Synned.game().byComponent('mined');
-		var rand = Synned.random(0, mineable.length - 1);
+		var mineable = Clicker.game().byComponent('mined');
+		var rand = Clicker.random(0, mineable.length - 1);
 
 		var toMine = mineable[rand];
 		
-		nextRand = Synned.random() * 100;
+		nextRand = Clicker.random() * 100;
 
 		if (toMine && toMine.rates.mined > nextRand) {
 			toMine.amount++;

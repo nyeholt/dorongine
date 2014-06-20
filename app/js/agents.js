@@ -1,5 +1,5 @@
 
-Synned.addTicker({
+Clicker.addTicker({
 	name: 'Migration',
 	onTick: 60,
 	currentTick: 0,
@@ -8,17 +8,17 @@ Synned.addTicker({
 		
 		if (this.currentTick >= this.onTick) {
 			// add a person
-			Synned.game().items.People.amount++;
+			Clicker.game().items.People.amount++;
 			
 			this.currentTick = 0;
 		}
 	}
 });
 
-Synned.addTicker({
+Clicker.addTicker({
 	name: 'Workers',
 	tick: function () {
-		var workers = Synned.game().byComponent('worker');
+		var workers = Clicker.game().byComponent('worker');
 		for (var i = 0, c = workers.length; i < c; i++) {
 			var worker = workers[i];
 			
@@ -34,10 +34,10 @@ Synned.addTicker({
 						for (var prov in worker.components.worker.provides) {
 							// add it in to the relevant bits
 							var toAdd = worker.amount * worker.components.worker.provides[prov];
-							if (Synned.game().items[prov]) {
-								Synned.game().items[prov].amount += toAdd;
-							} else if (Synned.game().topics[prov]) {
-								Synned.game().topics[prov].knowledge += toAdd;
+							if (Clicker.game().items[prov]) {
+								Clicker.game().items[prov].amount += toAdd;
+							} else if (Clicker.game().topics[prov]) {
+								Clicker.game().topics[prov].knowledge += toAdd;
 							}
 						}
 					}
@@ -48,10 +48,10 @@ Synned.addTicker({
 	}
 });
 
-Synned.addTicker({
+Clicker.addTicker({
 	name: 'Consumers',
 	tick: function () {
-		var workers = Synned.game().byComponent('consumer');
+		var workers = Clicker.game().byComponent('consumer');
 		for (var i = 0, c = workers.length; i < c; i++) {
 			var worker = workers[i];
 			
@@ -68,9 +68,9 @@ Synned.addTicker({
 							// add it in to the relevant bits
 							var toRemove = worker.amount * worker.components.consumer.consumes[prov];
 							
-							if (Synned.game().items[prov]) {
+							if (Clicker.game().items[prov]) {
 								// TODO - CHECK FOR NEGATIVES AND PUNISH
-								Synned.game().items[prov].amount -= toRemove;
+								Clicker.game().items[prov].amount -= toRemove;
 							}
 						}
 					}
@@ -85,14 +85,14 @@ Synned.addTicker({
 /**
  * Spreads Brainpower over the various areas of research
  */
-Synned.addTicker({
+Clicker.addTicker({
 	name: 'Researcher',
 	maxLevel: 10,
 	tick: function () {
-		var amount = Synned.game().items.Brainpower.amount;
+		var amount = Clicker.game().items.Brainpower.amount;
 		if (amount > 0) {
-			for (var name in Synned.game().topics) {
-				var topic = Synned.game().topics[name];
+			for (var name in Clicker.game().topics) {
+				var topic = Clicker.game().topics[name];
 				
 				if (topic.percentage > 0) {
 					var toAdd = Math.floor((topic.percentage / 100) * amount);
@@ -106,7 +106,7 @@ Synned.addTicker({
 						
 						if (topic.level < this.maxLevel) {
 							topic.level++;
-							var topicType = Synned.types().topics[name];
+							var topicType = Clicker.types().topics[name];
 							if (topicType.levelUp) {
 								topicType.levelUp(topic.level);
 							}
@@ -115,33 +115,33 @@ Synned.addTicker({
 				}
 			}
 		}
-		Synned.game().items.Brainpower.amount = amount;
+		Clicker.game().items.Brainpower.amount = amount;
 	}
 });
 
 /**
  * Converts ore into resources
  */
-Synned.addTicker({
+Clicker.addTicker({
 	numPerTick: 5,
 	name: 'Miner',
 	maxLevel: 10,
 	tick: function () {
-		var amount = Synned.game().items.Ore.amount;
+		var amount = Clicker.game().items.Ore.amount;
 		if (amount > 0) {
 			var numToProcess = amount > this.numPerTick ? this.numPerTick : amount;
 			amount -= numToProcess;
-			Synned.game().items.Ore.amount = amount;
+			Clicker.game().items.Ore.amount = amount;
 			
 			for (var i = 0; i < numToProcess; i++) {
-				var cmd = Synned.newCommand('mine');
-				Synned.runCommand(cmd);
+				var cmd = Clicker.newCommand('mine');
+				Clicker.runCommand(cmd);
 			}
 		}
 	}
 });
 
-Synned.addFastTicker({
+Clicker.addFastTicker({
 	name: 'Builder',
 	buildIndex: 0,
 	queueItem: function (item, volume) {
@@ -149,7 +149,7 @@ Synned.addFastTicker({
 		if (item.components.created.time) {
 			steps = item.components.created.time;
 		}
-		Synned.game().buildQueue.push({
+		Clicker.game().buildQueue.push({
 			totalSteps: steps,
 			currentStep: 0,
 			volume: volume ? volume : 1,
@@ -158,13 +158,13 @@ Synned.addFastTicker({
 	},
 	tick: function () {
 		if (!this.current) {
-			if (!Synned.game().buildQueue) {
-				Synned.game().buildQueue = [];
+			if (!Clicker.game().buildQueue) {
+				Clicker.game().buildQueue = [];
 			}
-			if (Synned.game().buildQueue.length == 0) {
+			if (Clicker.game().buildQueue.length == 0) {
 				return;
 			}
-			this.current = Synned.game().buildQueue[this.buildIndex];
+			this.current = Clicker.game().buildQueue[this.buildIndex];
 			if (!this.payFor(this.current.item)) {
 				this.finalise();
 				return;
@@ -179,7 +179,7 @@ Synned.addFastTicker({
 		}
 	},
 	payFor: function (item) {
-		var allItems = Synned.game().items;
+		var allItems = Clicker.game().items;
 		var volume = this.current.volume ? this.current.volume : 1;
 
 		var transactionRecord = {};
@@ -192,8 +192,8 @@ Synned.addFastTicker({
 					allItems[itemType].amount -= requiredAmount;
 					transactionRecord[itemType] = requiredAmount;
 				} else {
-					Synned.log("Item " + itemType + " was checked for sufficient amount, but there doesn't seem to be enough now");
-					Synned.log(transactionRecord);
+					Clicker.log("Item " + itemType + " was checked for sufficient amount, but there doesn't seem to be enough now");
+					Clicker.log(transactionRecord);
 					// TODO - undo transaction
 					// OR - leave it as a bugish thing that's actually an annoying feature to make people think about
 					// how many they're meaning to buy... ?
@@ -201,10 +201,10 @@ Synned.addFastTicker({
 				}
 			}
 		}
-		if (!Synned.game().transactions) {
-			Synned.game().transactions = [];
+		if (!Clicker.game().transactions) {
+			Clicker.game().transactions = [];
 		}
-		Synned.game().transactions.push(transactionRecord);
+		Clicker.game().transactions.push(transactionRecord);
 		return true;
 	},
 	tally: function () {
@@ -213,6 +213,6 @@ Synned.addFastTicker({
 	},
 	finalise: function () {
 		this.current = null;
-		Synned.game().buildQueue.splice(this.buildIndex, 1);
+		Clicker.game().buildQueue.splice(this.buildIndex, 1);
 	}
 })
