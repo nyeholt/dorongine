@@ -21,6 +21,7 @@
 			
 		},
 		buildQueue: [],
+		transactions: [],
 		byComponent: byComponent
 	};
 	
@@ -202,7 +203,12 @@
 		load: function () {
 			var data = localStorage.getItem(this.name + '-game');
 			game = JSON.parse(data);
+			
+			// rebind functions
 			game.byComponent = byComponent;
+			for (var type in game.items) {
+				game.items[type].canBuy = this.canBuyItem;
+			}
 		},
 		random: function (min, max) {
 			var x = Math.sin(this.seed++) * 10000;

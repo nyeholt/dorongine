@@ -102,6 +102,15 @@
 			</div>
 
 			<div id="creatable"  class="holder">
+				
+				<div id="build-queue">
+					{{#game.buildQueue}}
+					<div class="buildQueueItem">
+					<div>{{item.name}} {{currentStep}} / {{totalSteps}}</div>
+					</div>
+					{{/game.buildQueue}}
+				</div>
+
 				<h2>Items</h2>
 				<table>
 					<tr>
@@ -141,13 +150,6 @@
 				</table>
 			</div>
 			
-			<div id="creatable"  class="holder">
-				{{#game.buildQueue}}
-				<div class="buildQueueItem">
-				<div>{{item.name}} {{currentStep}} / {{totalSteps}}</div>
-				</div>
-				{{/game.buildQueue}}
-			</div>
 		</script>
 
 		<script type="text/javascript" src="js/jquery-2.0.0.min.js"></script>

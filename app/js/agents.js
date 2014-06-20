@@ -152,7 +152,7 @@ Synned.addFastTicker({
 		Synned.game().buildQueue.push({
 			totalSteps: steps,
 			currentStep: 0,
-			volume: volume,
+			volume: volume ? volume : 1,
 			item: item
 		})
 	},
@@ -165,33 +165,52 @@ Synned.addFastTicker({
 				return;
 			}
 			this.current = Synned.game().buildQueue[this.buildIndex];
+			if (!this.payFor(this.current.item)) {
+				this.finalise();
+				return;
+			}
 		}
 
 		this.current.currentStep++;
 
 		if (this.current.currentStep >= this.current.totalSteps) {
+			this.tally();
 			this.finalise();
-			this.current = null;
-			delete Synned.game().buildQueue.splice(this.buildIndex, 1);
 		}
 	},
-	finalise: function () {
-		// wee do what we need to do
+	payFor: function (item) {
 		var allItems = Synned.game().items;
-		var item = this.current.item;
 		var volume = this.current.volume ? this.current.volume : 1;
-		
+
+		var transactionRecord = {};
+
 		if (item.components.created && item.components.created.cost) {
 			for (var itemType in item.components.created.cost) {
 				// check stock levels
 				var requiredAmount = item.components.created.cost[itemType] * volume;
 				if (allItems[itemType].amount >= requiredAmount) {
 					allItems[itemType].amount -= requiredAmount;
+					transactionRecord[itemType] = requiredAmount;
 				} else {
 					Synned.log("Item " + itemType + " was checked for sufficient amount, but there doesn't seem to be enough now");
+					Synned.log(transactionRecord);
+					// TODO - undo transaction
+					return false;
 				}
 			}
 		}
-		allItems[item.name].amount += volume;
+		if (!Synned.game().transactions) {
+			Synned.game().transactions = [];
+		}
+		Synned.game().transactions.push(transactionRecord);
+		return true;
+	},
+	tally: function () {
+		// we actually add the total on now
+		this.current.item.amount += this.current.volume;
+	},
+	finalise: function () {
+		this.current = null;
+		Synned.game().buildQueue.splice(this.buildIndex, 1);
 	}
 })

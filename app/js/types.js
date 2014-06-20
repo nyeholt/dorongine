@@ -159,6 +159,7 @@ Synned.addItem({
 	components: {
 		goods: true,
 		created: {
+			time: 2,
 			cost: {
 				'Iron': 10
 			}
@@ -208,6 +209,13 @@ Synned.addTopic({
 
 Synned.addTopic({
 	name: 'Politics',
+	levelUp: function () {
+		
+	}
+});
+
+Synned.addTopic({
+	name: 'Civics',
 	levelUp: function () {
 		
 	}

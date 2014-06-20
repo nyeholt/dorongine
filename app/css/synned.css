@@ -70,3 +70,8 @@ body {
 	width: 40px;
 	float: right;
 }
+
+#build-queue {
+	height: 100px;
+	overflow: auto;
+}
