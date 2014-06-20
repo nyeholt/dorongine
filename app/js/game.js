@@ -77,7 +77,8 @@
 				}
 			}
 
-			item.canBuy = canBuyItem;
+			item = jQuery.extend({}, Item, item);
+			
 			item.rates = rates;
 			item.amount = item.defaultAmount ? item.defaultAmount : 0;
 
@@ -185,7 +186,7 @@
 			// rebind functions
 			game.byComponent = byComponent;
 			for (var type in game.items) {
-				game.items[type].canBuy = canBuyItem;
+				game.items[type] = jQuery.extend({}, Item, game.items[type]);
 			}
 		},
 		random: function (min, max) {
@@ -198,8 +199,20 @@
 			return rand;
 		}
 	};
-	
-		canBuyItem = function (volume) {
+
+	var Item = {
+		meetsRequirements: function () {
+			if (this.components.requires && this.components.requires.topics) {
+				for (var topic in this.components.requires.topics) {
+					if (game.topics[topic].level < this.components.requires.topics[topic]) {
+						return false;
+					}
+				}
+			};
+			
+			return true;
+		},
+		canBuy: function (volume) {
 			var item = this;
 			if (!volume) {
 				volume = 1;
@@ -215,16 +228,10 @@
 					}
 				}
 			}
-			if (okay && item.components.requires && item.components.requires.topics) {
-				for (var topic in item.components.requires.topics) {
-					if (game.topics[topic].level < item.components.requires.topics[topic]) {
-						okay = false;
-					}
-				}
-			}
-
-			return okay;
-		};
+			
+			return this.meetsRequirements() && okay;
+		}
+	};
 	
 
 	var time = (new Date()).getTime() % 100000;
