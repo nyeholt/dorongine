@@ -27,15 +27,15 @@
 				<td>{{game.items.People.amount}}</td>
 				</tr>
 				
-				{{# types.byComponent('worker') }}
+				{{# game.byComponent('worker') }}
 				
 				<tr>
 				<td>{{name}}</td>
-				<td>{{game.items[name].amount}}</td>
+				<td>{{amount}}</td>
 				<td>{{#canBuy(this)}}<button on-tap="buyItem">Hire</button>{{/canBuy}}</td>
 				</tr>
 				
-				{{/types}}
+				{{/game}}
 			</tbody>
 			</table>
 			</div>
@@ -69,16 +69,16 @@
 			<div id="resources" class="holder">
 				<div id="raw-resources">
 				<table>
-					{{# types.byComponent('raw') }}
+					{{# game.byComponent('raw') }}
 					<tr>
 					<td width="60%">
 					<button data-type="{{name}}" on-tap="collectItem">{{name}}</button>
 					</td>
 					<td>
-					<span class="resource-count">{{game.items[name].amount}}</span>
+					<span class="resource-count">{{amount}}</span>
 					</td>
 					</tr>
-					{{/ types}}
+					{{/ game}}
 				</table>
 				</div>
 				
@@ -87,16 +87,16 @@
 					<tr>
 					<td></td><td><button on-tap="mine">Mining at {{game.globalRates.mined}}% efficiency</button></td>
 					</tr>
-					{{# types.byComponent('mined') }}
+					{{# game.byComponent('mined') }}
 					<tr>
 					<td width="60%">
-					{{name}} {{game.items[name].rates.mined}}% efficiency
+					{{name}} {{rates.mined}}% efficiency
 					</td>
 					<td>
-					<span class="resource-count">{{game.items[name].amount}}</span>
+					<span class="resource-count">{{amount}}</span>
 					</td>
 					</tr>
-					{{/ types}}
+					{{/ game}}
 				</table>
 				</div>
 			</div>
@@ -111,33 +111,33 @@
 					<th width="20%">Requires</th>
 					<th width="60%"></th>
 					</tr>
-					{{# types.byComponent('goods') }}
-					<tr>
-					<td>
-						{{#canBuy(this)}}
-						<button on-tap="buyItem">Buy</button>
-						{{/canBuy}}
-					</td>
-					<td>
-					<span class="item-amount">{{game.items[name].amount}}</span>
-					</td>
+					{{# game.byComponent('goods') }}
+						<tr>
+						<td>
+							{{#canBuy(this)}}
+							<button on-tap="buyItem">Buy</button>
+							{{/canBuy}}
+						</td>
+						<td>
+						<span class="item-amount">{{amount}}</span>
+						</td>
 
-					<td>
-					{{name}}
-					</td>
-					
-					<td>
-					{{#components.created.cost :resource}}
-					<p>{{resource}} {{this}}</p>
-					{{/components}}
-					</td>
-					<td>
-					{{#requires.topics :topic}}
-						<p>{{topic}} level {{this}}</p>
-					{{/ requires}}
-					</td>
-					</tr>
-					{{/types}}
+						<td>
+						{{name}}
+						</td>
+
+						<td>
+						{{#components.created.cost :resource}}
+						<p>{{resource}} {{this}}</p>
+						{{/components}}
+						</td>
+						<td>
+						{{#requires.topics :topic}}
+							<p>{{topic}} level {{this}}</p>
+						{{/ requires}}
+						</td>
+						</tr>
+					{{/game}}
 				</table>
 			</div>
 			

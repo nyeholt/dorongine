@@ -33,12 +33,10 @@ Synned.addCommand({
 			return;
 		}
 
-		var mineable = Synned.types().byComponent('mined');
+		var mineable = Synned.game().byComponent('mined');
 		var rand = Synned.random(0, mineable.length - 1);
 
-		var mineType = mineable[rand];
-		
-		var toMine = Synned.game().items[mineType.name];
+		var toMine = mineable[rand];
 		
 		nextRand = Synned.random() * 100;
 

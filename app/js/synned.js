@@ -1,18 +1,3 @@
-var func = function () {
-	console.log(this.name);
-}
-
-var obja = {
-	name: 'obsja',
-	func: func
-};
-
-
-var objb = {
-	name: 'obsjb',
-	func: func
-};
-
 
 ;(function ($) {
 	
@@ -35,7 +20,8 @@ var objb = {
 		topics: {
 			
 		},
-		buildQueue: []
+		buildQueue: [],
+		byComponent: byComponent
 	};
 	
 	var tickers = [];
@@ -46,8 +32,8 @@ var objb = {
 		techs: {},
 		topics: {
 			
-		},
-		byComponent: byComponent
+		}
+		
 	};
 	
 	// all commands that could be executed
@@ -80,7 +66,8 @@ var objb = {
 			if (!item.components) {
 				item.components = {};
 			}
-			types.items[item.name] = item;
+			
+//			types.items[item.name] = item;
 
 			var rates = {};
 			for (var c in item.components) {
@@ -90,15 +77,14 @@ var objb = {
 			}
 
 			item.canBuy = this.canBuyItem;
+			item.rates = rates;
+			item.amount = item.defaultAmount ? item.defaultAmount : 0;
 
-			game.items[item.name] = {
-				amount: 0,
-				rates: rates
-			};
-			
-			if (item.defaultAmount) {
-				game.items[item.name].amount = item.defaultAmount;
-			}
+			game.items[item.name] = item;
+//			{
+//				amount: 0,
+//				rates: rates
+//			};
 
 			this.ractive.set('types', types);
 		},

@@ -15,14 +15,12 @@ Synned.addTicker({
 	}
 });
 
-
 Synned.addTicker({
 	name: 'Workers',
 	tick: function () {
-		var workerTypes = Synned.types().byComponent('worker');
-		for (var i = 0, c = workerTypes.length; i < c; i++) {
-			var type = workerTypes[i];
-			var worker = Synned.game().items[type.name];
+		var workers = Synned.game().byComponent('worker');
+		for (var i = 0, c = workers.length; i < c; i++) {
+			var worker = workers[i];
 			
 			if (worker.amount > 0) {
 				if (!worker.workTicks) {
@@ -32,10 +30,10 @@ Synned.addTicker({
 
 				// actually do the work now
 				if (worker.workTicks >= worker.rates.worker) {
-					if (type.components.worker.provides) {
-						for (var prov in type.components.worker.provides) {
+					if (worker.components.worker.provides) {
+						for (var prov in worker.components.worker.provides) {
 							// add it in to the relevant bits
-							var toAdd = worker.amount * type.components.worker.provides[prov];
+							var toAdd = worker.amount * worker.components.worker.provides[prov];
 							if (Synned.game().items[prov]) {
 								Synned.game().items[prov].amount += toAdd;
 							} else if (Synned.game().topics[prov]) {
@@ -53,10 +51,9 @@ Synned.addTicker({
 Synned.addTicker({
 	name: 'Consumers',
 	tick: function () {
-		var workerTypes = Synned.types().byComponent('consumer');
-		for (var i = 0, c = workerTypes.length; i < c; i++) {
-			var type = workerTypes[i];
-			var worker = Synned.game().items[type.name];
+		var workers = Synned.game().byComponent('consumer');
+		for (var i = 0, c = workers.length; i < c; i++) {
+			var worker = workers[i];
 			
 			if (worker.amount > 0) {
 				if (!worker.consumptionTicks) {
@@ -66,10 +63,10 @@ Synned.addTicker({
 
 				// actually do the work now
 				if (worker.consumptionTicks >= worker.rates.consumer) {
-					if (type.components.consumer.consumes) {
-						for (var prov in type.components.consumer.consumes) {
+					if (worker.components.consumer.consumes) {
+						for (var prov in worker.components.consumer.consumes) {
 							// add it in to the relevant bits
-							var toRemove = worker.amount * type.components.consumer.consumes[prov];
+							var toRemove = worker.amount * worker.components.consumer.consumes[prov];
 							
 							if (Synned.game().items[prov]) {
 								// TODO - CHECK FOR NEGATIVES AND PUNISH
