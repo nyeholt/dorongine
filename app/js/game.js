@@ -1,11 +1,20 @@
 
 ;(function () {
 
-	var byComponent = function (component) {
-		var items = [];
+	var byComponent = function (component, mapped) {
+		var items;
+		if (mapped) {
+			items = {};
+		} else {
+			items = [];
+		}
 		for (var k in this.items) {
 			if (this.items[k].components[component]) {
-				items.push(this.items[k])
+				if (mapped) {
+					items[k] = this.items[k];
+				} else {
+					items.push(this.items[k])
+				}
 			}
 		}
 		return items;
@@ -201,6 +210,9 @@
 	};
 
 	var Item = {
+		formattedAmount: function () {
+			return this.amount;
+		},
 		meetsRequirements: function () {
 			if (this.components.requires && this.components.requires.topics) {
 				for (var topic in this.components.requires.topics) {

@@ -19,6 +19,8 @@ Clicker.addTicker({
 	name: 'Workers',
 	tick: function () {
 		var workers = Clicker.game().byComponent('worker');
+		var raw = Clicker.game().byComponent('raw', true);
+		
 		for (var i = 0, c = workers.length; i < c; i++) {
 			var worker = workers[i];
 			
@@ -33,7 +35,11 @@ Clicker.addTicker({
 					if (worker.components.worker.provides) {
 						for (var prov in worker.components.worker.provides) {
 							// add it in to the relevant bits
-							var toAdd = worker.amount * worker.components.worker.provides[prov];
+							var base = worker.components.worker.provides[prov];
+							if (raw[prov] && raw[prov].rates.raw) {
+								base *= raw[prov].rates.raw;
+							}
+							var toAdd = worker.amount * base;
 							if (Clicker.game().items[prov]) {
 								Clicker.game().items[prov].amount += toAdd;
 							} else if (Clicker.game().topics[prov]) {

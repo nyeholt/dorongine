@@ -99,6 +99,7 @@ Clicker.addItem({
 Clicker.addItem({
 	name: 'Cash',
 	maximum: 1000000000,
+	formattedAmount: function () { return Number(this.amount).toFixed(2); },
 	components: {'raw': {rate: 1}}
 });
 
@@ -237,8 +238,9 @@ Clicker.addTopic({
 
 Clicker.addTopic({
 	name: 'Civics',
-	levelUp: function () {
-		
+	levelUp: function (newLevel) {
+		var current = Clicker.game().items.Cash.rates.raw;
+		Clicker.game().items.Cash.rates.raw = current + current * (newLevel / 10);
 	}
 });
 
