@@ -1,6 +1,5 @@
 
 ;(function ($) {
-	
 	var byComponent = function (component) {
 		var items = [];
 		for (var k in this.items) {
@@ -9,6 +8,33 @@
 			}
 		}
 		return items;
+	};
+	
+	var canBuyItem = function (volume) {
+		var item = this;
+		if (!volume) {
+			volume = 1;
+		}
+		var okay = true;
+		if (item.components.created && item.components.created.cost) {
+			for (var itemType in item.components.created.cost) {
+				// check stock levels
+				var requiredAmount = item.components.created.cost[itemType] * volume;
+				if (game.items[itemType].amount < requiredAmount) {
+					okay = false;
+					break;
+				}
+			}
+		}
+		if (okay && item.requires && item.requires.topics) {
+			for (var topic in item.requires.topics) {
+				if (game.topics[topic].level < item.requires.topics[topic]) {
+					okay = false;
+				}
+			}
+		}
+
+		return okay;
 	};
 
 	var game = {
@@ -77,7 +103,7 @@
 				}
 			}
 
-			item.canBuy = this.canBuyItem;
+			item.canBuy = canBuyItem;
 			item.rates = rates;
 			item.amount = item.defaultAmount ? item.defaultAmount : 0;
 
@@ -89,31 +115,7 @@
 
 			this.ractive.set('types', types);
 		},
-		canBuyItem: function (item, volume) {
-			if (!volume) {
-				volume = 1;
-			}
-			var okay = true;
-			if (item.components.created && item.components.created.cost) {
-				for (var itemType in item.components.created.cost) {
-					// check stock levels
-					var requiredAmount = item.components.created.cost[itemType] * volume;
-					if (game.items[itemType].amount < requiredAmount) {
-						okay = false;
-						break;
-					}
-				}
-			}
-			if (okay && item.requires && item.requires.topics) {
-				for (var topic in item.requires.topics) {
-					if (game.topics[topic].level < item.requires.topics[topic]) {
-						okay = false;
-					}
-				}
-			}
-			
-			return okay;
-		},
+		
 		addTopic: function (topic) {
 			types.topics[topic.name] = topic;
 			game.topics[topic.name] = {
@@ -207,7 +209,7 @@
 			// rebind functions
 			game.byComponent = byComponent;
 			for (var type in game.items) {
-				game.items[type].canBuy = this.canBuyItem;
+				game.items[type].canBuy = canBuyItem;
 			}
 		},
 		random: function (min, max) {
@@ -220,6 +222,8 @@
 			return rand;
 		}
 	};
+	
+
 
 	var time = (new Date()).getTime() % 100000;
 

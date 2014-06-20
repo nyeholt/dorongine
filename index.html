@@ -32,7 +32,7 @@
 				<tr>
 				<td>{{name}}</td>
 				<td>{{amount}}</td>
-				<td>{{#canBuy(this)}}<button on-tap="buyItem">Hire</button>{{/canBuy}}</td>
+				<td>{{#this.canBuy(1)}}<button on-tap="buyItem">Hire</button>{{/this}}</td>
 				</tr>
 				
 				{{/game}}
@@ -123,9 +123,9 @@
 					{{# game.byComponent('goods') }}
 						<tr>
 						<td>
-							{{#canBuy(this)}}
+							{{#this.canBuy(1)}}
 							<button on-tap="buyItem">Buy</button>
-							{{/canBuy}}
+							{{/this}}
 						</td>
 						<td>
 						<span class="item-amount">{{amount}}</span>

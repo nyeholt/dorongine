@@ -195,6 +195,8 @@ Synned.addFastTicker({
 					Synned.log("Item " + itemType + " was checked for sufficient amount, but there doesn't seem to be enough now");
 					Synned.log(transactionRecord);
 					// TODO - undo transaction
+					// OR - leave it as a bugish thing that's actually an annoying feature to make people think about
+					// how many they're meaning to buy... ?
 					return false;
 				}
 			}

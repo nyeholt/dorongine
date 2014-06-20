@@ -18,8 +18,8 @@ Synned.addCommand({
 	execute: function () {
 		var item = this.context;
 		var volume = this.volume ? this.volume : 1;
-		if (Synned.canBuyItem(item)) {
-			Synned.queueBuild(item, this.volume);
+		if (item.canBuy(volume)) {
+			Synned.queueBuild(item, volume);
 		}
 	}
 })
