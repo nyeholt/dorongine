@@ -20,11 +20,13 @@
 
 			<div id="population" class="holder">
 			<table>
-			<thead><tr><th width="60%"></th><th></th><th></th></thead>
+			<thead><tr><th width="60%"></th><th></th><th></th><th></th><th></th></thead>
 			<tbody>
 				<tr>
 				<td>Unemployed</td>
 				<td>{{game.items.People.amount}}</td>
+				<td></td>
+				<td></td>
 				</tr>
 				
 				{{# game.byComponent('worker') }}
@@ -33,6 +35,19 @@
 				<td>{{name}}</td>
 				<td>{{amount}}</td>
 				<td>{{#this.canBuy(1)}}<button on-tap="buyItem">Hire</button>{{/this}}</td>
+				
+				<td>
+				{{#components.created.cost :resource}}
+				<p>{{resource}} {{this}}</p>
+				{{/components}}
+				</td>
+				
+				<td>
+				{{#components.requires.topics :topic}}
+					<p>{{topic}} level {{this}}</p>
+				{{/components}}
+				</td>
+				
 				</tr>
 				
 				{{/game}}
@@ -141,9 +156,9 @@
 						{{/components}}
 						</td>
 						<td>
-						{{#requires.topics :topic}}
+						{{#components.requires.topics :topic}}
 							<p>{{topic}} level {{this}}</p>
-						{{/ requires}}
+						{{/components}}
 						</td>
 						</tr>
 					{{/game}}

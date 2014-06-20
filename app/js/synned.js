@@ -26,9 +26,9 @@
 				}
 			}
 		}
-		if (okay && item.requires && item.requires.topics) {
-			for (var topic in item.requires.topics) {
-				if (game.topics[topic].level < item.requires.topics[topic]) {
+		if (okay && item.components.requires && item.components.requires.topics) {
+			for (var topic in item.components.requires.topics) {
+				if (game.topics[topic].level < item.components.requires.topics[topic]) {
 					okay = false;
 				}
 			}
@@ -204,8 +204,10 @@
 		},
 		load: function () {
 			var data = localStorage.getItem(this.name + '-game');
-			game = JSON.parse(data);
+			var oldgame = JSON.parse(data);
 			
+			var newgame = jQuery.extend(true, {}, game, oldgame);
+			game = newgame;
 			// rebind functions
 			game.byComponent = byComponent;
 			for (var type in game.items) {

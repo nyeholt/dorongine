@@ -54,6 +54,11 @@ Synned.addItem({
 				Cash: 20,
 				Energy: 1
 			}
+		},
+		requires: {
+			topics: {
+				'Mining': 1
+			}
 		}
 	}
 });
@@ -80,6 +85,12 @@ Synned.addItem({
 			consumes: {
 				Cash: 100,
 				Energy: 10
+			}
+		},
+		requires: {
+			topics: {
+				'Education': 1,
+				'Computers': 1
 			}
 		}
 	}
@@ -163,11 +174,11 @@ Synned.addItem({
 			cost: {
 				'Iron': 10
 			}
-		}
-	},
-	requires: {
-		topics: {
-			'Manufacturing': 1
+		},
+		requires: {
+			topics: {
+				'Manufacturing': 1
+			}
 		}
 	}
 });
@@ -184,14 +195,17 @@ Synned.addItem({
 				'Silicon': 2,
 				'Copper': 5
 			}
-		}
-	},
-	requires: {
-		topics: {
-			'Manufacturing': 3
+		},
+		requires: {
+			topics: {
+				'Manufacturing': 3
+			}
 		}
 	}
 });
+
+
+// Research topic
 
 Synned.addTopic({
 	increaseBy: 10,
@@ -209,6 +223,13 @@ Synned.addTopic({
 
 Synned.addTopic({
 	name: 'Politics',
+	levelUp: function () {
+		
+	}
+});
+
+Synned.addTopic({
+	name: 'Education',
 	levelUp: function () {
 		
 	}
