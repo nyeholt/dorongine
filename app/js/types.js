@@ -53,7 +53,7 @@ Clicker.addItem({
 		consumer: { // consumers 
 			rate: 60,
 			consumes: {
-				Cash: 20,
+				Cash: 10,
 				Energy: 1
 			}
 		},
@@ -86,14 +86,14 @@ Clicker.addItem({
 		consumer: { // consumers 
 			rate: 60,
 			consumes: {
-				Cash: 100,
+				Cash: 30,
 				Energy: 10
 			}
 		},
 		requires: {
 			topics: {
 				'Education': 1,
-				'Computers': 1
+				'Technology': 1
 			}
 		}
 	}
@@ -190,6 +190,7 @@ Clicker.addItem({
 		}
 	}
 });
+
 Clicker.addItem({
 	name: 'Steel',
 	maximum: 1000000000,
@@ -210,6 +211,31 @@ Clicker.addItem({
 });
 
 Clicker.addItem({
+	name: 'Mining Tools',
+	maximum: 1000000000,
+	components: {
+		goods: true,
+		created: {
+			time: 5,
+			cost: {
+				'Steel': 100
+			}
+		},
+		requires: {
+			topics: {
+				'Manufacturing': 1
+			},
+			items: {
+				'Miner': 20
+			}
+		},
+		improves: {
+			Ore: 0.01
+		}
+	}
+});
+
+Clicker.addItem({
 	name: 'Chip',
 	maximum: 1000000000,
 	components: {
@@ -224,7 +250,31 @@ Clicker.addItem({
 		},
 		requires: {
 			topics: {
+				'Technology': 1,
 				'Manufacturing': 3
+			}
+		}
+	}
+});
+
+Clicker.addItem({
+	name: 'Computer',
+	maximum: 1000000000,
+	components: {
+		goods: true,
+		created: {
+			time: 100,
+			cost: {
+				'Gold': 1,
+				'Chip': 2,
+				'Glass': 2,
+				'Copper': 10
+			}
+		},
+		requires: {
+			topics: {
+				'Technology': 2,
+				'Manufacturing': 4
 			}
 		}
 	}
@@ -259,6 +309,12 @@ Clicker.addItem({
 		building: true,
 		improves: {
 			Energy: 0.10
+		},
+		worker: {
+			rate: 5,
+			provides: {
+				Energy: 1
+			}
 		},
 		created: {
 			time: 100,
@@ -318,13 +374,6 @@ Clicker.addTopic({
 });
 
 Clicker.addTopic({
-	name: 'Politics',
-	levelUp: function () {
-		
-	}
-});
-
-Clicker.addTopic({
 	name: 'Education',
 	levelUp: function (newLevel) {
 		var current = Clicker.game().items.Brainpower.rates.raw;
@@ -341,7 +390,14 @@ Clicker.addTopic({
 });
 
 Clicker.addTopic({
-	name: 'Computers',
+	name: 'Economics',
+	levelUp: function (newLevel) {
+		var current = Clicker.game().items.Cash.rates.raw;
+		Clicker.game().items.Cash.rates.raw = current + current * (newLevel / 4);
+	}
+});
+Clicker.addTopic({
+	name: 'Technology',
 	levelUp: function () {
 		
 	}

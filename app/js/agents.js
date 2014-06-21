@@ -158,11 +158,12 @@ Clicker.addFastTicker({
 		if (item.components.created.time) {
 			steps = item.components.created.time;
 		}
+		volume = volume ? volume : 1;
 		if (this.payFor(item, volume)) {
 			Clicker.game().buildQueue.push({
-				totalSteps: steps,
+				totalSteps: steps * volume,
 				currentStep: 0,
-				volume: volume ? volume : 1,
+				volume: volume,
 				item: item
 			});
 		}

@@ -224,13 +224,25 @@
 			return this.amount;
 		},
 		meetsRequirements: function () {
-			if (this.components.requires && this.components.requires.topics) {
+			if (!this.components.requires) {
+				return true;
+			}
+			
+			if (this.components.requires.topics) {
 				for (var topic in this.components.requires.topics) {
 					if (game.topics[topic].level < this.components.requires.topics[topic]) {
 						return false;
 					}
 				}
-			};
+			}
+			
+			if (this.components.requires.items) {
+				for (var item in this.components.requires.items) {
+					if (game.items[item].amount < this.components.requires.items[item]) {
+						return false;
+					}
+				}
+			}
 			
 			return true;
 		},
