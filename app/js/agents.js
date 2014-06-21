@@ -158,12 +158,14 @@ Clicker.addFastTicker({
 		if (item.components.created.time) {
 			steps = item.components.created.time;
 		}
-		Clicker.game().buildQueue.push({
-			totalSteps: steps,
-			currentStep: 0,
-			volume: volume ? volume : 1,
-			item: item
-		})
+		if (this.payFor(item, volume)) {
+			Clicker.game().buildQueue.push({
+				totalSteps: steps,
+				currentStep: 0,
+				volume: volume ? volume : 1,
+				item: item
+			});
+		}
 	},
 	tick: function () {
 		if (!this.current) {
@@ -174,10 +176,10 @@ Clicker.addFastTicker({
 				return;
 			}
 			this.current = Clicker.game().buildQueue[this.buildIndex];
-			if (!this.payFor(this.current.item)) {
-				this.finalise();
-				return;
-			}
+//			if (!this.payFor(this.current.item)) {
+//				this.finalise();
+//				return;
+//			}
 		}
 
 		this.current.currentStep++;
@@ -187,9 +189,9 @@ Clicker.addFastTicker({
 			this.finalise();
 		}
 	},
-	payFor: function (item) {
+	payFor: function (item, volume) {
 		var allItems = Clicker.game().items;
-		var volume = this.current.volume ? this.current.volume : 1;
+		var volume = volume ? volume : 1;
 
 		var transactionRecord = {};
 

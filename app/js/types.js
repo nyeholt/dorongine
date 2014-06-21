@@ -8,6 +8,7 @@ Clicker.addItem({
 	name: 'Employee',
 	maximum: 5000,
 	components: {
+		employable: true,
 		worker: {
 			rate: 5,
 			provides: {
@@ -35,6 +36,7 @@ Clicker.addItem({
 	name: 'Miner',
 	maximum: 200,
 	components: {
+		employable: true,
 		worker: {
 			rate: 5,
 			provides: {
@@ -67,6 +69,7 @@ Clicker.addItem({
 	name: 'Scientist',
 	maximum: 100,
 	components: { 
+		employable: true,
 		worker: {
 			rate: 5,
 			provides: {
@@ -170,6 +173,24 @@ Clicker.addItem({
 });
 
 Clicker.addItem({
+	name: 'Glass',
+	maximum: 1000000000,
+	components: {
+		goods: true,
+		created: {
+			time: 2,
+			cost: {
+				'Cement': 2
+			}
+		},
+		requires: {
+			topics: {
+				'Manufacturing': 1
+			}
+		}
+	}
+});
+Clicker.addItem({
 	name: 'Steel',
 	maximum: 1000000000,
 	components: {
@@ -231,6 +252,31 @@ Clicker.addItem({
 
 
 // Buildings
+Clicker.addItem({
+	name: 'Solar Panel',
+	maximum: 20,
+	components: {
+		building: true,
+		improves: {
+			Energy: 0.10
+		},
+		created: {
+			time: 100,
+			cost: {
+				'Cash': 100,
+				'Glass': 1,
+				'Steel': 1,
+				'Silicon': 1
+			}
+		},
+		requires: {
+			topics: {
+				'Education': 1,
+				'Manufacturing': 1
+			}
+		}
+	}
+});
 
 Clicker.addItem({
 	name: 'School',
@@ -268,7 +314,6 @@ Clicker.addTopic({
 		if (Clicker.game().globalRates.mined > 100) {
 			Clicker.game().globalRates.mined = 100;
 		}
-		
 	}
 });
 
