@@ -94,17 +94,20 @@ Clicker.addTicker({
 Clicker.addTicker({
 	name: 'Researcher',
 	maxLevel: 10,
+	researchMinAmount: 10, // level required before research will be applied, prevents 10% on first item blocking all others.
 	tick: function () {
 		var amount = Clicker.game().items.Brainpower.amount;
-		if (amount > 0) {
+		if (amount > this.researchMinAmount) {
+			var totalUsed = 0;
 			for (var name in Clicker.game().topics) {
 				var topic = Clicker.game().topics[name];
 				
 				if (topic.percentage > 0) {
 					var toAdd = Math.floor((topic.percentage / 100) * amount);
 					topic.knowledge += toAdd;
-					amount -= toAdd;
-
+					
+					totalUsed += toAdd;
+					
 					if (topic.knowledge >= topic.target) {
 						amount += topic.knowledge - topic.target;
 						topic.knowledge = 0;
@@ -120,8 +123,8 @@ Clicker.addTicker({
 					}
 				}
 			}
+			Clicker.game().items.Brainpower.amount -= totalUsed;
 		}
-		Clicker.game().items.Brainpower.amount = amount;
 	}
 });
 
@@ -216,6 +219,7 @@ Clicker.addFastTicker({
 	tally: function () {
 		// we actually add the total on now
 		this.current.item.amount += this.current.volume;
+		this.current.item.applyImprovement();
 	},
 	finalise: function () {
 		this.current = null;

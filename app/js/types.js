@@ -106,24 +106,28 @@ Clicker.addItem({
 Clicker.addItem({
 	name: 'Brainpower',
 	maximum: 1000000000,
+	formattedAmount: function () { return Number(this.amount).toFixed(2); },
 	components: {'raw': {rate: 1}}
 });
 
 Clicker.addItem({
 	name: 'Energy',
 	maximum: 1000000000,
+	formattedAmount: function () { return Number(this.amount).toFixed(2); },
 	components: {'raw': {rate: 1}}
 });
 
 Clicker.addItem({
 	name: 'Ore',
 	maximum: 1000000000,
+	formattedAmount: function () { return Number(this.amount).toFixed(2); },
 	components: {'raw': {rate: 1}}
 });
 
 Clicker.addItem({
 	name: 'Water',
 	maximum: 1000000000,
+	formattedAmount: function () { return Number(this.amount).toFixed(2); },
 	components: {raw: {rate: 1}, 'weather': true }
 });
 
@@ -205,8 +209,54 @@ Clicker.addItem({
 	}
 });
 
+Clicker.addItem({
+	name: 'Reinforced Concrete',
+	maximum: 1000000000,
+	components: {
+		goods: true,
+		created: {
+			time: 5,
+			cost: {
+				'Cement': 1,
+				'Steel': 1
+			}
+		},
+		requires: {
+			topics: {
+				'Manufacturing': 3
+			}
+		}
+	}
+});
 
-// Research topic
+
+// Buildings
+
+Clicker.addItem({
+	name: 'School',
+	maximum: 100,
+	components: {
+		building: true,
+		improves: {
+			Brainpower: 0.10
+		},
+		created: {
+			time: 300,
+			cost: {
+				'Cash': 500,
+				'Cement': 10,
+				'Iron': 4
+			}
+		},
+		requires: {
+			topics: {
+				'Education': 1
+			}
+		}
+	}
+});
+
+// Research topics
 
 Clicker.addTopic({
 	increaseBy: 10,
@@ -231,8 +281,9 @@ Clicker.addTopic({
 
 Clicker.addTopic({
 	name: 'Education',
-	levelUp: function () {
-		
+	levelUp: function (newLevel) {
+		var current = Clicker.game().items.Brainpower.rates.raw;
+		Clicker.game().items.Brainpower.rates.raw = current + current * (newLevel / 10);
 	}
 });
 

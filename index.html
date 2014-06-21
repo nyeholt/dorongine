@@ -127,6 +127,7 @@
 				</div>
 
 				<h2>Items</h2>
+				
 				<table>
 					<tr>
 					<th></th>
@@ -140,6 +141,44 @@
 						<td>
 							{{#this.canBuy(1)}}
 							<button on-tap="buyItem">Buy</button>
+							{{/this}}
+						</td>
+						<td>
+						<span class="item-amount">{{amount}}</span>
+						</td>
+
+						<td>
+						{{name}}
+						</td>
+
+						<td>
+						{{#components.created.cost :resource}}
+						<p>{{resource}} {{this}}</p>
+						{{/components}}
+						</td>
+						<td>
+						{{#components.requires.topics :topic}}
+							<p>{{topic}} level {{this}}</p>
+						{{/components}}
+						</td>
+						</tr>
+					{{/game}}
+				</table>
+				
+				<h2>Buildings</h2>
+				<table>
+					<tr>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th width="20%">Requires</th>
+					<th width="60%"></th>
+					</tr>
+					{{# game.byComponent('building') }}
+						<tr>
+						<td>
+							{{#this.canBuy(1)}}
+							<button on-tap="buyItem">Build</button>
 							{{/this}}
 						</td>
 						<td>

@@ -210,6 +210,16 @@
 	};
 
 	var Item = {
+		applyImprovement: function () {
+			if (this.components.improves) {
+				for (var type in this.components.improves) {
+					if (Clicker.game().items[type].rates && Clicker.game().items[type].rates.raw) {
+						var current = Clicker.game().items[type].rates.raw;
+						Clicker.game().items[type].rates.raw = current + current * this.components.improves[type];
+					}
+				}
+			}
+		},
 		formattedAmount: function () {
 			return this.amount;
 		},
