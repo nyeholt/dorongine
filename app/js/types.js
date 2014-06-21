@@ -77,7 +77,7 @@ Clicker.addItem({
 			}
 		},
 		created: {
-			time: 5,
+			time: 20,
 			cost: {
 				Cash: 1000,
 				Employee: 1
@@ -230,7 +230,7 @@ Clicker.addItem({
 			}
 		},
 		improves: {
-			Ore: 0.01
+			Ore: 0.02
 		}
 	}
 });
@@ -274,8 +274,11 @@ Clicker.addItem({
 		requires: {
 			topics: {
 				'Technology': 2,
-				'Manufacturing': 4
+				'Manufacturing': 2
 			}
+		},
+		improves: {
+			Brainpower: 0.01
 		}
 	}
 });
@@ -345,21 +348,48 @@ Clicker.addItem({
 		created: {
 			time: 300,
 			cost: {
-				'Cash': 500,
-				'Cement': 10,
-				'Iron': 4
+				'Cash': 1000,
+				'Cement': 100,
+				'Iron': 100,
+				'Computer': 20
 			}
 		},
 		requires: {
 			topics: {
-				'Education': 1
+				'Education': 2
+			}
+		}
+	}
+});
+
+
+Clicker.addItem({
+	name: 'University',
+	maximum: 10,
+	components: {
+		building: true,
+		improves: {
+			Brainpower: 0.50
+		},
+		created: {
+			time: 1200,
+			cost: {
+				'Cash': 10000,
+				'Reinforced Concrete': 100,
+				'Steel': 100,
+				'Computer': 100
+			}
+		},
+		requires: {
+			topics: {
+				'Education': 3,
+				'Civics': 2
 			}
 		}
 	}
 });
 
 // Research topics
-
 Clicker.addTopic({
 	increaseBy: 10,
 	name: 'Mining',
