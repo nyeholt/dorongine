@@ -117,11 +117,13 @@
 			</div>
 
 			<div id="creatable"  class="holder">
-				
 				<div id="build-queue">
 					{{#game.buildQueue}}
 					<div class="buildQueueItem">
-					<div>{{item.name}} {{currentStep}} / {{totalSteps}}</div>
+						<img title="{{item.name}}" src="{{item.icon}}" /> 
+						<div class="buildProgress">
+						<progress max="{{totalSteps}}" value="{{currentStep}}"></progress>
+						</div>
 					</div>
 					{{/game.buildQueue}}
 				</div>
@@ -132,23 +134,21 @@
 					<tr>
 					<th></th>
 					<th></th>
-					<th></th>
 					<th width="20%">Requires</th>
 					<th width="60%"></th>
 					</tr>
 					{{# game.byComponent('goods') }}
 						<tr>
-						<td>
+						<td class="build-col">
 							{{#this.canBuy(1)}}
-							<button on-tap="buyItem">Buy</button>
+							<button title="{{name}}" on-tap="buyItem"><img title="{{name}}" src="{{icon}}" /></button>
+							{{/this}}
+							{{^this.canBuy(1)}}
+							<img title="{{name}}" src="{{icon}}" />
 							{{/this}}
 						</td>
 						<td>
 						<span class="item-amount">{{amount}}</span>
-						</td>
-
-						<td>
-						{{name}}
 						</td>
 
 						<td>
@@ -170,25 +170,22 @@
 					<tr>
 					<th></th>
 					<th></th>
-					<th></th>
 					<th width="20%">Requires</th>
 					<th width="60%"></th>
 					</tr>
 					{{# game.byComponent('building') }}
 						<tr>
-						<td>
+						<td class="build-col">
 							{{#this.canBuy(1)}}
-							<button on-tap="buyItem">Build</button>
+							<button title="{{name}}" on-tap="buyItem"><img title="{{name}}" src="{{icon}}" /></button>
+							{{/this}}
+							{{^this.canBuy(1)}}
+							<img title="{{name}}" src="{{icon}}" />
 							{{/this}}
 						</td>
 						<td>
 						<span class="item-amount">{{amount}}</span>
 						</td>
-
-						<td>
-						{{name}}
-						</td>
-
 						<td>
 						{{#components.created.cost :resource}}
 						<p>{{resource}} {{this}}</p>

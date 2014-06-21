@@ -6,6 +6,7 @@ Clicker.addItem({
 
 Clicker.addItem({
 	name: 'Employee',
+	
 	maximum: 5000,
 	components: {
 		employable: true,
@@ -34,6 +35,7 @@ Clicker.addItem({
 
 Clicker.addItem({
 	name: 'Miner',
+	icon: 'icons/miner/icon_39492.svg',
 	maximum: 200,
 	components: {
 		employable: true,
@@ -67,6 +69,7 @@ Clicker.addItem({
 
 Clicker.addItem({
 	name: 'Scientist',
+	icon: 'icons/scientist/icon_19851.svg',
 	maximum: 100,
 	components: { 
 		employable: true,
@@ -174,6 +177,7 @@ Clicker.addItem({
 
 Clicker.addItem({
 	name: 'Glass',
+	icon: 'icons/glass/icon_20953.svg',
 	maximum: 1000000000,
 	components: {
 		goods: true,
@@ -193,6 +197,7 @@ Clicker.addItem({
 
 Clicker.addItem({
 	name: 'Steel',
+	icon: 'icons/steel/icon_18535.svg',
 	maximum: 1000000000,
 	components: {
 		goods: true,
@@ -212,6 +217,7 @@ Clicker.addItem({
 
 Clicker.addItem({
 	name: 'Mining Tools',
+	icon: 'icons/tools/icon_543.svg',
 	maximum: 1000000000,
 	components: {
 		goods: true,
@@ -237,6 +243,7 @@ Clicker.addItem({
 
 Clicker.addItem({
 	name: 'Chip',
+	icon: 'icons/chip/icon_25352.svg',
 	maximum: 1000000000,
 	components: {
 		goods: true,
@@ -259,6 +266,7 @@ Clicker.addItem({
 
 Clicker.addItem({
 	name: 'Computer',
+	icon: 'icons/computer/icon_3633.svg',
 	maximum: 1000000000,
 	components: {
 		goods: true,
@@ -285,6 +293,7 @@ Clicker.addItem({
 
 Clicker.addItem({
 	name: 'Reinforced Concrete',
+	icon: 'icons/reinforced/icon_14927.svg',
 	maximum: 1000000000,
 	components: {
 		goods: true,
@@ -307,6 +316,7 @@ Clicker.addItem({
 // Buildings
 Clicker.addItem({
 	name: 'Solar Panel',
+	icon: 'icons/solar/icon_2062.svg',
 	maximum: 20,
 	components: {
 		building: true,
@@ -339,6 +349,7 @@ Clicker.addItem({
 
 Clicker.addItem({
 	name: 'School',
+	icon: 'icons/school/icon_4405.svg',
 	maximum: 100,
 	components: {
 		building: true,
@@ -365,6 +376,7 @@ Clicker.addItem({
 
 Clicker.addItem({
 	name: 'University',
+	icon: 'icons/uni/icon_2402.svg',
 	maximum: 10,
 	components: {
 		building: true,

@@ -66,6 +66,10 @@ body {
 	padding: 10px;
 }
 
+.holder .build-col img {
+	max-width: 36px;
+}
+
 .knowledge-input input {
 	width: 40px;
 	float: right;
@@ -74,4 +78,21 @@ body {
 #build-queue {
 	height: 100px;
 	overflow: auto;
+}
+
+.buildQueueItem {
+	height: 40px;
+	overflow: auto;
+}
+
+.buildQueueItem img {
+	max-width: 36px;
+	max-height: 36px;
+	float: left;
+}
+
+.buildProgress {
+  height: 100%;
+  margin-left: 40px;
+  padding-top: 10px;
 }
