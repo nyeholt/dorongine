@@ -73,6 +73,39 @@ Clicker.addItem({
 });
 
 Clicker.addItem({
+	name: 'Engineer',
+//	icon: 'icons/miner/icon_39492.svg',
+	maximum: 200,
+	components: {
+		employable: true,
+		worker: {
+			rate: 5,
+			provides: {
+				Water: 2
+			}
+		},
+		created: {
+			time: 3,
+			cost: {
+				Cash: 50,
+				Employee: 1
+			}
+		},
+		consumer: { // consumers 
+			rate: 60,
+			consumes: {
+				Cash: 20
+			}
+		},
+		requires: {
+			topics: {
+				'Civics': 1
+			}
+		}
+	}
+});
+
+Clicker.addItem({
 	name: 'Scientist',
 	icon: 'icons/scientist/icon_19851.svg',
 	maximum: 100,
@@ -94,7 +127,7 @@ Clicker.addItem({
 		consumer: { // consumers 
 			rate: 60,
 			consumes: {
-				Cash: 30,
+				Cash: 40,
 				Energy: 10
 			}
 		},
@@ -329,13 +362,13 @@ Clicker.addItem({
 			Energy: 0.10
 		},
 		worker: {
-			rate: 5,
+			rate: 6,
 			provides: {
 				Energy: 1
 			}
 		},
 		consumer: {
-			rate: 5,
+			rate: 6,
 			consumes: {
 				Water: 2,
 			}
@@ -452,8 +485,9 @@ Clicker.addTopic({
 });
 Clicker.addTopic({
 	name: 'Technology',
-	levelUp: function () {
-		
+	levelUp: function (newLevel) {
+		var current = Clicker.game().items.Water.rates.raw;
+		Clicker.game().items.Water.rates.raw = current + current * (newLevel / 5);
 	}
 });
 
