@@ -26,7 +26,7 @@ Clicker.addTicker({
 		for (var i = 0, c = workers.length; i < c; i++) {
 			var worker = workers[i];
 			
-			if (worker.amount > 0) {
+			if (!worker.disabled && worker.amount > 0) {
 				if (!worker.workTicks) {
 					worker.workTicks = 0;
 				}
@@ -42,6 +42,7 @@ Clicker.addTicker({
 								base *= raw[prov].rates.raw;
 							}
 							var toAdd = worker.amount * base;
+							Clicker.log("Doing work by " + worker.name + " creating " + toAdd + " for " + prov);
 							if (Clicker.game().items[prov]) {
 								Clicker.game().items[prov].amount += toAdd;
 							} else if (Clicker.game().topics[prov]) {
@@ -64,6 +65,7 @@ Clicker.addTicker({
 			var worker = workers[i];
 			
 			if (worker.amount > 0) {
+				
 				if (!worker.consumptionTicks) {
 					worker.consumptionTicks = 0;
 				}
@@ -71,14 +73,21 @@ Clicker.addTicker({
 
 				// actually do the work now
 				if (worker.consumptionTicks >= worker.rates.consumer) {
+					Clicker.log("Consuming items for  " + worker.name);
 					if (worker.components.consumer.consumes) {
 						for (var prov in worker.components.consumer.consumes) {
 							// add it in to the relevant bits
 							var toRemove = worker.amount * worker.components.consumer.consumes[prov];
 							
-							if (Clicker.game().items[prov]) {
+							if (Clicker.game().items[prov] && Clicker.game().items[prov].amount >= toRemove) {
 								// TODO - CHECK FOR NEGATIVES AND PUNISH
+								// make sure to reset if it was previously disabled. 
+								worker.enabled = true;
 								Clicker.game().items[prov].amount -= toRemove;
+							} else {
+								Clicker.log("Disabling " + worker.name + " due to insufficient " + prov);
+								worker.disabled = true;
+								break;
 							}
 						}
 					}
@@ -119,6 +128,7 @@ Clicker.addTicker({
 							topic.level++;
 							var topicType = Clicker.types().topics[name];
 							if (topicType.levelUp) {
+								Clicker.log("Leveling up " + name + " to " + topic.level);
 								topicType.levelUp(topic.level);
 							}
 						}

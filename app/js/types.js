@@ -334,6 +334,12 @@ Clicker.addItem({
 				Energy: 1
 			}
 		},
+		consumer: {
+			rate: 5,
+			consumes: {
+				Water: 2,
+			}
+		},
 		created: {
 			time: 100,
 			cost: {

@@ -151,14 +151,14 @@
 						<span class="item-amount">{{amount}}</span>
 						</td>
 
-						<td>
+						<td class="req-list">
 						{{#components.created.cost :resource}}
-						<p>{{resource}} {{this}}</p>
+						<p class="{{resource}}-req" title="{{resource}}">{{resource}} {{this}}</p>
 						{{/components}}
 						</td>
-						<td>
+						<td class="req-list">
 						{{#components.requires.topics :topic}}
-							<p>{{topic}} level {{this}}</p>
+						<p class="{{topic}}-req" title="{{topic}}">{{topic}} {{this}}</p>
 						{{/components}}
 						</td>
 						</tr>
