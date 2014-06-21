@@ -8,7 +8,9 @@ Clicker.addTicker({
 		
 		if (this.currentTick >= this.onTick) {
 			// add a person
-			Clicker.game().items.People.amount++;
+			var num = Math.floor(Clicker.game().items.People.rates.increment);
+
+			Clicker.game().items.People.amount += num;
 			
 			this.currentTick = 0;
 		}

@@ -1,7 +1,12 @@
 Clicker.addItem({
 	name: 'People',
 	maximum: 10000000,
-	defaultAmount: 5
+	defaultAmount: 5,
+	components: {
+		increment: {
+			rate: 1
+		}
+	}
 });
 
 Clicker.addItem({
@@ -428,6 +433,7 @@ Clicker.addTopic({
 	levelUp: function (newLevel) {
 		var current = Clicker.game().items.Cash.rates.raw;
 		Clicker.game().items.Cash.rates.raw = current + current * (newLevel / 10);
+		Clicker.game().items.People.rates.increment = newLevel;
 	}
 });
 
