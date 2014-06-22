@@ -30,9 +30,9 @@ Clicker.addItem({
 			}
 		},
 		consumer: { // consumers 
-			rate: 60,
+			rate: 30,
 			consumes: {
-				Cash: 5,
+				Cash: 2,
 				Energy: 1
 			}
 		}
@@ -59,9 +59,9 @@ Clicker.addItem({
 			}
 		},
 		consumer: { // consumers 
-			rate: 60,
+			rate: 30,
 			consumes: {
-				Cash: 10,
+				Cash: 5,
 				Energy: 1
 			}
 		},
@@ -93,9 +93,9 @@ Clicker.addItem({
 			}
 		},
 		consumer: { // consumers 
-			rate: 60,
+			rate: 30,
 			consumes: {
-				Cash: 20
+				Cash: 10
 			}
 		},
 		requires: {
@@ -126,10 +126,10 @@ Clicker.addItem({
 			}
 		},
 		consumer: { // consumers 
-			rate: 60,
+			rate: 30,
 			consumes: {
-				Cash: 40,
-				Energy: 10
+				Cash: 20,
+				Energy: 5
 			}
 		},
 		requires: {
@@ -175,7 +175,7 @@ Clicker.addItem({
 
 Clicker.addItem({
 	name: 'Water',
-	icon: 'icons/water/icon_212.svg',
+	icon: 'icons/water/icon_3168.svg',
 	maximum: 1000000000,
 	formattedAmount: function () { return Number(this.amount).toFixed(2); },
 	components: {raw: {rate: 1}, 'weather': true }
@@ -258,6 +258,27 @@ Clicker.addItem({
 });
 
 Clicker.addItem({
+	name: 'Reinforced Concrete',
+	icon: 'icons/reinforced/icon_14927.svg',
+	maximum: 1000000000,
+	components: {
+		goods: true,
+		created: {
+			time: 5,
+			cost: {
+				'Cement': 1,
+				'Steel': 1
+			}
+		},
+		requires: {
+			topics: {
+				'Manufacturing': 3
+			}
+		}
+	}
+});
+
+Clicker.addItem({
 	name: 'Mining Tools',
 	icon: 'icons/tools/icon_543.svg',
 	maximum: 1000000000,
@@ -333,26 +354,6 @@ Clicker.addItem({
 	}
 });
 
-Clicker.addItem({
-	name: 'Reinforced Concrete',
-	icon: 'icons/reinforced/icon_14927.svg',
-	maximum: 1000000000,
-	components: {
-		goods: true,
-		created: {
-			time: 5,
-			cost: {
-				'Cement': 1,
-				'Steel': 1
-			}
-		},
-		requires: {
-			topics: {
-				'Manufacturing': 3
-			}
-		}
-	}
-});
 
 
 // Buildings
@@ -372,9 +373,9 @@ Clicker.addItem({
 			}
 		},
 		consumer: {
-			rate: 6,
+			rate: 30,
 			consumes: {
-				Water: 2,
+				Water: 10,
 			}
 		},
 		created: {

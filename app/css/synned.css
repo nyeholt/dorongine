@@ -60,10 +60,13 @@ body {
 
 #build-queue {
 	height: 100px;
+	width: 100%;
 	overflow: auto;
-	position: absolute;
+	position: fixed;
 	bottom: 0px;
 	background-color: #fff;
+	padding: 10px;
+	border-top: 1px solid #222;
 }
 
 
@@ -91,6 +94,16 @@ body {
 
 .holder .build-col img {
 	
+}
+
+.raw-res {
+	width: 60px;
+	float: left;
+	height: 70px;
+}
+
+.resource-count {
+	margin-top: 10px;
 }
 
 .knowledge-input input {
