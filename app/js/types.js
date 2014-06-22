@@ -433,7 +433,7 @@ Clicker.addItem({
 		},
 		requires: {
 			topics: {
-				'Technology': 1,
+				'Technology': 2,
 				'Manufacturing': 3
 			}
 		}
@@ -623,7 +623,7 @@ Clicker.addItem({
 		requires: {
 			topics: {
 				'Education': 1,
-				'Manufacturing': 1
+				'Technology': 1
 			}
 		}
 	}

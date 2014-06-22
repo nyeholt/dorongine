@@ -125,7 +125,8 @@ Clicker.addTicker({
 					if (topic.knowledge >= topic.target) {
 						amount += topic.knowledge - topic.target;
 						topic.knowledge = 0;
-						topic.target = Math.pow(10, (topic.level + 3));
+						
+						topic.target =  Math.pow(topic.level + 1, 3) * 100;
 						
 						if (topic.level < this.maxLevel) {
 							topic.level++;
