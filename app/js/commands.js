@@ -8,7 +8,10 @@ Clicker.addCommand({
 			if (current.rates.raw) {
 				increase = current.rates.raw;
 			}
-			current.amount += increase;
+			
+			if (current.canAdd(increase)) {
+				current.amount += increase;
+			}
 		}
 	}
 });
@@ -18,7 +21,7 @@ Clicker.addCommand({
 	execute: function () {
 		var item = this.context;
 		var volume = this.volume ? this.volume : 1;
-		if (item.canBuy(volume)) {
+		if (item.canBuy(volume) && item.canAdd(volume)) {
 			Clicker.queueBuild(item, volume);
 		}
 	}

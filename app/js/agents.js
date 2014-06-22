@@ -44,7 +44,11 @@ Clicker.addTicker({
 							var toAdd = worker.amount * base;
 							Clicker.log("Doing work by " + worker.name + " creating " + toAdd + " for " + prov);
 							if (Clicker.game().items[prov]) {
-								Clicker.game().items[prov].amount += toAdd;
+								var addto = Clicker.game().items[prov];
+								
+								if (addto.canAdd(toAdd)) {
+									addto.amount += toAdd;
+								}
 							} else if (Clicker.game().topics[prov]) {
 								Clicker.game().topics[prov].knowledge += toAdd;
 							}
@@ -82,7 +86,7 @@ Clicker.addTicker({
 							if (Clicker.game().items[prov] && Clicker.game().items[prov].amount >= toRemove) {
 								// TODO - CHECK FOR NEGATIVES AND PUNISH
 								// make sure to reset if it was previously disabled. 
-								worker.enabled = true;
+								worker.disabled = false;
 								Clicker.game().items[prov].amount -= toRemove;
 							} else {
 								Clicker.log("Disabling " + worker.name + " due to insufficient " + prov);
@@ -97,7 +101,6 @@ Clicker.addTicker({
 		}
 	}
 });
-
 
 /**
  * Spreads Brainpower over the various areas of research

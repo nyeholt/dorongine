@@ -3,6 +3,8 @@
 	
 	var gameLoop;
 	var commandLoop;
+	
+	var componentSets = {};
 
 	var byComponent = function (component, mapped) {
 		var items;
@@ -11,6 +13,7 @@
 		} else {
 			items = [];
 		}
+		
 		for (var k in this.items) {
 			if (this.items[k].components[component]) {
 				if (mapped) {
@@ -22,7 +25,7 @@
 		}
 		return items;
 	};
-	
+
 	var game = {
 		ticks: 0,
 		items: {},
@@ -30,7 +33,7 @@
 			mined: 30
 		},
 		topics: {
-			
+
 		},
 		buildQueue: [],
 		transactions: [],
@@ -46,7 +49,6 @@
 		topics: {
 			
 		}
-		
 	};
 	
 	// all commands that could be executed
@@ -82,7 +84,6 @@
 		},
 		start: function () {
 			var clicker = this;
-
 
 			gameLoop = setInterval(function () {
 				clicker.tick();
@@ -293,7 +294,19 @@
 				}
 			}
 			
-			return this.meetsRequirements() && okay;
+			return okay && this.canAdd(volume) && this.meetsRequirements();
+		}, 
+		canAdd: function (number) {
+			if (number < 0 && this.amount === 0) {
+				return false;
+			}
+			
+			var max = this.maximum ? this.maximum : 100000000;
+			if (number > 0 && this.amount >= max) {
+				return false;
+			}
+			
+			return true;
 		},
 		iconfor: function (name) {
 			if (game.items[name]) {

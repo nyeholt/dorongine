@@ -13,7 +13,7 @@ Clicker.addItem({
 Clicker.addItem({
 	name: 'Employee',
 	icon: 'icons/employee/icon_961.svg',
-	maximum: 5000,
+	maximum: 100,
 	components: {
 		employable: true,
 		worker: {
@@ -179,6 +179,22 @@ Clicker.addItem({
 	maximum: 1000000000,
 	formattedAmount: function () { return Number(this.amount).toFixed(2); },
 	components: {raw: {rate: 1}, 'weather': true }
+});
+
+Clicker.addItem({
+	name: 'Crime',
+	maximum: 1000000000,
+	icon: 'icons/crime/icon_5293.svg',
+	formattedAmount: function () { return Number(this.amount).toFixed(2); },
+	components: {'raw': { rate: -1 }}
+});
+
+Clicker.addItem({
+	name: 'Pollution',
+	maximum: 1000000000,
+	icon: 'icons/pollution/icon_40472.svg',
+	formattedAmount: function () { return Number(this.amount).toFixed(2); },
+	components: {'raw': { rate: -1 }}
 });
 
 Clicker.addItem({
