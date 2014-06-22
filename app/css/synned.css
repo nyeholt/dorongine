@@ -53,6 +53,20 @@ body {
 	font-family: sans-serif;
 }
 
+#container {
+	padding-bottom: 100px;
+	position: relative;
+}
+
+#build-queue {
+	height: 100px;
+	overflow: auto;
+	position: absolute;
+	bottom: 0px;
+	background-color: #fff;
+}
+
+
 #container table {
 	width: 100%;
 }
@@ -66,18 +80,22 @@ body {
 	padding: 10px;
 }
 
+.item-icon {
+	width: 36px;
+	/*height: 36px;*/
+}
+
+.required-icon {
+	width: 16px;
+}
+
 .holder .build-col img {
-	max-width: 36px;
+	
 }
 
 .knowledge-input input {
 	width: 40px;
 	float: right;
-}
-
-#build-queue {
-	height: 100px;
-	overflow: auto;
 }
 
 .buildQueueItem {
@@ -86,8 +104,6 @@ body {
 }
 
 .buildQueueItem img {
-	max-width: 36px;
-	max-height: 36px;
 	float: left;
 }
 
@@ -97,6 +113,7 @@ body {
   padding-top: 10px;
 }
 
-.Cash-req {
-	
+.requirement {
+	white-space: nowrap;
 }
+

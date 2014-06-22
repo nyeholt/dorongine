@@ -1,5 +1,8 @@
 
 ;(function () {
+	
+	var gameLoop;
+	var commandLoop;
 
 	var byComponent = function (component, mapped) {
 		var items;
@@ -55,6 +58,20 @@
 		this.name = 'default';
 		this.seed = seed ? seed : 1;
 		this.commands = [];
+		
+
+		this.ractive = new Ractive({
+			// The `el` option can be a node, an ID, or a CSS selector.
+			el: 'container',
+			// We could pass in a string, but for the sake of convenience
+			// we're passing the ID of the <script> tag above.
+			template: '#template',
+			// Here, we're passing in some initial data
+			data: {
+				game: game,
+				types: types,
+			}
+		});
 	};
 
 	ClickerGame.prototype = {
@@ -62,6 +79,18 @@
 			if (window.console && window.console.log) {
 				console.log(msg);
 			}
+		},
+		start: function () {
+			var clicker = this;
+
+
+			gameLoop = setInterval(function () {
+				clicker.tick();
+			}, 1000);
+
+			commandLoop = setInterval(function () {
+				clicker.processCommands();
+			}, 100);
 		},
 		types: function () {
 			return types;
@@ -97,19 +126,20 @@
 //				rates: rates
 //			};
 
-			this.ractive.set('types', types);
+//			this.ractive.set('types', types);
 		},
 		
 		addTopic: function (topic) {
 			types.topics[topic.name] = topic;
 			game.topics[topic.name] = {
+				icon: topic.icon,
 				knowledge: 0,
 				level: 0,
 				target: 100,
 				percentage: 0
 			};
 			this.ractive.observe('game.topics.' + topic.name +'.percentage', this.updateTopics);
-			this.ractive.set('game', game);
+//			this.ractive.set('game', game);
 		},
 		updateTopics: function () {
 			var currentAmount = 0;
@@ -264,34 +294,21 @@
 			}
 			
 			return this.meetsRequirements() && okay;
+		},
+		iconfor: function (name) {
+			if (game.items[name]) {
+				return game.items[name].icon;
+			}
+			
+			console.log("Iconfor " + name);
+			
+			return types.topics[name].icon;
 		}
 	};
 	
+	var seed = (new Date()).getTime() % 100000;
 
-	var time = (new Date()).getTime() % 100000;
+	window.Clicker = new ClickerGame(seed);
 
-	window.Clicker = new ClickerGame(time);
-	
-	Clicker.ractive = new Ractive({
-		// The `el` option can be a node, an ID, or a CSS selector.
-		el: 'container',
-		// We could pass in a string, but for the sake of convenience
-		// we're passing the ID of the <script> tag above.
-		template: '#template',
-		// Here, we're passing in some initial data
-		data: {
-			game: game,
-			types: types
-		}
-	});
-	
-	var gameLoop = setInterval(function () {
-		Clicker.tick();
-	}, 1000);
-	
-	var commandLoop = setInterval(function () {
-		Clicker.processCommands();
-	}, 100);
-	
 })();
 

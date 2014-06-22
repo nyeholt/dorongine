@@ -17,13 +17,30 @@
 			<div id="debug">
 			{{game.ticks}}
 			</div>
+			
+			<div id="collectors" class="holder">
+				<div id="raw-resources">
+				<table>
+					{{# game.byComponent('raw') }}
+					<tr>
+					<td width="60%">
+					<button data-type="{{name}}" on-tap="collectItem" title="{{name}}"><img src="{{icon}}" title="{{name}}" class="item-icon" /></button>
+					</td>
+					<td>
+					<span class="resource-count">{{this.formattedAmount()}}</span>
+					</td>
+					</tr>
+					{{/ game}}
+				</table>
+				</div>
+			</div>
 
 			<div id="population" class="holder">
 			<table>
 			<thead><tr><th width="60%"></th><th></th><th></th><th></th><th></th></thead>
 			<tbody>
 				<tr>
-				<td>Unemployed</td>
+				<td><img src="{{game.items.People.icon}}" title="People" class="item-icon" /></td>
 				<td>{{game.items.People.amount}}</td>
 				<td></td>
 				<td></td>
@@ -31,25 +48,25 @@
 				
 				{{# game.byComponent('employable') }}
 				
-				<tr>
-				<td>{{name}}</td>
-				<td>{{amount}}</td>
-				<td>{{#this.canBuy(1)}}<button on-tap="buyItem">Hire</button>{{/this}}</td>
-				
-				<td>
-				{{#components.created.cost :resource}}
-				<p>{{resource}} {{this}}</p>
-				{{/components}}
-				</td>
-				
-				<td>
-				{{#components.requires.topics :topic}}
-					<p>{{topic}} level {{this}}</p>
-				{{/components}}
-				</td>
-				
-				</tr>
-				
+					<tr>
+					<td><img title="{{name}}" src="{{icon}}" class="item-icon" /></td>
+					<td>{{amount}}</td>
+					<td>{{#this.canBuy(1)}}<button on-tap="buyItem">Hire</button>{{/this}}</td>
+
+					<td>
+					{{#components.created.cost :resource}}
+					<span class="requirement"><img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}</span>
+					{{/components}}
+					</td>
+
+					<td>
+					{{#components.requires.topics :topic}}
+						<span class="requirement"><img title="{{topic}}" src="{{iconfor(topic)}}" class="required-icon" /> {{this}}</span>
+					{{/components}}
+					</td>
+
+					</tr>
+
 				{{/game}}
 			</tbody>
 			</table>
@@ -59,8 +76,9 @@
 				<table>
 				{{# game.topics :name}}
 				<tr>
-				<td width="60%">{{name}} {{level}}</td>
-				<td>{{knowledge}} / {{target}}</td>
+				<td><img src="{{icon}}" title="{{name}}" class="item-icon" /></td>
+				<td>Level {{level}}</td>
+				<td><progress max="{{target}}" value="{{knowledge}}"></progress></td>
 				<td class="knowledge-input">
 					<select value="{{percentage}}">
 						<option value="0">0</option>
@@ -82,20 +100,7 @@
 			</div>
 
 			<div id="resources" class="holder">
-				<div id="raw-resources">
-				<table>
-					{{# game.byComponent('raw') }}
-					<tr>
-					<td width="60%">
-					<button data-type="{{name}}" on-tap="collectItem">{{name}}</button>
-					</td>
-					<td>
-					<span class="resource-count">{{this.formattedAmount()}}</span>
-					</td>
-					</tr>
-					{{/ game}}
-				</table>
-				</div>
+				
 				
 				<div id="mined-resources">
 				<table>
@@ -105,7 +110,7 @@
 					{{# game.byComponent('mined') }}
 					<tr>
 					<td width="60%">
-					{{name}} {{rates.mined}}% efficiency
+					<img title="{{name}}" class="item-icon" src="{{icon}}" /> {{rates.mined}}% efficiency
 					</td>
 					<td>
 					<span class="resource-count">{{amount}}</span>
@@ -117,17 +122,7 @@
 			</div>
 
 			<div id="creatable"  class="holder">
-				<div id="build-queue">
-					{{#game.buildQueue}}
-					<div class="buildQueueItem">
-						<img title="{{item.name}}" src="{{item.icon}}" /> 
-						<div class="buildProgress">
-						<progress max="{{totalSteps}}" value="{{currentStep}}"></progress>
-						</div>
-					</div>
-					{{/game.buildQueue}}
-				</div>
-
+				
 				<h2>Items</h2>
 				
 				<table>
@@ -141,10 +136,10 @@
 						<tr>
 						<td class="build-col">
 							{{#this.canBuy(1)}}
-							<button title="{{name}}" on-tap="buyItem"><img title="{{name}}" src="{{icon}}" /></button>
+							<button title="{{name}}" on-tap="buyItem"><img title="{{name}}" src="{{icon}}" class="item-icon" /></button>
 							{{/this}}
 							{{^this.canBuy(1)}}
-							<img title="{{name}}" src="{{icon}}" />
+							<img title="{{name}}" src="{{icon}}" class="item-icon" />
 							{{/this}}
 						</td>
 						<td>
@@ -153,12 +148,13 @@
 
 						<td class="req-list">
 						{{#components.created.cost :resource}}
-						<p class="{{resource}}-req" title="{{resource}}">{{resource}} {{this}}</p>
+						<span class="requirement"><img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}</span>
+						
 						{{/components}}
 						</td>
 						<td class="req-list">
 						{{#components.requires.topics :topic}}
-						<p class="{{topic}}-req" title="{{topic}}">{{topic}} {{this}}</p>
+						<span class="requirement"><img title="{{topic}}" src="{{iconfor(topic)}}" class="required-icon" /> {{this}}</span>
 						{{/components}}
 						</td>
 						</tr>
@@ -177,23 +173,24 @@
 						<tr>
 						<td class="build-col">
 							{{#this.canBuy(1)}}
-							<button title="{{name}}" on-tap="buyItem"><img title="{{name}}" src="{{icon}}" /></button>
+							<button title="{{name}}" on-tap="buyItem"><img title="{{name}}" src="{{icon}}" class="item-icon" /></button>
 							{{/this}}
 							{{^this.canBuy(1)}}
-							<img title="{{name}}" src="{{icon}}" />
+							<img title="{{name}}" src="{{icon}}" class="item-icon" />
 							{{/this}}
 						</td>
 						<td>
 						<span class="item-amount">{{amount}}</span>
 						</td>
-						<td>
+						<td class="req-list">
 						{{#components.created.cost :resource}}
-						<p>{{resource}} {{this}}</p>
+						<span class="requirement"><img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}</span>
+						
 						{{/components}}
 						</td>
-						<td>
+						<td class="req-list">
 						{{#components.requires.topics :topic}}
-							<p>{{topic}} level {{this}}</p>
+						<span class="requirement"><img title="{{topic}}" src="{{iconfor(topic)}}" class="required-icon" /> {{this}}</span>
 						{{/components}}
 						</td>
 						</tr>
@@ -201,6 +198,18 @@
 				</table>
 			</div>
 			
+			<div id="build-queue">
+			<p>Building</p>
+				{{#game.buildQueue}}
+				<div class="buildQueueItem">
+					<img title="{{item.name}}" src="{{item.icon}}" class="item-icon" /> 
+					<div class="buildProgress">
+					<progress max="{{totalSteps}}" value="{{currentStep}}"></progress>
+					</div>
+				</div>
+				{{/game.buildQueue}}
+			</div>
+
 		</script>
 
 		<script type="text/javascript" src="js/jquery-2.0.0.min.js"></script>
@@ -210,5 +219,6 @@
 		<script type="text/javascript" src="app/js/agents.js"></script>
 		<script type="text/javascript" src="app/js/types.js"></script>
 		<script type="text/javascript" src="app/js/commands.js"></script>
+		<script type="text/javascript" src="app/js/synned.js"></script>
 	</body>
 </html>
