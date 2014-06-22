@@ -297,7 +297,7 @@
 			return okay && this.canAdd(volume) && this.meetsRequirements();
 		}, 
 		canAdd: function (number) {
-			if (number < 0 && this.amount === 0) {
+			if (number < 0 && this.amount <= 0) {
 				return false;
 			}
 			
@@ -305,7 +305,7 @@
 			if (number > 0 && this.amount >= max) {
 				return false;
 			}
-			
+
 			return true;
 		},
 		iconfor: function (name) {

@@ -19,7 +19,8 @@ Clicker.addItem({
 		worker: {
 			rate: 5,
 			provides: {
-				Cash: 1
+				Cash: 1, 
+				Crime: -0.01
 			}
 		},
 		created: {
@@ -48,7 +49,8 @@ Clicker.addItem({
 		worker: {
 			rate: 5,
 			provides: {
-				Ore: 1
+				Ore: 1,
+				Pollution: -0.02
 			}
 		},
 		created: {
@@ -128,8 +130,8 @@ Clicker.addItem({
 		consumer: { // consumers 
 			rate: 30,
 			consumes: {
-				Cash: 20,
-				Energy: 5
+				Cash: 10,
+				Energy: 10
 			}
 		},
 		requires: {
@@ -198,40 +200,115 @@ Clicker.addItem({
 });
 
 Clicker.addItem({
+	name: 'Wood',
+	icon: 'icons/wood/icon_53364.svg',
+	maximum: 1000000000,
+	components: {
+		'mined': { 
+			rate: 100 
+		},
+		created: {
+			time: 1,
+			cost: {
+				'Cash': 5
+			}
+		}
+	}
+});
+
+Clicker.addItem({
+	name: 'Coal',
+	icon: 'icons/coal/icon_16776.svg',
+	maximum: 1000000000,
+	components: {
+		'mined': { rate: 90 },
+		created: {
+			time: 1,
+			cost: {
+				'Cash': 5
+			}
+		}
+		
+	}
+});
+Clicker.addItem({
 	name: 'Cement',
 	icon: 'icons/cement/icon_24412.svg',
 	maximum: 1000000000,
-	components: {'mined': { rate: 80 }}
+	components: {
+		'mined': { rate: 80 },
+		created: {
+			time: 1,
+			cost: {
+				'Cash': 10
+			}
+		}
+	
+	}
+});
+
+Clicker.addItem({
+	name: 'Iron',
+	icon: 'icons/iron/icon_25438.svg',
+	maximum: 1000000000,
+	components: {
+		'mined': { rate: 50 },
+		created: {
+			time: 1,
+			cost: {
+				'Cash': 20
+			}
+		}
+	}
 });
 
 Clicker.addItem({
 	name: 'Copper',
 	icon: 'icons/copper/icon_15400.svg',
 	maximum: 1000000000,
-	components: {'mined': { rate: 20 }}
+	components: {
+		'mined': { rate: 20 },
+		created: {
+			time: 1,
+			cost: {
+				'Cash': 50
+			}
+		}
+	
+	}
 });
 
 Clicker.addItem({
 	name: 'Silicon',
 	icon: 'icons/silicon/icon_53365.svg',
 	maximum: 1000000000,
-	components: {'mined': { rate: 10 }}
+	components: {
+		'mined': { rate: 10 },
+		created: {
+			time: 1,
+			cost: {
+				'Cash': 50
+			}
+		}
+	
+	}
 });
 
 Clicker.addItem({
 	name: 'Gold',
 	icon: 'icons/gold/icon_13470.svg',
 	maximum: 1000000000,
-	components: {'mined': { rate: 10 }}
+	components: {
+		'mined': { rate: 10 },
+		created: {
+			time: 1,
+			cost: {
+				'Cash': 75
+			}
+		}
+	}
 });
 
-
-Clicker.addItem({
-	name: 'Iron',
-	icon: 'icons/iron/icon_25438.svg',
-	maximum: 1000000000,
-	components: {'mined': { rate: 50 }}
-});
 
 Clicker.addItem({
 	name: 'Glass',
@@ -248,6 +325,26 @@ Clicker.addItem({
 		requires: {
 			topics: {
 				'Manufacturing': 1
+			}
+		}
+	}
+});
+
+Clicker.addItem({
+	name: 'Book',
+	icon: 'icons/book/icon_4964.svg',
+	maximum: 10000,
+	components: {
+		goods: true,
+		created: {
+			time: 10,
+			cost: {
+				'Wood': 2
+			}
+		},
+		requires: {
+			topics: {
+				'Education': 1
 			}
 		}
 	}
@@ -373,6 +470,126 @@ Clicker.addItem({
 
 
 // Buildings
+
+Clicker.addItem({
+	name: 'Power Plant',
+	icon: 'icons/powerplant/icon_2071.svg',
+	maximum: 20,
+	components: {
+		building: true,
+		improves: {
+			Energy: 0.20
+		},
+		worker: {
+			rate: 4,
+			provides: {
+				Energy: 1,
+				Pollution: -2
+			}
+		},
+		consumer: {
+			rate: 30,
+			consumes: {
+				Water: 7,
+				Coal: 5
+			}
+		},
+		created: {
+			time: 200,
+			cost: {
+				'Cash': 500,
+				'Glass': 5,
+				'Iron': 10,
+				'Silicon': 1
+			}
+		},
+		requires: {
+			topics: {
+				'Manufacturing': 1
+			}
+		}
+	}
+});
+
+
+Clicker.addItem({
+	name: 'Office',
+	icon: 'icons/office/icon_26565.svg',
+	maximum: 20,
+	components: {
+		building: true,
+		improves: {
+			Cash: 0.10
+		},
+//		
+//		worker: {
+//			rate: 4,
+//			provides: {
+//				Energy: 1,
+//				Pollution: 2
+//			}
+//		},
+		consumer: {
+			rate: 31,
+			consumes: {
+				Energy: 30
+			}
+		},
+		created: {
+			time: 300,
+			cost: {
+				'Cash': 500,
+				'Glass': 15,
+				'Iron': 20,
+				'Copper': 20
+			}
+		},
+		requires: {
+			topics: {
+				'Civics': 1,
+				'Economics': 1
+			}
+		}
+	}
+});
+
+
+Clicker.addItem({
+	name: 'Bank',
+	icon: 'icons/bank/icon_40422.svg',
+	maximum: 20,
+	components: {
+		building: true,
+		improves: {
+			Cash: 0.25
+		},
+//		
+//		worker: {
+//			rate: 4,
+//			provides: {
+//				Energy: 1,
+//				Pollution: 2
+//			}
+//		},
+		created: {
+			time: 500,
+			cost: {
+				'Cash': 1500,
+				'Glass': 50,
+				'Steel': 50,
+				'Reinforced Concrete': 20,
+				'Computer': 1
+			}
+		},
+		requires: {
+			topics: {
+				'Civics': 1,
+				'Economics': 2
+			}
+		}
+	}
+});
+
 Clicker.addItem({
 	name: 'Solar Panel',
 	icon: 'icons/solar/icon_2062.svg',
@@ -397,10 +614,10 @@ Clicker.addItem({
 		created: {
 			time: 100,
 			cost: {
-				'Cash': 100,
-				'Glass': 1,
-				'Steel': 1,
-				'Silicon': 1
+				'Cash': 200,
+				'Glass': 10,
+				'Steel': 2,
+				'Silicon': 10
 			}
 		},
 		requires: {
@@ -415,19 +632,19 @@ Clicker.addItem({
 Clicker.addItem({
 	name: 'School',
 	icon: 'icons/school/icon_4405.svg',
-	maximum: 100,
+	maximum: 20,
 	components: {
 		building: true,
 		improves: {
-			Brainpower: 0.10
+			Brainpower: 0.15
 		},
 		created: {
 			time: 300,
 			cost: {
 				'Cash': 1000,
 				'Cement': 100,
-				'Iron': 100,
-				'Computer': 20
+				'Wood': 100,
+				'Book': 20
 			}
 		},
 		requires: {

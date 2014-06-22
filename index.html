@@ -140,6 +140,15 @@
 					<td>
 					<span class="resource-count">{{amount}}</span>
 					</td>
+					
+					<td>
+					{{#this.canBuy(1)}}
+					<button title="{{name}}" on-tap="buyItem">
+					{{components.created.cost.Cash}}
+					</button>
+					{{/this}}
+					</td>
+					
 					</tr>
 					{{/ game}}
 				</table>
