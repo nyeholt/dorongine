@@ -86,7 +86,7 @@ Clicker.addItem({
 		created: {
 			time: 3,
 			cost: {
-				Cash: 50,
+				Cash: 250,
 				Employee: 1
 			}
 		},
@@ -114,25 +114,27 @@ Clicker.addItem({
 		worker: {
 			rate: 5,
 			provides: {
-				Water: 2
+				Water: 2,
+				Brainpower: 0.1
 			}
 		},
 		created: {
 			time: 3,
 			cost: {
-				Cash: 50,
+				Cash: 500,
 				Employee: 1
 			}
 		},
 		consumer: { // consumers 
 			rate: 30,
 			consumes: {
-				Cash: 10
+				Cash: 10,
+				Energy: 2
 			}
 		},
 		requires: {
 			topics: {
-				'Civics': 1
+				'Civics': 2
 			}
 		}
 	}
@@ -153,7 +155,7 @@ Clicker.addItem({
 		created: {
 			time: 20,
 			cost: {
-				Cash: 1000,
+				Cash: 750,
 				Employee: 1
 			}
 		},
@@ -166,8 +168,8 @@ Clicker.addItem({
 		},
 		requires: {
 			topics: {
-				'Education': 1,
-				'Technology': 1
+				'Education': 2,
+				'Technology': 3
 			}
 		}
 	}
@@ -234,7 +236,7 @@ Clicker.addItem({
 	icon: 'icons/crime/icon_5293.svg',
 	formattedAmount: function () { return Number(this.amount).toFixed(2); },
 	components: {
-		'raw': {rate: -11},
+		'raw': {rate: -1},
 		'collected': true
 	}
 });
@@ -410,7 +412,8 @@ Clicker.addItem({
 		created: {
 			time: 2,
 			cost: {
-				'Iron': 10
+				'Iron': 3,
+				Water: 2
 			}
 		},
 		requires: {
@@ -431,7 +434,8 @@ Clicker.addItem({
 			time: 5,
 			cost: {
 				'Cement': 1,
-				'Steel': 1
+				'Steel': 1,
+				'Water': 3
 			}
 		},
 		requires: {
@@ -683,7 +687,7 @@ Clicker.addItem({
 		requires: {
 			topics: {
 				'Civics': 1,
-				'Economics': 1
+				'Economics': 2
 			}
 		}
 	}
@@ -691,23 +695,27 @@ Clicker.addItem({
 
 Clicker.addItem({
 	name: 'Clinic',
-	icon: 'icons/hospital/icon_2230.svg',
+	icon: 'icons/clinic/icon_50644.svg',
 	maximum: 20,
 	components: {
 		building: true,
 //		improves: {
 //			Cash: 0.10
 //		},
+		// technically, we want this to check consumerability first, BUT 
+		// we can't guarantee that, so we justifty it by claiming that sometimes
+		// an extra person will pop out due to a birth...
 		worker: {
-			rate: 11,
+			rate: 61,
 			provides: {
 				People: 1
 			}
 		},
 		consumer: {
-			rate: 11,
+			rate: 61,
 			consumes: {
-				Sick: 1
+				Sick: 1,
+				Water: 10
 			}
 		},
 		created: {
@@ -735,7 +743,7 @@ Clicker.addItem({
 	components: {
 		building: true,
 		improves: {
-			Cash: 0.25
+			Cash: 0.20
 		},
 //		
 //		worker: {
@@ -748,17 +756,18 @@ Clicker.addItem({
 		created: {
 			time: 500,
 			cost: {
-				'Cash': 1500,
+				'Cash': 5000,
 				'Glass': 50,
-				'Steel': 50,
-				'Reinforced Concrete': 20,
-				'Computer': 1
+				'Steel': 100,
+				'Reinforced Concrete': 50,
+				'Computer': 10,
+				'Gold': 50
 			}
 		},
 		requires: {
 			topics: {
-				'Civics': 1,
-				'Economics': 2
+				'Civics': 2,
+				'Economics': 3
 			}
 		}
 	}
@@ -796,8 +805,8 @@ Clicker.addItem({
 		},
 		requires: {
 			topics: {
-				'Education': 1,
-				'Technology': 1
+				'Education': 2,
+				'Technology': 4
 			}
 		}
 	}
@@ -829,6 +838,49 @@ Clicker.addItem({
 	}
 });
 
+
+Clicker.addItem({
+	name: 'Hospital',
+	icon: 'icons/hospital/icon_50643.svg',
+	maximum: 20,
+	components: {
+		building: true,
+//		improves: {
+//			Cash: 0.10
+//		},
+		// technically, we want this to check consumerability first, BUT 
+		// we can't guarantee that, so we justifty it by claiming that sometimes
+		// an extra person will pop out due to a birth...
+		worker: {
+			rate: 13,
+			provides: {
+				People: 1
+			}
+		},
+		consumer: {
+			rate: 13,	// 5 times faster than a clinic or there abouts
+			consumes: {
+				Sick: 1,
+				Water: 10
+			}
+		},
+		created: {
+			time: 600,
+			cost: {
+				'Cash': 1500,
+				'Glass': 30,
+				'Steel': 20,
+				'Computer': 5
+			}
+		},
+		requires: {
+			topics: {
+				'Civics': 2,
+				'Education': 3
+			}
+		}
+	}
+});
 
 Clicker.addItem({
 	name: 'University',
