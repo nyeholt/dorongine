@@ -1,10 +1,7 @@
 
 ;(function () {
-	
 	var gameLoop;
 	var commandLoop;
-	
-	var componentSets = {};
 
 	var byComponent = function (component, mapped) {
 		var items;

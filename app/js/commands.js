@@ -27,24 +27,29 @@ Clicker.addCommand({
 	}
 })
 
+// for the amount of ore consumed, generated a single random ore item
 Clicker.addCommand({
 	name: 'mine',
+	perOp: 1,
 	execute: function () {
-		var nextRand = Clicker.random() * 100;
-		
-		if (nextRand >= Clicker.game().globalRates.mined) {
-			return;
-		}
+		var i = 0;
+		while (i < this.perOp) {
+			var nextRand = Clicker.random() * 100;
 
-		var mineable = Clicker.game().byComponent('mined');
-		var rand = Clicker.random(0, mineable.length - 1);
+			if (nextRand >= Clicker.game().globalRates.mined) {
+				return;
+			}
 
-		var toMine = mineable[rand];
-		
-		nextRand = Clicker.random() * 100;
+			var mineable = Clicker.game().byComponent('mined');
+			var rand = Clicker.random(0, mineable.length - 1);
 
-		if (toMine && toMine.rates.mined > nextRand) {
-			toMine.amount++;
+			var toMine = mineable[rand];
+
+			nextRand = Clicker.random() * 100;
+
+			if (toMine && toMine.rates.mined > nextRand) {
+				toMine.amount += 1;
+			}
 		}
 	}
 });

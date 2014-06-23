@@ -148,17 +148,27 @@ Clicker.addTicker({
  * Converts ore into resources
  */
 Clicker.addTicker({
-	numPerTick: 5,
 	name: 'Miner',
 	maxLevel: 10,
 	tick: function () {
 		var amount = Clicker.game().items.Ore.amount;
-		if (amount > 0) {
-			var numToProcess = amount > this.numPerTick ? this.numPerTick : amount;
+		var miners = Clicker.game().byComponent('mine');
+		if (amount > 0 && miners.length) {
+			var numToProcess = 0;
+			for (var i = 0, c = miners.length; i < c; i++) {
+				var miner = miners[i];
+				var rate = miner.rates.mine;
+				if (!miner.disabled) {
+					numToProcess += rate * miner.amount;
+				}
+			}
+
+			numToProcess = amount > numToProcess ? numToProcess : amount;
 			amount -= numToProcess;
 			Clicker.game().items.Ore.amount = amount;
-			
+
 			for (var i = 0; i < numToProcess; i++) {
+				Clicker.log("Mining " + numToProcess);
 				var cmd = Clicker.newCommand('mine');
 				Clicker.runCommand(cmd);
 			}

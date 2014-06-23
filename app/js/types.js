@@ -511,6 +511,43 @@ Clicker.addItem({
 	}
 });
 
+Clicker.addItem({
+	name: 'Mine',
+	icon: 'icons/mine/icon_8497.svg',
+	maximum: 20,
+	components: {
+		building: true,
+		mine: {
+			rate: 1
+		},
+		worker: {
+			rate: 9,
+			provides: {
+				Pollution: -2
+			}
+		},
+		consumer: {
+			rate: 30,
+			consumes: {
+				Water: 5,
+				Energy: 5
+			}
+		},
+		created: {
+			time: 300,
+			cost: {
+				'Cash': 500,
+				'Wood': 20,
+				'Iron': 10
+			}
+		},
+		requires: {
+			topics: {
+				'Manufacturing': 1
+			}
+		}
+	}
+});
 
 Clicker.addItem({
 	name: 'Office',
