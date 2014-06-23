@@ -20,7 +20,7 @@
 			
 			<div id="collectors" class="holder">
 				<div id="raw-resources">
-					{{# game.byComponent('raw') }}
+					{{# game.byComponent('collected') }}
 					<div class="raw-res">
 						<button data-type="{{name}}" on-tap="collectItem" title="{{name}}"><img src="{{icon}}" title="{{name}}" class="item-icon" /></button>
 						<div class="resource-count">{{this.formattedAmount()}}</div>

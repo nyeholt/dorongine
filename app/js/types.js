@@ -4,7 +4,7 @@ Clicker.addItem({
 	icon: 'icons/people/icon_10579.svg',
 	defaultAmount: 5,
 	components: {
-		increment: {
+		raw: {
 			rate: 1
 		}
 	}
@@ -148,7 +148,10 @@ Clicker.addItem({
 	maximum: 1000000000,
 	icon: 'icons/cash/icon_2709.svg',
 	formattedAmount: function () { return Number(this.amount).toFixed(2); },
-	components: {'raw': {rate: 1}}
+	components: {
+		'raw': {rate: 1},
+		'collected': true
+	}
 });
 
 Clicker.addItem({
@@ -156,7 +159,10 @@ Clicker.addItem({
 	icon: 'icons/brain/icon_38934.svg',
 	maximum: 1000000000,
 	formattedAmount: function () { return Number(this.amount).toFixed(2); },
-	components: {'raw': {rate: 1}}
+	components: {
+		'raw': {rate: 1},
+		'collected': true
+	}
 });
 
 Clicker.addItem({
@@ -164,7 +170,10 @@ Clicker.addItem({
 	icon: 'icons/energy/icon_2766.svg',
 	maximum: 1000000000,
 	formattedAmount: function () { return Number(this.amount).toFixed(2); },
-	components: {'raw': {rate: 1}}
+	components: {
+		'raw': {rate: 1},
+		'collected': true
+	}
 });
 
 Clicker.addItem({
@@ -172,7 +181,10 @@ Clicker.addItem({
 	icon: 'icons/ore/icon_7202.svg',
 	maximum: 1000000000,
 	formattedAmount: function () { return Number(this.amount).toFixed(2); },
-	components: {'raw': {rate: 1}}
+	components: {
+		'raw': {rate: 1},
+		'collected': true
+	}
 });
 
 Clicker.addItem({
@@ -180,7 +192,10 @@ Clicker.addItem({
 	icon: 'icons/water/icon_3168.svg',
 	maximum: 1000000000,
 	formattedAmount: function () { return Number(this.amount).toFixed(2); },
-	components: {raw: {rate: 1}, 'weather': true }
+	components: {
+		'raw': {rate: 1},
+		'collected': true
+	}
 });
 
 Clicker.addItem({
@@ -188,7 +203,10 @@ Clicker.addItem({
 	maximum: 1000000000,
 	icon: 'icons/crime/icon_5293.svg',
 	formattedAmount: function () { return Number(this.amount).toFixed(2); },
-	components: {'raw': { rate: -1 }}
+	components: {
+		'raw': {rate: -11},
+		'collected': true
+	}
 });
 
 Clicker.addItem({
@@ -196,7 +214,10 @@ Clicker.addItem({
 	maximum: 1000000000,
 	icon: 'icons/pollution/icon_40472.svg',
 	formattedAmount: function () { return Number(this.amount).toFixed(2); },
-	components: {'raw': { rate: -1 }}
+	components: {
+		'raw': {rate: -11},
+		'collected': true
+	}
 });
 
 Clicker.addItem({
@@ -549,6 +570,8 @@ Clicker.addItem({
 	}
 });
 
+
+
 Clicker.addItem({
 	name: 'Office',
 	icon: 'icons/office/icon_26565.svg',
@@ -590,6 +613,46 @@ Clicker.addItem({
 	}
 });
 
+Clicker.addItem({
+	name: 'Hospital',
+	icon: 'icons/hospital/icon_2230.svg',
+	maximum: 20,
+	components: {
+		building: true,
+//		improves: {
+//			Cash: 0.10
+//		},
+//		
+		worker: {
+			rate: 11,
+			provides: {
+				Energy: 1,
+				Pollution: 2
+			}
+		},
+		consumer: {
+			rate: 11,
+			consumes: {
+				Energy: 30
+			}
+		},
+		created: {
+			time: 300,
+			cost: {
+				'Cash': 500,
+				'Glass': 15,
+				'Iron': 20,
+				'Copper': 20
+			}
+		},
+		requires: {
+			topics: {
+				'Civics': 1,
+				'Economics': 1
+			}
+		}
+	}
+});
 
 Clicker.addItem({
 	name: 'Bank',
@@ -750,7 +813,7 @@ Clicker.addTopic({
 	levelUp: function (newLevel) {
 		var current = Clicker.game().items.Cash.rates.raw;
 		Clicker.game().items.Cash.rates.raw = current + current * (newLevel / 10);
-		Clicker.game().items.People.rates.increment = newLevel;
+		Clicker.game().items.People.rates.raw = newLevel;
 	}
 });
 
