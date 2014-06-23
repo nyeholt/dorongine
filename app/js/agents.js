@@ -1,16 +1,55 @@
+//
+//Clicker.addTicker({
+//	name: 'Migration',
+//	onTick: 60,
+//	currentTick: 0,
+//	tick: function () {
+//		this.currentTick++;
+//		
+//		if (this.currentTick >= this.onTick) {
+//			// add a person
+//			var num = Math.floor(Clicker.game().items.People.rates.raw);
+//
+//			Clicker.game().items.People.amount += num;
+//			
+//			this.currentTick = 0;
+//		}
+//	}
+//});
 
 Clicker.addTicker({
-	name: 'Migration',
-	onTick: 60,
+	name: 'Disease',
+	onTick: 21,
 	currentTick: 0,
 	tick: function () {
 		this.currentTick++;
 		
 		if (this.currentTick >= this.onTick) {
-			// add a person
-			var num = Math.floor(Clicker.game().items.People.rates.raw);
-
-			Clicker.game().items.People.amount += num;
+			// trigger a disease
+			var rand = Clicker.random();
+			if (rand > .5) {
+				var pollution = Clicker.game().items.Pollution.amount;
+				if (pollution > 0) {
+					// polution == 10, 1% chance of disease striking
+					var chance = pollution / 1000;
+					
+					var dis = Clicker.random();
+					if (dis <= chance) {
+						var employTypes = Clicker.game().byComponent('employable');
+						var key = Clicker.random(0, employTypes.length - 1);
+						
+						var toRemove = employTypes[key];
+						
+						Clicker.log("Giving disease to " + toRemove.name);
+						
+						if (toRemove.amount > 0) {
+							toRemove.amount --;
+							Clicker.game().items.Sick.amount++;
+						}
+						
+					}
+				}
+			}
 			
 			this.currentTick = 0;
 		}

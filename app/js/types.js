@@ -1,6 +1,36 @@
 Clicker.addItem({
 	name: 'People',
-	maximum: 10000000,
+	maximum: 20,
+	icon: 'icons/people/icon_10579.svg',
+	defaultAmount: 5,
+	components: {
+		raw: {
+			rate: 1
+		}
+	}
+});
+
+Clicker.addItem({
+	name: 'Sick',
+	maximum: 20,
+	icon: 'icons/sick/icon_27818.svg',
+	components: {
+		
+	}
+});
+
+Clicker.addItem({
+	name: 'Dead',
+	maximum: 20,
+	icon: 'icons/dead/icon_13126.svg',
+	components: {
+		
+	}
+});
+
+Clicker.addItem({
+	name: 'People',
+	maximum: 20,
 	icon: 'icons/people/icon_10579.svg',
 	defaultAmount: 5,
 	components: {
@@ -215,7 +245,7 @@ Clicker.addItem({
 	icon: 'icons/pollution/icon_40472.svg',
 	formattedAmount: function () { return Number(this.amount).toFixed(2); },
 	components: {
-		'raw': {rate: -11},
+		'raw': {rate: -1 },
 		'collected': true
 	}
 });
@@ -493,6 +523,52 @@ Clicker.addItem({
 // Buildings
 
 Clicker.addItem({
+	name: 'Town Hall',
+	icon: 'icons/townhall/icon_2406.svg',
+	maximum: 1,
+	components: {
+		building: true,
+		worker: {
+			rate: 61,
+			provides: {
+				People: 1
+			}
+		},
+		created: {
+			time: 200,
+			cost: {
+				'Cash': 100,
+				'Wood': 10
+			}
+		}
+	}
+});
+
+//
+//Clicker.addItem({
+//	name: 'House',
+//	icon: 'icons/house/icon_4399.svg',
+//	maximum: 1,
+//	components: {
+//		building: true,
+//		worker: {
+//			rate: 31,
+//			provides: {
+//				People: 1
+//			}
+//		},
+//		created: {
+//			time: 200,
+//			cost: {
+//				'Cash': 100,
+//				'Wood': 10,
+//				'Glass': 1
+//			}
+//		}
+//	}
+//});
+
+Clicker.addItem({
 	name: 'Power Plant',
 	icon: 'icons/powerplant/icon_2071.svg',
 	maximum: 20,
@@ -614,7 +690,7 @@ Clicker.addItem({
 });
 
 Clicker.addItem({
-	name: 'Hospital',
+	name: 'Clinic',
 	icon: 'icons/hospital/icon_2230.svg',
 	maximum: 20,
 	components: {
@@ -622,18 +698,16 @@ Clicker.addItem({
 //		improves: {
 //			Cash: 0.10
 //		},
-//		
 		worker: {
 			rate: 11,
 			provides: {
-				Energy: 1,
-				Pollution: 2
+				People: 1
 			}
 		},
 		consumer: {
 			rate: 11,
 			consumes: {
-				Energy: 30
+				Sick: 1
 			}
 		},
 		created: {
@@ -648,7 +722,7 @@ Clicker.addItem({
 		requires: {
 			topics: {
 				'Civics': 1,
-				'Economics': 1
+				'Education': 2
 			}
 		}
 	}
