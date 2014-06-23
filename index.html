@@ -22,7 +22,7 @@
 				<div id="raw-resources">
 					{{# game.byComponent('collected') }}
 					<div class="raw-res">
-						<button data-type="{{name}}" on-tap="collectItem" title="{{name}}"><img src="{{icon}}" title="{{name}}" class="item-icon" /></button>
+						<button data-type="{{name}}" on-tap="collectItem" title="{{name}}"><img src="{{icon}}" title="{{name}}" class="raw-icon" /></button>
 						<div class="resource-count">{{this.formattedAmount()}}</div>
 						<div class="resource-mods"></div>
 					</div>
@@ -35,7 +35,7 @@
 			<thead>
 				<tr>
 				<th><img src="{{game.items.People.icon}}" title="People" class="item-icon" /></th>
-				<th>{{game.items.People.amount}}</th>
+				<th>{{game.items.People.amount}} / {{game.items.People.maximum}}</th>
 				<th></th>
 				
 				<th>Required</th>

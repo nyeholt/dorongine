@@ -58,6 +58,7 @@
 		this.seed = seed ? seed : 1;
 		this.commands = [];
 		
+		this.initters = [];
 
 		this.ractive = new Ractive({
 			// The `el` option can be a node, an ID, or a CSS selector.
@@ -77,6 +78,48 @@
 		log: function (msg) {
 			if (window.console && window.console.log) {
 				console.log(msg);
+			}
+		},
+		onInit: function (func) {
+			this.initters.push(func);
+		},
+		// reset everything to rego
+		init: function () {
+			clearInterval(gameLoop);
+			clearInterval(commandLoop);
+
+			game = {
+				ticks: 0,
+				items: {},
+				globalRates: {
+					mined: 30
+				},
+				topics: {
+
+				},
+				buildQueue: [],
+				transactions: [],
+				byComponent: byComponent
+			};
+			
+			tickers = [];
+			fastTickers = [];
+
+			types = {
+				items: {},
+				techs: {},
+				topics: {
+
+				}
+			};
+
+			// all commands that could be executed
+			availableCommands = {
+
+			};
+			
+			for (var i = 0; i < this.initters.length; i++) {
+				this.initters[i].call(this);
 			}
 		},
 		start: function () {
@@ -298,7 +341,7 @@
 				return false;
 			}
 			
-			var max = this.maximum ? this.maximum : 100000000;
+			var max = this.maximum ? this.maximum : 1000;
 			if (number > 0 && this.amount >= max) {
 				return false;
 			}

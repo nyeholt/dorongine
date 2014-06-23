@@ -83,8 +83,12 @@ body {
 	padding: 10px;
 }
 
+.raw-icon {
+	width: 64px;
+}
+
 .item-icon {
-	width: 36px;
+	width: 32px;
 	/*height: 36px;*/
 }
 
@@ -97,9 +101,9 @@ body {
 }
 
 .raw-res {
-	width: 60px;
+	width: 100px;
 	float: left;
-	height: 70px;
+	height: 100px;
 }
 
 .resource-count {
