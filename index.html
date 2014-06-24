@@ -30,6 +30,14 @@
 					{{/ game}}
 				</div>
 			</div>
+		
+			<div id="messages">
+			{{#game.messages}}
+			<div class="message {{class}}">
+			<span class="msg-time">{{time.toLocaleTimeString()}}</span> {{message}}
+			</div>
+			{{/game.messages}}
+			</div>
 
 			<div id="population" class="holder">
 			<table>
@@ -50,8 +58,6 @@
 			<tbody>
 				{{# game.byComponent('employable') }}
 					{{#this.meetsRequirements()}}
-					
-					
 					<tr>
 					<td><img title="{{name}}" src="{{icon}}" class="item-icon" /></td>
 					<td>{{amount}} / {{maximum}}</td>

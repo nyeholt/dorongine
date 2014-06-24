@@ -41,10 +41,18 @@ Clicker.onInit(function() {
 
 							var toRemove = employTypes[key];
 
-							Clicker.log("Giving disease to " + toRemove.name);
-
+							var number = 1;
+							
+							
+							
 							if (toRemove.amount > 0) {
-								toRemove.amount--;
+								if (number >= toRemove.amount) {
+									number = toRemove.amount;
+								}
+								
+								Clicker.message(number + " " + toRemove.name + " became diseased!", 'bad', 'Sick');
+								
+								toRemove.amount -= number;
 								Clicker.game().items.Sick.amount++;
 							}
 
@@ -129,7 +137,7 @@ Clicker.onInit(function() {
 									worker.disabled = false;
 									Clicker.game().items[prov].amount -= toRemove;
 								} else {
-									Clicker.log("Disabling " + worker.name + " due to insufficient " + prov);
+									Clicker.message("Disabling " + worker.name + " due to insufficient " + prov, 'bad', worker.name);
 									worker.disabled = true;
 									break;
 								}
@@ -172,7 +180,7 @@ Clicker.onInit(function() {
 								topic.level++;
 								var topicType = Clicker.types().topics[name];
 								if (topicType.levelUp) {
-									Clicker.log("Leveling up " + name + " to " + topic.level);
+									Clicker.message("Leveling up " + name + " to " + topic.level, 'good', name);
 									topicType.levelUp(topic.level);
 								}
 							}
@@ -291,6 +299,7 @@ Clicker.onInit(function() {
 			this.current.item.applyImprovement();
 		},
 		finalise: function() {
+			
 			this.current = null;
 			Clicker.game().buildQueue.splice(this.buildIndex, 1);
 		}

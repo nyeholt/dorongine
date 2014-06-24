@@ -34,6 +34,7 @@
 		},
 		buildQueue: [],
 		transactions: [],
+		messages: [],
 		byComponent: byComponent
 	};
 	
@@ -80,6 +81,17 @@
 				console.log(msg);
 			}
 		},
+		message: function (message, type, cls) {
+			this.log(message);
+			if (!cls) {
+				cls = '';
+			}
+			cls = type + ' ' + cls;
+			game.messages.unshift({message: message, class: cls, time: new Date() });
+			if (game.messages.length > 5) {
+				game.messages.pop();
+			}
+		},
 		onInit: function (func) {
 			this.initters.push(func);
 		},
@@ -99,6 +111,7 @@
 				},
 				buildQueue: [],
 				transactions: [],
+				messages: [],
 				byComponent: byComponent
 			};
 			
