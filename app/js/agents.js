@@ -137,7 +137,9 @@ Clicker.onInit(function() {
 									worker.disabled = false;
 									Clicker.game().items[prov].amount -= toRemove;
 								} else {
-									Clicker.message("Disabling " + worker.name + " due to insufficient " + prov, 'bad', worker.name);
+									if (!worker.disabled) {
+										Clicker.message("Disabling " + worker.name + " due to insufficient " + prov, 'bad', worker.name);
+									}
 									worker.disabled = true;
 									break;
 								}
@@ -174,7 +176,7 @@ Clicker.onInit(function() {
 							amount += topic.knowledge - topic.target;
 							topic.knowledge = 0;
 
-							topic.target = Math.pow(topic.level + 1, 3) * 100;
+							topic.target = Math.pow(topic.level + 2, 3) * 100;
 
 							if (topic.level < this.maxLevel) {
 								topic.level++;
@@ -296,6 +298,11 @@ Clicker.onInit(function() {
 		tally: function() {
 			// we actually add the total on now
 			this.current.item.amount += this.current.volume;
+			
+			if (this.current.totalSteps > 50) {
+				Clicker.message("Created " + this.current.volume + " " + this.current.item.name, 'good', this.current.item.name);
+			}
+			
 			this.current.item.applyImprovement();
 		},
 		finalise: function() {

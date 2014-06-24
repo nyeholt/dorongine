@@ -14,31 +14,18 @@
 		</div>
 
 		<script id='template' type='text/ractive'>
-			<div id="debug">
-			{{game.ticks}}
-			</div>
 			
-			<div id="collectors" class="holder">
-				<div id="raw-resources">
-					{{# game.byComponent('collected') }}
-					<div class="raw-res">
-						<button data-type="{{name}}" on-tap="collectItem" title="{{name}}"><img src="{{icon}}" title="{{name}}" class="raw-icon" /></button>
-						<div class="resource-count">{{this.formattedAmount()}}</div>
-						<div class="resource-max">{{maximum}}</div>
-						<div class="resource-mods"></div>
-					</div>
-					{{/ game}}
+			<div id="raw-resources">
+				{{# game.byComponent('collected') }}
+				<div class="raw-res">
+					<button data-type="{{name}}" on-tap="collectItem" title="{{name}}"><img src="{{icon}}" title="{{name}}" class="raw-icon" /></button>
+					<div class="resource-count">{{this.formattedAmount()}}</div>
+					<div class="resource-max">{{maximum}}</div>
+					<div class="resource-mods"></div>
 				</div>
+				{{/ game}}
 			</div>
 		
-			<div id="messages">
-			{{#game.messages}}
-			<div class="message {{class}}">
-			<span class="msg-time">{{time.toLocaleTimeString()}}</span> {{message}}
-			</div>
-			{{/game.messages}}
-			</div>
-
 			<div id="population" class="holder">
 			<table>
 			<thead>
@@ -308,18 +295,30 @@
 				</table>
 			</div>
 			
-			<div id="build-queue">
-			<p>Queue</p>
-				{{#game.buildQueue}}
-				<div class="buildQueueItem">
-					<img title="{{item.name}}" src="{{item.icon}}" class="item-icon" /> 
-					<div class="buildProgress">
-					<progress max="{{totalSteps}}" value="{{currentStep}}"></progress>
+			
+			<div id="footer">
+				
+				<div id="build-queue" class="queue-container">
+					{{#game.buildQueue}}
+					<div class="buildQueueItem">
+						<img title="{{item.name}}" src="{{item.icon}}" class="item-icon" /> 
+						<div class="buildProgress">
+						<progress max="{{totalSteps}}" value="{{currentStep}}"></progress>
+						</div>
 					</div>
+					{{/game.buildQueue}}
+					<div class="emptyfor spacing">&nbsp;</div>
 				</div>
-				{{/game.buildQueue}}
+				
+				<div id="messages" class="queue-container">
+					{{#game.messages}}
+					<div class="message {{class}}">
+					<span class="msg-time">{{time.toLocaleTimeString()}}</span> {{message}}
+					</div>
+					{{/game.messages}}
+				</div>
+				
 			</div>
-
 		</script>
 
 		<script type="text/javascript" src="js/jquery-2.0.0.min.js"></script>

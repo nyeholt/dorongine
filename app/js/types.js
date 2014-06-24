@@ -174,6 +174,78 @@ Clicker.onInit(function() {
 	});
 
 	Clicker.addItem({
+		name: 'Teacher',
+		icon: 'icons/teacher/icon_28111.svg',
+		maximum: 1,
+		components: {
+			employable: true,
+			worker: {
+				rate: 5,
+				provides: {
+					Brainpower: 2
+				}
+			},
+			created: {
+				time: 30,
+				cost: {
+					Cash: 250,
+					Employee: 1
+				}
+			},
+			consumer: {// consumers 
+				rate: 30,
+				consumes: {
+					Energy: 10
+				}
+			},
+			requires: {
+				topics: {
+					'Education': 2
+				},
+				items: {
+					'School': 1
+				}
+			}
+		}
+	});
+
+	Clicker.addItem({
+		name: 'Professor',
+		icon: 'icons/professor/icon_43308.svg',
+		maximum: 1,
+		components: {
+			employable: true,
+			worker: {
+				rate: 5,
+				provides: {
+					Brainpower: 5
+				}
+			},
+			created: {
+				time: 30,
+				cost: {
+					Cash: 250,
+					Employee: 1
+				}
+			},
+			consumer: {// consumers 
+				rate: 30,
+				consumes: {
+					Energy: 10
+				}
+			},
+			requires: {
+				topics: {
+					'Education': 3
+				},
+				items: {
+					'University': 1
+				}
+			}
+		}
+	});
+	
+	Clicker.addItem({
 		name: 'Scientist',
 		icon: 'icons/scientist/icon_19851.svg',
 		maximum: 1,
@@ -182,7 +254,9 @@ Clicker.onInit(function() {
 			worker: {
 				rate: 5,
 				provides: {
-					Brainpower: 1
+					Brainpower: 2,
+					Water: 2,
+					Pollution: -5
 				}
 			},
 			created: {
@@ -195,8 +269,7 @@ Clicker.onInit(function() {
 			consumer: {// consumers 
 				rate: 30,
 				consumes: {
-					Cash: 10,
-					Energy: 10
+					Energy: 20
 				}
 			},
 			requires: {
@@ -207,7 +280,7 @@ Clicker.onInit(function() {
 			}
 		}
 	});
-
+	
 	Clicker.addItem({
 		name: 'Cash',
 		maximum: 1000000,
@@ -539,7 +612,7 @@ Clicker.onInit(function() {
 			created: {
 				time: 5,
 				cost: {
-					'Steel': 100
+					'Steel': 20
 				}
 			},
 			requires: {
@@ -683,46 +756,6 @@ Clicker.onInit(function() {
 //});
 
 	Clicker.addItem({
-		name: 'Power Plant',
-		icon: 'icons/powerplant/icon_2071.svg',
-		maximum: 5,
-		components: {
-			building: true,
-			improves: {
-				Energy: 0.20
-			},
-			worker: {
-				rate: 4,
-				provides: {
-					Energy: 1,
-					Pollution: -2
-				}
-			},
-			consumer: {
-				rate: 30,
-				consumes: {
-					Water: 7,
-					Coal: 5
-				}
-			},
-			created: {
-				time: 200,
-				cost: {
-					'Cash': 500,
-					'Glass': 5,
-					'Iron': 10,
-					'Silicon': 1
-				}
-			},
-			requires: {
-				topics: {
-					'Manufacturing': 1
-				}
-			}
-		}
-	});
-
-	Clicker.addItem({
 		name: 'Mine',
 		icon: 'icons/mine/icon_8497.svg',
 		maximum: 5,
@@ -753,6 +786,46 @@ Clicker.onInit(function() {
 					'Cash': 500,
 					'Wood': 20,
 					'Iron': 10
+				}
+			},
+			requires: {
+				topics: {
+					'Manufacturing': 1
+				}
+			}
+		}
+	});
+
+	Clicker.addItem({
+		name: 'Power Plant',
+		icon: 'icons/powerplant/icon_2071.svg',
+		maximum: 5,
+		components: {
+			building: true,
+			improves: {
+				Energy: 0.20
+			},
+			worker: {
+				rate: 4,
+				provides: {
+					Energy: 1,
+					Pollution: -2
+				}
+			},
+			consumer: {
+				rate: 30,
+				consumes: {
+					Water: 7,
+					Coal: 5
+				}
+			},
+			created: {
+				time: 200,
+				cost: {
+					'Cash': 500,
+					'Glass': 5,
+					'Iron': 10,
+					'Silicon': 1
 				}
 			},
 			requires: {
@@ -932,6 +1005,9 @@ Clicker.onInit(function() {
 			improves: {
 				Brainpower: 0.15
 			},
+			increases: {
+				Teacher: 3
+			},
 			created: {
 				time: 300,
 				cost: {
@@ -1001,6 +1077,9 @@ Clicker.onInit(function() {
 			building: true,
 			improves: {
 				Brainpower: 0.50
+			},
+			increases: {
+				Professor: 3
 			},
 			created: {
 				time: 1200,
@@ -1073,8 +1152,13 @@ Clicker.onInit(function() {
 	Clicker.addTopic({
 		name: 'Manufacturing',
 		icon: 'icons/manufacturing/icon_819.svg',
-		levelUp: function() {
-
+		levelUp: function(newLevel) {
+			var items = Clicker.game().byComponent('building');
+			if (items && items.length) {
+				for (var i = 0; i < items.length; i++) {
+					items[i].maximum += newLevel * 4;
+				}
+			}
 		}
 	});
 });

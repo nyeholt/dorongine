@@ -54,19 +54,9 @@ body {
 }
 
 #container {
+	padding-top: 120px;
 	padding-bottom: 100px;
 	position: relative;
-}
-
-#build-queue {
-	height: 100px;
-	width: 100%;
-	overflow: auto;
-	position: fixed;
-	bottom: 0px;
-	background-color: #fff;
-	padding: 10px;
-	border-top: 1px solid #222;
 }
 
 
@@ -85,28 +75,17 @@ body {
 
 #raw-resources {
 	height: 120px;
+	position: fixed;
+	background-color: #fff;
+	border-bottom: 1px solid #222;
+	padding-left: 10px;
+	padding-top: 10px;
+	width: 100%;
+	top: 0px;
 }
 
 .raw-icon {
 	width: 64px;
-}
-
-#messages {
-	height: 100px;
-}
-
-.message {
-	height: 18px;
-	padding: 2px;
-	margin-bottom: 2px;
-}
-
-.message.bad {
-	background-color: #e7c3c3;
-}
-
-.message.good {
-	background-color: #d6e9c6;
 }
 
 .item-icon {
@@ -141,12 +120,47 @@ body {
 	float: right;
 }
 
+
+#footer {
+	height: 70px;
+	width: 100%;
+	overflow: auto;
+	position: fixed;
+	bottom: 0px;
+	background-color: #fff;
+	padding: 5px;
+	border-top: 1px solid #222;
+}
+
+.queue-container {
+	width: 49%;
+	float: left;
+}
+
+
+.message {
+	height: 18px;
+	padding: 2px;
+	margin-bottom: 2px;
+}
+
+.message.bad {
+	background-color: #e7c3c3;
+}
+
+.message.good {
+	background-color: #d6e9c6;
+}
+
+
+
 .buildQueueItem {
-	height: 40px;
+	height: 20px;
 	overflow: auto;
 }
 
 .buildQueueItem img {
+	height: 20px;
 	float: left;
 }
 

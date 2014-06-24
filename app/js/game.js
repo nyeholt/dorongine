@@ -88,7 +88,7 @@
 			}
 			cls = type + ' ' + cls;
 			game.messages.unshift({message: message, class: cls, time: new Date() });
-			if (game.messages.length > 5) {
+			if (game.messages.length > 10) {
 				game.messages.pop();
 			}
 		},
