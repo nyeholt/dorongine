@@ -251,9 +251,6 @@
 			}
 			this.ractive.set('game', game);
 		},
-		randomClick: function () {
-			
-		},
 		save: function () {
 			var data = JSON.stringify(game);
 			localStorage.setItem(this.name + '-game', data);

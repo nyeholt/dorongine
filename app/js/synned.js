@@ -14,7 +14,10 @@ Clicker.start();
 		})
 		
 		$(document).on('click', function () {
-			
+			var items = Clicker.game().byComponent('raw');
+			var rand = Clicker.random(0, items.length - 1);
+			var cmd = Clicker.newCommand('collectItem', items[rand]);
+			Clicker.runCommand(cmd);
 		})
 
 		var graphDiv;
