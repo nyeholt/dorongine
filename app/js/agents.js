@@ -93,7 +93,7 @@ Clicker.onInit(function() {
 									var addto = Clicker.game().items[prov];
 
 									if (addto.canAdd(toAdd)) {
-										addto.amount += toAdd;
+										addto.add(toAdd);
 									}
 								} else if (Clicker.game().topics[prov]) {
 									Clicker.game().topics[prov].knowledge += toAdd;
@@ -295,11 +295,11 @@ Clicker.onInit(function() {
 		},
 		tally: function() {
 			// we actually add the total on now
-			this.current.item.amount += this.current.volume;
+			this.current.item.add(this.current.volume);
 			
 			if (this.current.item.components.created.gives) {
 				for (var type in this.current.item.components.created.gives) {
-					Clicker.game().items[type].amount += this.current.item.components.created.gives[type];
+					Clicker.game().items[type].add(this.current.item.components.created.gives[type]);
 				}
 			}
 			
@@ -316,4 +316,54 @@ Clicker.onInit(function() {
 		}
 	})
 
+	Clicker.addTicker({
+		name: 'StatsCollector',
+		onTick: 10,
+		currentTick: 0,
+		tick: function () {
+			this.currentTick++;
+
+			if (this.currentTick >= this.onTick) {
+				// collect data from the items and store
+				var stats = Clicker.game().stats;
+				
+				var items = Clicker.game().byComponent('raw');
+
+				for (var i = 0; i < items.length; i ++) {
+					var existing = stats.amounts[items[i].name];
+					if (!existing) {
+						existing = [0];
+						stats.amounts[items[i].name] = existing;
+					}
+					existing.push(items[i].amount);
+					// track the maximum for graphing purposes
+					if (items[i].amount > stats.amounts.max_val) {
+						stats.amounts.max_val = items[i].amount;
+					}
+
+					var existing = stats.rates[items[i].name];
+					if (!existing) {
+						existing = [0];
+						stats.rates[items[i].name] = existing;
+					}
+					existing.push(items[i].rates.raw);
+					if (items[i].rates.raw > stats.rates.max_val) {
+						stats.rates.max_val = items[i].rates.raw;
+					}
+					
+					var existing = stats.totals[items[i].name];
+					if (!existing) {
+						existing = [0];
+						stats.totals[items[i].name] = existing;
+					}
+					existing.push(items[i].existed);
+					if (items[i].existed > stats.totals.max_val) {
+						stats.totals.max_val = items[i].existed;
+					}
+				}
+
+				this.currentTick = 0;
+			}
+		}
+	});
 });

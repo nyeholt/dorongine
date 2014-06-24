@@ -12,7 +12,7 @@ Clicker.onInit(function() {
 				}
 
 				if (current.canAdd(increase)) {
-					current.amount += increase;
+					current.add(increase);
 				}
 			}
 		}
@@ -61,7 +61,7 @@ Clicker.onInit(function() {
 				nextRand = Clicker.random() * 100;
 
 				if (toMine && toMine.rates.mined > nextRand) {
-					toMine.amount += 1;
+					toMine.add(1);
 				}
 			}
 		}

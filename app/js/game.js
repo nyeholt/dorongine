@@ -92,7 +92,7 @@
 				topics: {
 
 				},
-				stats: [],
+				stats: {amounts: {}, rates: {}, totals: {}},
 				buildQueue: [],
 				transactions: [],
 				messages: [],
@@ -157,6 +157,7 @@
 			
 			item.rates = rates;
 			item.amount = item.defaultAmount ? item.defaultAmount : 0;
+			item.existed = item.amount;
 
 			game.items[item.name] = item;
 //			{
@@ -250,10 +251,7 @@
 			}
 			this.ractive.set('game', game);
 		},
-		collectStats: function () {
-			// collect data from the items and store
-			var items = game.byComponent('raw');
-			
+		randomClick: function () {
 			
 		},
 		save: function () {
@@ -285,24 +283,32 @@
 
 	var Item = {
 		applyImprovement: function () {
+			var gameitems = Clicker.game().items;
+			
 			if (this.components.improves) {
 				for (var type in this.components.improves) {
-					if (Clicker.game().items[type].rates && Clicker.game().items[type].rates.raw) {
-						var current = Clicker.game().items[type].rates.raw;
-						Clicker.game().items[type].rates.raw = current + current * this.components.improves[type];
+					if (gameitems[type].rates && Clicker.game().items[type].rates.raw) {
+						var current = gameitems[type].rates.raw;
+						gameitems[type].rates.raw = current + current * this.components.improves[type];
 					}
 				}
 			}
 			
 			if (this.components.increases) {
 				for (var type in this.components.increases) {
-					if (Clicker.game().items[type]) {
-						Clicker.game().items[type].maximum += this.components.increases[type];
+					if (gameitems[type]) {
+						if (gameitems[type].fixed) {
+							continue;
+						}
+						gameitems[type].maximum += this.components.increases[type];
 					} else {
 						// try by component type
 						var items = Clicker.game().byComponent(type);
 						if (items && items.length) {
 							for (var i = 0; i < items.length; i++) {
+								if (items[type].fixed) {
+									continue;
+								}
 								items[i].maximum += this.components.increases[type];
 							}
 						}
@@ -366,6 +372,10 @@
 			}
 
 			return true;
+		},
+		add: function (volume) {
+			this.amount += volume;
+			this.existed += volume;
 		},
 		iconfor: function (name) {
 			if (game.items[name]) {

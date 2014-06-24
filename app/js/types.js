@@ -1,6 +1,106 @@
 
 Clicker.onInit(function() {
 
+	
+	Clicker.addItem({
+		name: 'Cash',
+		color: '#01832D',
+		maximum: 1000000,
+		icon: 'icons/cash/icon_2709.svg',
+		formattedAmount: function() {
+			return Number(this.amount).toFixed(2);
+		},
+		components: {
+			'raw': {rate: 1},
+			'collected': true
+		}
+	});
+
+	Clicker.addItem({
+		name: 'Brainpower',
+		color: '#E60084',
+		icon: 'icons/brain/icon_38934.svg',
+		maximum: 1000,
+		formattedAmount: function() {
+			return Number(this.amount).toFixed(2);
+		},
+		components: {
+			'raw': {rate: 1},
+			'collected': true
+		}
+	});
+
+	Clicker.addItem({
+		name: 'Energy',
+		color: '#F9B700',
+		icon: 'icons/energy/icon_2766.svg',
+		maximum: 1000,
+		formattedAmount: function() {
+			return Number(this.amount).toFixed(2);
+		},
+		components: {
+			'raw': {rate: 1},
+			'collected': true
+		}
+	});
+
+	Clicker.addItem({
+		name: 'Ore',
+		color: '#4F1700',
+		icon: 'icons/ore/icon_13384.svg',
+		maximum: 1000,
+		formattedAmount: function() {
+			return Number(this.amount).toFixed(2);
+		},
+		components: {
+			'raw': {rate: 1},
+			'collected': true
+		}
+	});
+
+	Clicker.addItem({
+		name: 'Water',
+		color: '#0059A9',
+		icon: 'icons/water/icon_3168.svg',
+		maximum: 1000,
+		formattedAmount: function() {
+			return Number(this.amount).toFixed(2);
+		},
+		components: {
+			'raw': {rate: 1},
+			'collected': true
+		}
+	});
+
+	Clicker.addItem({
+		name: 'Crime',
+		color: '#B30006',
+		maximum: 100000,
+		icon: 'icons/crime/icon_5293.svg',
+		formattedAmount: function() {
+			return Number(this.amount).toFixed(2);
+		},
+		components: {
+			'raw': {rate: -1},
+			'collected': true
+		}
+	});
+
+	Clicker.addItem({
+		name: 'Pollution',
+		color: '#012F08',
+		maximum: 100000,
+		icon: 'icons/pollution/icon_40472.svg',
+		formattedAmount: function() {
+			return Number(this.amount).toFixed(2);
+		},
+		components: {
+			'raw': {rate: -1},
+			'collected': true
+		}
+	});
+
+
 	Clicker.addItem({
 		name: 'People',
 		maximum: 20,
@@ -24,6 +124,7 @@ Clicker.onInit(function() {
 	Clicker.addItem({
 		name: 'Dead',
 		maximum: 20,
+		color: '#000',
 		icon: 'icons/dead/icon_13126.svg',
 		components: {
 		}
@@ -32,6 +133,7 @@ Clicker.onInit(function() {
 	Clicker.addItem({
 		name: 'People',
 		maximum: 20,
+		color: '#F59701',
 		icon: 'icons/people/icon_10579.svg',
 		defaultAmount: 5,
 		components: {
@@ -281,97 +383,6 @@ Clicker.onInit(function() {
 		}
 	});
 	
-	Clicker.addItem({
-		name: 'Cash',
-		maximum: 1000000,
-		icon: 'icons/cash/icon_2709.svg',
-		formattedAmount: function() {
-			return Number(this.amount).toFixed(2);
-		},
-		components: {
-			'raw': {rate: 1},
-			'collected': true
-		}
-	});
-
-	Clicker.addItem({
-		name: 'Brainpower',
-		icon: 'icons/brain/icon_38934.svg',
-		maximum: 1000,
-		formattedAmount: function() {
-			return Number(this.amount).toFixed(2);
-		},
-		components: {
-			'raw': {rate: 1},
-			'collected': true
-		}
-	});
-
-	Clicker.addItem({
-		name: 'Energy',
-		icon: 'icons/energy/icon_2766.svg',
-		maximum: 1000,
-		formattedAmount: function() {
-			return Number(this.amount).toFixed(2);
-		},
-		components: {
-			'raw': {rate: 1},
-			'collected': true
-		}
-	});
-
-	Clicker.addItem({
-		name: 'Ore',
-		icon: 'icons/ore/icon_13384.svg',
-		maximum: 1000,
-		formattedAmount: function() {
-			return Number(this.amount).toFixed(2);
-		},
-		components: {
-			'raw': {rate: 1},
-			'collected': true
-		}
-	});
-
-	Clicker.addItem({
-		name: 'Water',
-		icon: 'icons/water/icon_3168.svg',
-		maximum: 1000,
-		formattedAmount: function() {
-			return Number(this.amount).toFixed(2);
-		},
-		components: {
-			'raw': {rate: 1},
-			'collected': true
-		}
-	});
-
-	Clicker.addItem({
-		name: 'Crime',
-		maximum: 100000,
-		icon: 'icons/crime/icon_5293.svg',
-		formattedAmount: function() {
-			return Number(this.amount).toFixed(2);
-		},
-		components: {
-			'raw': {rate: -1},
-			'collected': true
-		}
-	});
-
-	Clicker.addItem({
-		name: 'Pollution',
-		maximum: 100000,
-		icon: 'icons/pollution/icon_40472.svg',
-		formattedAmount: function() {
-			return Number(this.amount).toFixed(2);
-		},
-		components: {
-			'raw': {rate: -1},
-			'collected': true
-		}
-	});
-
 	Clicker.addItem({
 		name: 'Wood',
 		icon: 'icons/wood/icon_53364.svg',
@@ -721,6 +732,7 @@ Clicker.onInit(function() {
 	Clicker.addItem({
 		name: 'Town Hall',
 		icon: 'icons/townhall/icon_2406.svg',
+		fixed: true,		// cannot increase maximum
 		maximum: 1,
 		components: {
 			building: true,
