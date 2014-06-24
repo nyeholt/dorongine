@@ -83,6 +83,10 @@ body {
 	padding: 10px;
 }
 
+#raw-resources {
+	height: 120px;
+}
+
 .raw-icon {
 	width: 64px;
 }
@@ -108,6 +112,10 @@ body {
 
 .resource-count {
 	margin-top: 10px;
+}
+
+.resource-max {
+	color: #ccc;
 }
 
 .knowledge-input input {

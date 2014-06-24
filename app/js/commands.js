@@ -27,6 +27,17 @@ Clicker.onInit(function() {
 				Clicker.queueBuild(item, volume);
 			}
 		}
+	});
+	
+	Clicker.addCommand({
+		name: 'sellItem',
+		execute: function() {
+			var item = this.context;
+			var volume = this.volume ? this.volume : 1;
+			if (item.amount > volume) {
+				Clicker.queueBuild(item, volume);
+			}
+		}
 	})
 
 // for the amount of ore consumed, generated a single random ore item

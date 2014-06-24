@@ -44,7 +44,7 @@ Clicker.onInit(function() {
 	Clicker.addItem({
 		name: 'Employee',
 		icon: 'icons/employee/icon_961.svg',
-		maximum: 100,
+		maximum: 15,
 		components: {
 			employable: true,
 			worker: {
@@ -64,7 +64,6 @@ Clicker.onInit(function() {
 			consumer: {// consumers 
 				rate: 30,
 				consumes: {
-					Cash: 2,
 					Energy: 1
 				}
 			}
@@ -74,7 +73,7 @@ Clicker.onInit(function() {
 	Clicker.addItem({
 		name: 'Miner',
 		icon: 'icons/miner/icon_39492.svg',
-		maximum: 200,
+		maximum: 2,
 		components: {
 			employable: true,
 			worker: {
@@ -94,8 +93,7 @@ Clicker.onInit(function() {
 			consumer: {// consumers 
 				rate: 30,
 				consumes: {
-					Cash: 5,
-					Energy: 1
+					Energy: 2
 				}
 			},
 			requires: {
@@ -109,7 +107,7 @@ Clicker.onInit(function() {
 	Clicker.addItem({
 		name: 'Engineer',
 		icon: 'icons/engineer/icon_34710.svg',
-		maximum: 200,
+		maximum: 2,
 		components: {
 			employable: true,
 			worker: {
@@ -129,8 +127,7 @@ Clicker.onInit(function() {
 			consumer: {// consumers 
 				rate: 30,
 				consumes: {
-					Cash: 10,
-					Energy: 2
+					Energy: 3
 				}
 			},
 			requires: {
@@ -140,11 +137,46 @@ Clicker.onInit(function() {
 			}
 		}
 	});
+	
+	Clicker.addItem({
+		name: 'Banker',
+		icon: 'icons/banker/icon_32097.svg',
+		maximum: 2,
+		components: {
+			employable: true,
+			worker: {
+				rate: 5,
+				provides: {
+					Cash: 5,
+					Crime: 0.1
+				}
+			},
+			created: {
+				time: 3,
+				cost: {
+					Cash: 500,
+					Employee: 1
+				}
+			},
+			consumer: {// consumers 
+				rate: 30,
+				consumes: {
+					Water: 3,
+					Energy: 5
+				}
+			},
+			requires: {
+				topics: {
+					'Economics': 2
+				}
+			}
+		}
+	});
 
 	Clicker.addItem({
 		name: 'Scientist',
 		icon: 'icons/scientist/icon_19851.svg',
-		maximum: 100,
+		maximum: 1,
 		components: {
 			employable: true,
 			worker: {
@@ -270,7 +302,7 @@ Clicker.onInit(function() {
 	Clicker.addItem({
 		name: 'Wood',
 		icon: 'icons/wood/icon_53364.svg',
-		maximum: 10000,
+		maximum: 50,
 		components: {
 			'mined': {
 				rate: 100
@@ -287,7 +319,7 @@ Clicker.onInit(function() {
 	Clicker.addItem({
 		name: 'Coal',
 		icon: 'icons/coal/icon_16776.svg',
-		maximum: 10000,
+		maximum: 50,
 		components: {
 			'mined': {rate: 90},
 			created: {
@@ -303,7 +335,7 @@ Clicker.onInit(function() {
 	Clicker.addItem({
 		name: 'Cement',
 		icon: 'icons/cement/icon_24412.svg',
-		maximum: 10000,
+		maximum: 50,
 		components: {
 			'mined': {rate: 80},
 			created: {
@@ -319,7 +351,7 @@ Clicker.onInit(function() {
 	Clicker.addItem({
 		name: 'Oil',
 		icon: 'icons/oil/icon_375.svg',
-		maximum: 10000,
+		maximum: 50,
 		components: {
 			'mined': {
 				rate: 70
@@ -336,7 +368,7 @@ Clicker.onInit(function() {
 	Clicker.addItem({
 		name: 'Iron',
 		icon: 'icons/iron/icon_25438.svg',
-		maximum: 1000,
+		maximum: 20,
 		components: {
 			'mined': {rate: 50},
 			created: {
@@ -351,7 +383,7 @@ Clicker.onInit(function() {
 	Clicker.addItem({
 		name: 'Copper',
 		icon: 'icons/copper/icon_15400.svg',
-		maximum: 1000,
+		maximum: 20,
 		components: {
 			'mined': {rate: 20},
 			created: {
@@ -367,7 +399,7 @@ Clicker.onInit(function() {
 	Clicker.addItem({
 		name: 'Silicon',
 		icon: 'icons/silicon/icon_53365.svg',
-		maximum: 1000,
+		maximum: 10,
 		components: {
 			'mined': {rate: 10},
 			created: {
@@ -383,7 +415,7 @@ Clicker.onInit(function() {
 	Clicker.addItem({
 		name: 'Gold',
 		icon: 'icons/gold/icon_13470.svg',
-		maximum: 1000,
+		maximum: 10,
 		components: {
 			'mined': {rate: 10},
 			created: {
@@ -395,11 +427,10 @@ Clicker.onInit(function() {
 		}
 	});
 
-
 	Clicker.addItem({
 		name: 'Glass',
 		icon: 'icons/glass/icon_20953.svg',
-		maximum: 1000,
+		maximum: 10,
 		components: {
 			goods: true,
 			created: {
@@ -419,7 +450,7 @@ Clicker.onInit(function() {
 	Clicker.addItem({
 		name: 'Book',
 		icon: 'icons/book/icon_4964.svg',
-		maximum: 10000,
+		maximum: 10,
 		components: {
 			goods: true,
 			created: {
@@ -439,7 +470,7 @@ Clicker.onInit(function() {
 	Clicker.addItem({
 		name: 'Fuel',
 		icon: 'icons/fuel/icon_17625.svg',
-		maximum: 1000,
+		maximum: 10,
 		components: {
 			created: {
 				time: 1,
@@ -459,7 +490,7 @@ Clicker.onInit(function() {
 	Clicker.addItem({
 		name: 'Steel',
 		icon: 'icons/steel/icon_18535.svg',
-		maximum: 1000,
+		maximum: 10,
 		components: {
 			goods: true,
 			created: {
@@ -480,7 +511,7 @@ Clicker.onInit(function() {
 	Clicker.addItem({
 		name: 'Reinforced Concrete',
 		icon: 'icons/reinforced/icon_14927.svg',
-		maximum: 1000,
+		maximum: 10,
 		components: {
 			goods: true,
 			created: {
@@ -502,7 +533,7 @@ Clicker.onInit(function() {
 	Clicker.addItem({
 		name: 'Mining Tools',
 		icon: 'icons/tools/icon_543.svg',
-		maximum: 1000,
+		maximum: 10,
 		components: {
 			goods: true,
 			created: {
@@ -528,7 +559,7 @@ Clicker.onInit(function() {
 	Clicker.addItem({
 		name: 'Chip',
 		icon: 'icons/chip/icon_25352.svg',
-		maximum: 1000,
+		maximum: 10,
 		components: {
 			goods: true,
 			created: {
@@ -601,6 +632,32 @@ Clicker.onInit(function() {
 		}
 	});
 
+	Clicker.addItem({
+		name: 'Warehouse',
+		icon: 'icons/warehouse/icon_1808.svg',
+		maximum: 5,
+		components: {
+			building: true,
+			increases: {
+				'mined': 20,
+				'goods': 10
+			},
+			created: {
+				time: 300,
+				cost: {
+					'Cash': 200,
+					'Wood': 40,
+					'Cement': 10,
+					'Iron': 10
+				}
+			},
+			requires: {
+				topics: {
+					'Manufacturing': 1
+				}
+			}
+		}
+	});
 //
 //Clicker.addItem({
 //	name: 'House',
@@ -628,7 +685,7 @@ Clicker.onInit(function() {
 	Clicker.addItem({
 		name: 'Power Plant',
 		icon: 'icons/powerplant/icon_2071.svg',
-		maximum: 20,
+		maximum: 5,
 		components: {
 			building: true,
 			improves: {
@@ -668,11 +725,14 @@ Clicker.onInit(function() {
 	Clicker.addItem({
 		name: 'Mine',
 		icon: 'icons/mine/icon_8497.svg',
-		maximum: 20,
+		maximum: 5,
 		components: {
 			building: true,
 			mine: {
 				rate: 1
+			},
+			increases: {
+				Miner: 10
 			},
 			worker: {
 				rate: 9,
@@ -704,24 +764,19 @@ Clicker.onInit(function() {
 	});
 
 
-
 	Clicker.addItem({
 		name: 'Office',
 		icon: 'icons/office/icon_26565.svg',
-		maximum: 20,
+		maximum: 5,
 		components: {
 			building: true,
 			improves: {
 				Cash: 0.10
 			},
-//		
-//		worker: {
-//			rate: 4,
-//			provides: {
-//				Energy: 1,
-//				Pollution: 2
-//			}
-//		},
+			increases: {
+				Employee: 20,
+				Banker: 5
+			},
 			consumer: {
 				rate: 31,
 				consumes: {
@@ -749,7 +804,7 @@ Clicker.onInit(function() {
 	Clicker.addItem({
 		name: 'Clinic',
 		icon: 'icons/clinic/icon_50644.svg',
-		maximum: 20,
+		maximum: 5,
 		components: {
 			building: true,
 //		improves: {
@@ -792,13 +847,16 @@ Clicker.onInit(function() {
 	Clicker.addItem({
 		name: 'Bank',
 		icon: 'icons/bank/icon_40422.svg',
-		maximum: 20,
+		maximum: 5,
 		components: {
 			building: true,
 			improves: {
 				Cash: 0.20
 			},
-//		
+			increases: {
+				Banker: 5,
+				Cash: 250000
+			},
 //		worker: {
 //			rate: 4,
 //			provides: {
@@ -829,7 +887,7 @@ Clicker.onInit(function() {
 	Clicker.addItem({
 		name: 'Solar Panel',
 		icon: 'icons/solar/icon_2062.svg',
-		maximum: 20,
+		maximum: 5,
 		components: {
 			building: true,
 			improves: {
@@ -868,7 +926,7 @@ Clicker.onInit(function() {
 	Clicker.addItem({
 		name: 'School',
 		icon: 'icons/school/icon_4405.svg',
-		maximum: 20,
+		maximum: 5,
 		components: {
 			building: true,
 			improves: {
@@ -895,7 +953,7 @@ Clicker.onInit(function() {
 	Clicker.addItem({
 		name: 'Hospital',
 		icon: 'icons/hospital/icon_50643.svg',
-		maximum: 20,
+		maximum: 5,
 		components: {
 			building: true,
 //		improves: {
@@ -938,7 +996,7 @@ Clicker.onInit(function() {
 	Clicker.addItem({
 		name: 'University',
 		icon: 'icons/uni/icon_2402.svg',
-		maximum: 10,
+		maximum: 5,
 		components: {
 			building: true,
 			improves: {
@@ -947,7 +1005,7 @@ Clicker.onInit(function() {
 			created: {
 				time: 1200,
 				cost: {
-					'Cash': 10000,
+					'Cash': 10,
 					'Reinforced Concrete': 100,
 					'Steel': 100,
 					'Computer': 100

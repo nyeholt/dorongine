@@ -290,6 +290,22 @@
 					}
 				}
 			}
+			
+			if (this.components.increases) {
+				for (var type in this.components.increases) {
+					if (Clicker.game().items[type]) {
+						Clicker.game().items[type].maximum += this.components.increases[type];
+					} else {
+						// try by component type
+						var items = Clicker.game().byComponent(type);
+						if (items && items.length) {
+							for (var i = 0; i < items.length; i++) {
+								items[i].maximum += this.components.increases[type];
+							}
+						}
+					}
+				}
+			}
 		},
 		formattedAmount: function () {
 			return this.amount;
@@ -306,7 +322,7 @@
 					}
 				}
 			}
-			
+
 			if (this.components.requires.items) {
 				for (var item in this.components.requires.items) {
 					if (game.items[item].amount < this.components.requires.items[item]) {
@@ -314,7 +330,7 @@
 					}
 				}
 			}
-			
+
 			return true;
 		},
 		canBuy: function (volume) {
