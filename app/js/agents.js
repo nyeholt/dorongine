@@ -42,9 +42,7 @@ Clicker.onInit(function() {
 							var toRemove = employTypes[key];
 
 							var number = 1;
-							
-							
-							
+
 							if (toRemove.amount > 0) {
 								if (number >= toRemove.amount) {
 									number = toRemove.amount;
@@ -298,6 +296,12 @@ Clicker.onInit(function() {
 		tally: function() {
 			// we actually add the total on now
 			this.current.item.amount += this.current.volume;
+			
+			if (this.current.item.components.created.gives) {
+				for (var type in this.current.item.components.created.gives) {
+					Clicker.game().items[type].amount += this.current.item.components.created.gives[type];
+				}
+			}
 			
 			if (this.current.totalSteps > 50) {
 				Clicker.message("Created " + this.current.volume + " " + this.current.item.name, 'good', this.current.item.name);

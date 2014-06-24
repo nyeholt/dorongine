@@ -23,30 +23,13 @@
 		return items;
 	};
 
-	var game = {
-		ticks: 0,
-		items: {},
-		globalRates: {
-			mined: 30
-		},
-		topics: {
-
-		},
-		buildQueue: [],
-		transactions: [],
-		messages: [],
-		byComponent: byComponent
-	};
+	var game = {};
 	
 	var tickers = [];
 	var fastTickers = [];
 
 	var types = {
-		items: {},
-		techs: {},
-		topics: {
-			
-		}
+		
 	};
 	
 	// all commands that could be executed
@@ -109,6 +92,7 @@
 				topics: {
 
 				},
+				stats: [],
 				buildQueue: [],
 				transactions: [],
 				messages: [],
@@ -265,6 +249,12 @@
 				fastTickers[i].tick();
 			}
 			this.ractive.set('game', game);
+		},
+		collectStats: function () {
+			// collect data from the items and store
+			var items = game.byComponent('raw');
+			
+			
 		},
 		save: function () {
 			var data = JSON.stringify(game);

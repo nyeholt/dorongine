@@ -167,7 +167,7 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Economics': 2
+					'Economics': 3
 				}
 			}
 		}
@@ -218,7 +218,7 @@ Clicker.onInit(function() {
 			worker: {
 				rate: 5,
 				provides: {
-					Brainpower: 5
+					Brainpower: 10
 				}
 			},
 			created: {
@@ -322,7 +322,7 @@ Clicker.onInit(function() {
 
 	Clicker.addItem({
 		name: 'Ore',
-		icon: 'icons/ore/icon_7202.svg',
+		icon: 'icons/ore/icon_13384.svg',
 		maximum: 1000,
 		formattedAmount: function() {
 			return Number(this.amount).toFixed(2);
@@ -670,7 +670,7 @@ Clicker.onInit(function() {
 	Clicker.addItem({
 		name: 'Computer',
 		icon: 'icons/computer/icon_3633.svg',
-		maximum: 1000,
+		maximum: 5,
 		components: {
 			goods: true,
 			created: {
@@ -747,8 +747,8 @@ Clicker.onInit(function() {
 		components: {
 			building: true,
 			increases: {
-				'mined': 20,
-				'goods': 10
+				'mined': 50,
+				'goods': 15
 			},
 			created: {
 				time: 300,
@@ -789,6 +789,67 @@ Clicker.onInit(function() {
 //		}
 //	}
 //});
+	
+	Clicker.addItem({
+		name: 'Water Tank',
+		icon: 'icons/watertank/icon_30192.svg',
+		maximum: 5,
+		components: {
+			building: true,
+			increases: {
+				Water: 300
+			},
+			created: {
+				time: 150,
+				cost: {
+					'Cash': 400,
+					'Steel': 20,
+					'Copper': 20
+				},
+				gives: {
+					Water: 300
+				}
+			},
+			requires: {
+				topics: {
+					'Civics': 2,
+					'Manufacturing': 2
+				}
+			}
+		}
+	});
+	
+	
+	Clicker.addItem({
+		name: 'Battery',
+		icon: 'icons/battery/icon_2952.svg',
+		maximum: 25,
+		components: {
+			building: true,
+			increases: {
+				Energy: 300
+			},
+			created: {
+				time: 150,
+				cost: {
+					'Cash': 400,
+					'Steel': 20,
+					'Copper': 40,
+					'Silicon': 5,
+					'Gold': 5
+				},
+				gives: {
+					Energy: 300
+				}
+			},
+			requires: {
+				topics: {
+					'Technology': 2,
+					'Manufacturing': 1
+				}
+			}
+		}
+	});
 
 	Clicker.addItem({
 		name: 'Mine',
@@ -870,7 +931,7 @@ Clicker.onInit(function() {
 			}
 		}
 	});
-
+	
 
 	Clicker.addItem({
 		name: 'Office',
@@ -909,6 +970,37 @@ Clicker.onInit(function() {
 		}
 	});
 
+	
+	Clicker.addItem({
+		name: 'School',
+		icon: 'icons/school/icon_4405.svg',
+		maximum: 5,
+		components: {
+			building: true,
+			improves: {
+				Brainpower: 0.04
+			},
+			increases: {
+				Teacher: 3
+			},
+			created: {
+				time: 300,
+				cost: {
+					'Cash': 750,
+					'Cement': 100,
+					'Wood': 100,
+					'Book': 20
+				}
+			},
+			requires: {
+				topics: {
+					'Education': 2
+				}
+			}
+		}
+	});
+
+
 	Clicker.addItem({
 		name: 'Clinic',
 		icon: 'icons/clinic/icon_50644.svg',
@@ -937,7 +1029,7 @@ Clicker.onInit(function() {
 			created: {
 				time: 300,
 				cost: {
-					'Cash': 500,
+					'Cash': 750,
 					'Glass': 15,
 					'Iron': 20,
 					'Copper': 20
@@ -951,6 +1043,91 @@ Clicker.onInit(function() {
 			}
 		}
 	});
+	
+	Clicker.addItem({
+		name: 'Solar Panel',
+		icon: 'icons/solar/icon_2062.svg',
+		maximum: 5,
+		components: {
+			building: true,
+			improves: {
+				Energy: 0.10
+			},
+			worker: {
+				rate: 6,
+				provides: {
+					Energy: 1
+				}
+			},
+			consumer: {
+				rate: 30,
+				consumes: {
+					Water: 10,
+				}
+			},
+			created: {
+				time: 100,
+				cost: {
+					'Cash': 200,
+					'Glass': 10,
+					'Steel': 2,
+					'Silicon': 10
+				}
+			},
+			requires: {
+				topics: {
+					'Education': 2,
+					'Technology': 3
+				}
+			}
+		}
+	});
+	
+	Clicker.addItem({
+		name: 'Water Recycling Plant',
+		icon: 'icons/watertreatment/icon_1132.svg',
+		maximum: 5,
+		components: {
+			building: true,
+			improves: {
+				Water: 0.05
+			},
+			increases: {
+				Water: 500,
+			},
+			worker: {
+				rate: 7,
+				provides: {
+					Water: 1
+				}
+			},
+			consumer: {
+				rate: 7,
+				consumes: {
+					Pollution: 1,
+					Energy: 1
+				}
+			},
+			created: {
+				time: 400,
+				cost: {
+					'Cash': 5000,
+					'Glass': 50,
+					'Steel': 100,
+					'Reinforced Concrete': 10,
+					'Computer': 1,
+					'Gold': 20
+				}
+			},
+			requires: {
+				topics: {
+					'Civics': 2,
+					'Economics': 3
+				}
+			}
+		}
+	});
+
 
 	Clicker.addItem({
 		name: 'Bank',
@@ -992,73 +1169,6 @@ Clicker.onInit(function() {
 		}
 	});
 
-	Clicker.addItem({
-		name: 'Solar Panel',
-		icon: 'icons/solar/icon_2062.svg',
-		maximum: 5,
-		components: {
-			building: true,
-			improves: {
-				Energy: 0.10
-			},
-			worker: {
-				rate: 6,
-				provides: {
-					Energy: 1
-				}
-			},
-			consumer: {
-				rate: 30,
-				consumes: {
-					Water: 10,
-				}
-			},
-			created: {
-				time: 100,
-				cost: {
-					'Cash': 200,
-					'Glass': 10,
-					'Steel': 2,
-					'Silicon': 10
-				}
-			},
-			requires: {
-				topics: {
-					'Education': 2,
-					'Technology': 4
-				}
-			}
-		}
-	});
-
-	Clicker.addItem({
-		name: 'School',
-		icon: 'icons/school/icon_4405.svg',
-		maximum: 5,
-		components: {
-			building: true,
-			improves: {
-				Brainpower: 0.15
-			},
-			increases: {
-				Teacher: 3
-			},
-			created: {
-				time: 300,
-				cost: {
-					'Cash': 1000,
-					'Cement': 100,
-					'Wood': 100,
-					'Book': 20
-				}
-			},
-			requires: {
-				topics: {
-					'Education': 2
-				}
-			}
-		}
-	});
 
 
 	Clicker.addItem({
@@ -1089,7 +1199,7 @@ Clicker.onInit(function() {
 			created: {
 				time: 600,
 				cost: {
-					'Cash': 1500,
+					'Cash': 50000,
 					'Glass': 30,
 					'Steel': 20,
 					'Computer': 5
@@ -1111,15 +1221,16 @@ Clicker.onInit(function() {
 		components: {
 			building: true,
 			improves: {
-				Brainpower: 0.50
+				Brainpower: 0.30
 			},
 			increases: {
+				Engineer: 10,
 				Professor: 3
 			},
 			created: {
 				time: 1200,
 				cost: {
-					'Cash': 10000,
+					'Cash': 100000,
 					'Reinforced Concrete': 20,
 					'Steel': 100,
 					'Computer': 15
@@ -1142,7 +1253,7 @@ Clicker.onInit(function() {
 		components: {
 			building: true,
 			improves: {
-				Energy: 0.75
+				Energy: 0.5
 			},
 			worker: {
 				rate: 5,
@@ -1168,7 +1279,7 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Manufacturing': 4
+					'Manufacturing': 5
 				},
 				items: {
 					University: 1,
@@ -1177,7 +1288,6 @@ Clicker.onInit(function() {
 			}
 		}
 	});
-	
 
 	Clicker.addTopic({
 		increaseBy: 10,
