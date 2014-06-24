@@ -499,6 +499,21 @@ Clicker.onInit(function() {
 			}
 		}
 	});
+	
+	Clicker.addItem({
+		name: 'Actinide',
+		icon: 'icons/actinide/icon_50501.svg',
+		maximum: 10,
+		components: {
+			'mined': { rate: 5 },
+			created: {
+				time: 1,
+				cost: {
+					'Cash': 200
+				}
+			}
+		}
+	});
 
 	Clicker.addItem({
 		name: 'Glass',
@@ -679,7 +694,27 @@ Clicker.onInit(function() {
 		}
 	});
 
-
+	Clicker.addItem({
+		name: 'FuelRod',
+		icon: 'icons/fuelrod/icon_36099.svg',
+		maximum: 200,
+		components: {
+			goods: true,
+			created: {
+				time: 100,
+				cost: {
+					'Gold': 5,
+					'Actinide': 10
+				}
+			},
+			requires: {
+				topics: {
+					'Technology': 3,
+					'Manufacturing': 4
+				}
+			}
+		}
+	});
 
 // Buildings
 
@@ -1084,10 +1119,10 @@ Clicker.onInit(function() {
 			created: {
 				time: 1200,
 				cost: {
-					'Cash': 10,
-					'Reinforced Concrete': 100,
+					'Cash': 10000,
+					'Reinforced Concrete': 20,
 					'Steel': 100,
-					'Computer': 100
+					'Computer': 15
 				}
 			},
 			requires: {
@@ -1098,6 +1133,51 @@ Clicker.onInit(function() {
 			}
 		}
 	});
+	
+	
+	Clicker.addItem({
+		name: 'Nuclear Plant',
+		icon: 'icons/nuclearplant/icon_42473.svg',
+		maximum: 5,
+		components: {
+			building: true,
+			improves: {
+				Energy: 0.75
+			},
+			worker: {
+				rate: 5,
+				provides: {
+					Energy: 10
+				}
+			},
+			consumer: {
+				rate: 30,
+				consumes: {
+					Water: 20,
+					FuelRod: 5
+				}
+			},
+			created: {
+				time: 1200,
+				cost: {
+					'Cash': 10000,
+					'Reinforced Concrete': 100,
+					'Steel': 200,
+					'Computer': 20
+				}
+			},
+			requires: {
+				topics: {
+					'Manufacturing': 4
+				},
+				items: {
+					University: 1,
+					Hospital: 1
+				}
+			}
+		}
+	});
+	
 
 	Clicker.addTopic({
 		increaseBy: 10,
