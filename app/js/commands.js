@@ -18,8 +18,8 @@ Clicker.onInit(function() {
 					stats[this.context.name] += 1;
 				}
 				
-				if (stats[this.context.name] % 1000 === 0 && current.bonus) {
-					var toAdd = stats[this.context.name] / 1000;
+				if (stats[this.context.name] % 100 === 0 && current.bonus) {
+					var toAdd = stats[this.context.name] / 100;
 					Clicker.message(stats[this.context.name] + " click bonus awarded - Keep clicking!", 'good', current.name);
 					increase = toAdd * current.bonus;
 				}
