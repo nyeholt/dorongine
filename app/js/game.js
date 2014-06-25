@@ -92,7 +92,7 @@
 				topics: {
 
 				},
-				stats: {amounts: {max_val: 0}, rates: {max_val: 0}, totals: {max_val: 0}},
+				stats: {amounts: {max_val: 0}, rates: {max_val: 0}, totals: {max_val: 0}, clicks: {max_val: 0}},
 				buildQueue: [],
 				transactions: [],
 				messages: [],

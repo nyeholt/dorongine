@@ -6,6 +6,7 @@ Clicker.onInit(function() {
 		name: 'Cash',
 		color: '#01832D',
 		maximum: 1000000,
+		bonus: 300,			// bonus after 1000 clicks
 		icon: 'icons/cash/icon_2709.svg',
 		formattedAmount: function() {
 			return Number(this.amount).toFixed(2);
@@ -20,6 +21,7 @@ Clicker.onInit(function() {
 		name: 'Brainpower',
 		color: '#E60084',
 		icon: 'icons/brain/icon_38934.svg',
+		bonus: 300,			// bonus after 1000 clicks
 		maximum: 1000,
 		formattedAmount: function() {
 			return Number(this.amount).toFixed(2);
@@ -34,6 +36,7 @@ Clicker.onInit(function() {
 		name: 'Energy',
 		color: '#F9B700',
 		icon: 'icons/energy/icon_2766.svg',
+		bonus: 300,			// bonus after 1000 clicks
 		maximum: 1000,
 		formattedAmount: function() {
 			return Number(this.amount).toFixed(2);
@@ -49,6 +52,7 @@ Clicker.onInit(function() {
 		color: '#4F1700',
 		icon: 'icons/ore/icon_13384.svg',
 		maximum: 1000,
+		bonus: 300,			// bonus after 1000 clicks
 		formattedAmount: function() {
 			return Number(this.amount).toFixed(2);
 		},
@@ -63,6 +67,7 @@ Clicker.onInit(function() {
 		color: '#0059A9',
 		icon: 'icons/water/icon_3168.svg',
 		maximum: 1000,
+		bonus: 300,			// bonus after 1000 clicks
 		formattedAmount: function() {
 			return Number(this.amount).toFixed(2);
 		},
