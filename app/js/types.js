@@ -302,7 +302,7 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Education': 2
+					'Education': 1
 				},
 				items: {
 					'School': 1
@@ -998,15 +998,15 @@ Clicker.onInit(function() {
 			created: {
 				time: 300,
 				cost: {
-					'Cash': 750,
-					'Cement': 100,
-					'Wood': 100,
-					'Book': 20
+					'Cash': 300,
+					'Cement': 10,
+					'Wood': 30,
+					'Book': 5
 				}
 			},
 			requires: {
 				topics: {
-					'Education': 2
+					'Education': 1
 				}
 			}
 		}

@@ -14,13 +14,14 @@ Clicker.start();
 		})
 		
 		$(document).on('click', function () {
-			var items = Clicker.game().byComponent('raw');
-			var rand = Clicker.random(0, items.length - 1);
-			var cmd = Clicker.newCommand('collectItem', items[rand]);
-			Clicker.runCommand(cmd);
+			
 		})
 
 		var graphDiv;
+		var closeGraph = function () {
+			graphDiv.hide();
+		};
+		
 		$(document).on('click','#graphbtn', function () {
 			if (!graphDiv) {
 				graphDiv = $('<div id="graphdiv-container"><span id="graph">Loading...</span></div>');
@@ -40,9 +41,10 @@ Clicker.start();
 			}
 			
 			if (graphDiv.is(':visible')) {
-				graphDiv.hide();
+				closeGraph();
 				return;
 			}
+			graphDiv.click(closeGraph);
 			graphDiv.show();
 			
 			var data = Clicker.game().stats.amounts;

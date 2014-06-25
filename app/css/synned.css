@@ -152,7 +152,9 @@ body {
 	background-color: #d6e9c6;
 }
 
-
+#knowledge progress {
+	width: 100%;
+}
 
 .buildQueueItem {
 	height: 20px;

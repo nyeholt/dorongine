@@ -92,7 +92,7 @@
 				topics: {
 
 				},
-				stats: {amounts: {}, rates: {}, totals: {}},
+				stats: {amounts: {max_val: 0}, rates: {max_val: 0}, totals: {max_val: 0}},
 				buildQueue: [],
 				transactions: [],
 				messages: [],
@@ -175,20 +175,36 @@
 				knowledge: 0,
 				level: 0,
 				target: 100,
+				active: false,
 				percentage: 0
 			};
-			this.ractive.observe('game.topics.' + topic.name +'.percentage', this.updateTopics);
+			this.ractive.observe('game.topics.' + topic.name +'.active', this.updateTopics);
 //			this.ractive.set('game', game);
 		},
 		updateTopics: function () {
 			var currentAmount = 0;
+			var active = [];
 			for (var k in game.topics) {
+				currentAmount++;
 				var topic = game.topics[k];
-				topic.percentage = parseInt(topic.percentage);
-				currentAmount += topic.percentage;
-				if (currentAmount > 100) {
-					topic.percentage = 0;
+				if (topic.active) {
+					active.push(topic);
 				}
+				topic.percentage = 0;
+//				topic.percentage = parseInt(topic.percentage);
+//				currentAmount += topic.percentage;
+//				if (currentAmount > 100) {
+//					topic.percentage = 0;
+//				}
+			}
+			
+			if (active.length === 0) {
+				return;
+			}
+			
+			var perc = Math.floor(100 * (1 / active.length));
+			for (var i in active) {
+				active[i].percentage = perc;
 			}
 		},
 		addCommand: function (command) {
@@ -254,6 +270,7 @@
 		save: function () {
 			var data = JSON.stringify(game);
 			localStorage.setItem(this.name + '-game', data);
+			this.message("Saved", "good");
 		},
 		load: function () {
 			var data = localStorage.getItem(this.name + '-game');
@@ -303,7 +320,7 @@
 						var items = Clicker.game().byComponent(type);
 						if (items && items.length) {
 							for (var i = 0; i < items.length; i++) {
-								if (items[type].fixed) {
+								if (items[i].fixed) {
 									continue;
 								}
 								items[i].maximum += this.components.increases[type];
