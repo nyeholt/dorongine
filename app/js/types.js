@@ -221,7 +221,7 @@ Clicker.onInit(function() {
 				rate: 5,
 				provides: {
 					Water: 2,
-					Brainpower: 0.1
+					Energy: 2
 				}
 			},
 			created: {
@@ -234,7 +234,7 @@ Clicker.onInit(function() {
 			consumer: {// consumers 
 				rate: 30,
 				consumes: {
-					Energy: 3
+					Cash: 5
 				}
 			},
 			requires: {
@@ -302,7 +302,8 @@ Clicker.onInit(function() {
 			consumer: {// consumers 
 				rate: 30,
 				consumes: {
-					Energy: 10
+					Energy: 4,
+					Cash: 5
 				}
 			},
 			requires: {
@@ -410,7 +411,7 @@ Clicker.onInit(function() {
 		icon: 'icons/coal/icon_16776.svg',
 		maximum: 50,
 		components: {
-			'mined': {rate: 90},
+			'mined': {rate: 95},
 			created: {
 				time: 1,
 				cost: {
@@ -459,7 +460,7 @@ Clicker.onInit(function() {
 		icon: 'icons/iron/icon_25438.svg',
 		maximum: 20,
 		components: {
-			'mined': {rate: 50},
+			'mined': {rate: 70},
 			created: {
 				time: 1,
 				cost: {
@@ -474,7 +475,7 @@ Clicker.onInit(function() {
 		icon: 'icons/copper/icon_15400.svg',
 		maximum: 20,
 		components: {
-			'mined': {rate: 20},
+			'mined': {rate: 60},
 			created: {
 				time: 1,
 				cost: {
@@ -490,7 +491,7 @@ Clicker.onInit(function() {
 		icon: 'icons/silicon/icon_53365.svg',
 		maximum: 10,
 		components: {
-			'mined': {rate: 10},
+			'mined': {rate: 20},
 			created: {
 				time: 1,
 				cost: {
@@ -820,7 +821,6 @@ Clicker.onInit(function() {
 				time: 150,
 				cost: {
 					'Cash': 400,
-					'Steel': 20,
 					'Copper': 20
 				},
 				gives: {
@@ -850,10 +850,9 @@ Clicker.onInit(function() {
 				time: 150,
 				cost: {
 					'Cash': 400,
-					'Steel': 20,
-					'Copper': 40,
-					'Silicon': 5,
-					'Gold': 5
+					'Copper': 20,
+					Gold: 5,
+					'Silicon': 5
 				},
 				gives: {
 					Energy: 300

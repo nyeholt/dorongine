@@ -27,12 +27,6 @@
 				</div>
 				{{/ game}}
 				
-				<div class="raw-res">
-					<button id="graphbtn">~</button>
-					<button id="save">save</button>
-					<button id="load">load</button>
-					<div class="resource-count">Graph</div>
-				</div>
 				
 			</div>
 		
@@ -320,6 +314,23 @@
 					<span class="msg-time">{{time.toLocaleTimeString()}}</span> {{message}}
 					</div>
 					{{/game.messages}}
+					<div class="emptyfor spacing">&nbsp;</div>
+				</div>
+				
+				<div id="options" class="queue-container right-align-contents">
+					<div class="graphopts">
+						<select id="graphsrc">
+							<option value="amounts">Amounts</option>
+							<option value="rates">Rates</option>
+							<option value="totals">Total</option>
+						</select>
+						<button id="graphbtn">~</button>
+					</div>
+					<div>
+						<button id="load">load</button>
+						<button id="save">save</button>
+						
+					</div>
 				</div>
 				
 			</div>

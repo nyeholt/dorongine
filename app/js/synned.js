@@ -47,13 +47,14 @@ Clicker.start();
 			graphDiv.click(closeGraph);
 			graphDiv.show();
 			
-			var data = Clicker.game().stats.amounts;
+			var src = $('#graphsrc').val();
+			var data = Clicker.game().stats[src];
 			
 			var max = data.max_val;
 			var drawn = false;
 			for (var key in data) {
-				if (key == 'max_val') {
-					break;
+				if (key === 'max_val') {
+					continue;
 				}
 
 				// create the graph

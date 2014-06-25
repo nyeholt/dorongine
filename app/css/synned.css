@@ -133,7 +133,7 @@ body {
 }
 
 .queue-container {
-	width: 49%;
+	width: 33%;
 	float: left;
 }
 
@@ -178,4 +178,10 @@ body {
 
 button {
 	border-radius: 5px;
+	min-width: 30px;
+	min-height: 30px;
+}
+
+.right-align-contents {
+	text-align: right;
 }

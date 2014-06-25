@@ -20,7 +20,7 @@ Clicker.onInit(function() {
 				
 				if (stats[this.context.name] % 100 === 0 && current.bonus) {
 					var toAdd = stats[this.context.name] / 100;
-					Clicker.message(stats[this.context.name] + " click bonus awarded - Keep clicking!", 'good', current.name);
+					Clicker.message(stats[this.context.name] + " click bonus awarded for " + current.name + " - Keep clicking!", 'good', current.name);
 					increase = toAdd * current.bonus;
 				}
 

@@ -295,6 +295,10 @@ Clicker.onInit(function() {
 		},
 		tally: function() {
 			// we actually add the total on now
+			if (!this.current.item.add) {
+				Clicker.log("Missing item func - probably due to saving with a partially complete build queue");
+				this.current.item = Clicker.game().items[this.current.item.name];
+			}
 			this.current.item.add(this.current.volume);
 			
 			if (this.current.item.components.created.gives) {

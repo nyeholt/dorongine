@@ -402,7 +402,7 @@
 		}
 	};
 	
-	var seed = (new Date()).getTime() % 100000;
+	var seed = (new Date()).getTime() % 100000;	
 
 	window.Clicker = new ClickerGame(seed);
 
