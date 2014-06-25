@@ -197,10 +197,12 @@
 							{{/components}}
 							</td>
 
-
-								<td>
+							<td>
 							{{#components.created.cost :resource}}
 							<span class="requirement"><img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}</span>
+							{{/components}}
+							{{#components.requires.items :item}}
+								<span class="requirement"><img title="{{item}}" src="{{iconfor(item)}}" class="required-icon" /> {{this}}</span>
 							{{/components}}
 							</td>
 
@@ -258,6 +260,9 @@
 							<td>
 							{{#components.requires.topics :topic}}
 								<span class="requirement"><img title="{{topic}}" src="{{iconfor(topic)}}" class="required-icon" /> {{this}}</span>
+							{{/components}}
+							{{#components.requires.items :item}}
+								<span class="requirement"><img title="{{item}}" src="{{iconfor(item)}}" class="required-icon" /> {{this}}</span>
 							{{/components}}
 							</td>
 

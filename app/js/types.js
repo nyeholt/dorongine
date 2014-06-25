@@ -239,7 +239,7 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Civics': 2
+					'Civics': 1
 				}
 			}
 		}
@@ -405,7 +405,7 @@ Clicker.onInit(function() {
 			}
 		}
 	});
-	
+
 	Clicker.addItem({
 		name: 'Coal',
 		icon: 'icons/coal/icon_16776.svg',
@@ -807,6 +807,66 @@ Clicker.onInit(function() {
 //		}
 //	}
 //});
+
+	Clicker.addItem({
+		name: 'Water Pump',
+		icon: 'icons/pump/icon_24191.svg',
+		maximum: 5,
+		components: {
+			building: true,
+			created: {
+				time: 150,
+				cost: {
+					'Cash': 300,
+					'Iron': 20
+				},
+				worker: {
+					rate: 32,
+					provides: {
+						Water: 2
+					}
+				},
+			},
+			requires: {
+				topics: {
+					'Manufacturing': 1
+				},
+				items: {
+					Engineer: 1
+				}
+			}
+		}
+	});
+	
+	Clicker.addItem({
+		name: 'Sewer',
+		icon: 'icons/sewer/icon_30146.svg',
+		maximum: 5,
+		components: {
+			building: true,
+			created: {
+				time: 150,
+				cost: {
+					'Cash': 300,
+					'Copper': 20
+				},
+				worker: {
+					rate: 32,
+					provides: {
+						Pollution: -2
+					}
+				},
+			},
+			requires: {
+				topics: {
+					'Manufacturing': 1
+				},
+				items: {
+					Engineer: 1
+				}
+			}
+		}
+	});
 	
 	Clicker.addItem({
 		name: 'Water Tank',
@@ -1112,9 +1172,9 @@ Clicker.onInit(function() {
 				Water: 500,
 			},
 			worker: {
-				rate: 7,
+				rate: 33,
 				provides: {
-					Water: 1
+					Water: 10
 				}
 			},
 			consumer: {

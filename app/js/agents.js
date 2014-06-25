@@ -175,6 +175,11 @@ Clicker.onInit(function() {
 							topic.knowledge = 0;
 
 							topic.target = Math.pow(topic.level + 2, 3) * 100;
+							
+							// if our education level is < 3, we reduce things
+							if (Clicker.game().topics.Education && Clicker.game().topics.Education.level < 4) {
+								topic.target = topic.target * .66;
+							}
 
 							if (topic.level < this.maxLevel) {
 								topic.level++;
