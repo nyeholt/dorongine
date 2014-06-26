@@ -2,6 +2,8 @@
 <html>
 
 	<head>
+		<meta content='user-scalable=0' name='viewport' />
+
 		<title>Synned</title>
 		<link href="css/bootstrap.css" rel="stylesheet" type="text/css"></link>
 		<link href="css/bootstrap-theme.css" rel="stylesheet" type="text/css"></link>
@@ -195,21 +197,23 @@
 							{{#components.requires.topics :topic}}
 								<span class="requirement"><img title="{{topic}}" src="{{iconfor(topic)}}" class="required-icon" /> {{this}}</span>
 							{{/components}}
-							</td>
-
-							<td>
-							{{#components.created.cost :resource}}
-							<span class="requirement"><img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}</span>
-							{{/components}}
 							{{#components.requires.items :item}}
 								<span class="requirement"><img title="{{item}}" src="{{iconfor(item)}}" class="required-icon" /> {{this}}</span>
 							{{/components}}
 							</td>
 
 							<td>
+							{{#components.created.cost :resource}}
+							<span class="requirement"><img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}</span>
+							{{/components}}
+							
+							</td>
+
+							<td>
 							{{#components.consumer.consumes :resource}}
 							<span class="requirement"><img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}</span>
 							{{/components}}
+							
 							</td>
 
 
@@ -277,8 +281,10 @@
 							{{#components.consumer.consumes :resource}}
 							<span class="requirement"><img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}</span>
 							{{/components}}
+							{{#rates.consumer}}
+							/ {{rates.consumer}} ticks
+							{{/rates}}
 							</td>
-
 
 							<td>
 							{{#components.worker.provides :resource}}
@@ -316,7 +322,7 @@
 				<div id="messages" class="queue-container">
 					{{#game.messages}}
 					<div class="message {{class}}">
-					<span class="msg-time">{{time.toLocaleTimeString()}}</span> {{message}}
+					<span class="msg-time">{{time}}</span> {{message}}
 					</div>
 					{{/game.messages}}
 					<div class="emptyfor spacing">&nbsp;</div>

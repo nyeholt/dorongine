@@ -1,7 +1,5 @@
 
 Clicker.onInit(function() {
-
-	
 	Clicker.addItem({
 		name: 'Cash',
 		color: '#01832D',
@@ -620,7 +618,7 @@ Clicker.onInit(function() {
 		components: {
 			goods: true,
 			created: {
-				time: 5,
+				time: 3,
 				cost: {
 					'Cement': 1,
 					'Steel': 1,
@@ -652,7 +650,7 @@ Clicker.onInit(function() {
 					'Manufacturing': 1
 				},
 				items: {
-					'Miner': 20
+					'Miner': 5
 				}
 			},
 			improves: {
@@ -668,7 +666,7 @@ Clicker.onInit(function() {
 		components: {
 			goods: true,
 			created: {
-				time: 20,
+				time: 10,
 				cost: {
 					'Gold': 1,
 					'Silicon': 2,
@@ -691,7 +689,7 @@ Clicker.onInit(function() {
 		components: {
 			goods: true,
 			created: {
-				time: 100,
+				time: 50,
 				cost: {
 					'Gold': 1,
 					'Chip': 2,
@@ -732,6 +730,56 @@ Clicker.onInit(function() {
 			}
 		}
 	});
+	
+	
+	Clicker.addItem({
+		name: 'Outsource Thinking',
+		icon: 'icons/brain/icon_38934.svg',
+		maximum: 10,
+		fixed: true,
+		components: {
+			goods: true,
+			created: {
+				time: 120,
+				cost: {
+					'Cash': 1000
+				},
+				gives: {
+					Brainpower: 1000
+				}
+			},
+			requires: {
+				items: {
+					Cash: 2000
+				}
+			}
+		}
+	});
+	
+	Clicker.addItem({
+		name: 'Sunburst',
+		icon: 'icons/energy/icon_2766.svg',
+		maximum: 10,
+		fixed: true,
+		components: {
+			goods: true,
+			created: {
+				time: 120,
+				cost: {
+					'Cash': 1000
+				},
+				gives: {
+					Energy: 1000
+				}
+			},
+			requires: {
+				items: {
+					Cash: 2000
+				}
+			}
+		}
+	});
+	
 
 // Buildings
 
@@ -769,12 +817,11 @@ Clicker.onInit(function() {
 				'goods': 15
 			},
 			created: {
-				time: 300,
+				time: 100,
 				cost: {
 					'Cash': 200,
-					'Wood': 40,
-					'Cement': 10,
-					'Iron': 10
+					'Wood': 20,
+					'Cement': 10
 				}
 			},
 			requires: {
@@ -818,14 +865,15 @@ Clicker.onInit(function() {
 				time: 150,
 				cost: {
 					'Cash': 300,
-					'Iron': 20
-				},
-				worker: {
-					rate: 32,
-					provides: {
-						Water: 2
-					}
-				},
+					'Copper': 5
+				}
+				
+			},
+			worker: {
+				rate: 32,
+				provides: {
+					Water: 2
+				}
 			},
 			requires: {
 				topics: {
@@ -848,14 +896,15 @@ Clicker.onInit(function() {
 				time: 150,
 				cost: {
 					'Cash': 300,
-					'Copper': 20
-				},
-				worker: {
-					rate: 32,
-					provides: {
-						Pollution: -2
-					}
-				},
+					'Iron': 10
+				}
+				
+			},
+			consumer: {
+				rate: 7,
+				consumes: {
+					Pollution: 2
+				}
 			},
 			requires: {
 				topics: {
@@ -878,9 +927,9 @@ Clicker.onInit(function() {
 				Water: 300
 			},
 			created: {
-				time: 150,
+				time: 250,
 				cost: {
-					'Cash': 400,
+					'Cash': 1000,
 					'Copper': 20
 				},
 				gives: {
@@ -896,7 +945,6 @@ Clicker.onInit(function() {
 		}
 	});
 	
-	
 	Clicker.addItem({
 		name: 'Battery',
 		icon: 'icons/battery/icon_2952.svg',
@@ -909,8 +957,8 @@ Clicker.onInit(function() {
 			created: {
 				time: 150,
 				cost: {
-					'Cash': 400,
-					'Copper': 20,
+					'Cash': 500,
+					'Copper': 10,
 					Gold: 5,
 					'Silicon': 5
 				},
@@ -981,7 +1029,7 @@ Clicker.onInit(function() {
 				rate: 4,
 				provides: {
 					Energy: 1,
-					Pollution: -2
+					Pollution: -1.5
 				}
 			},
 			consumer: {
@@ -1054,7 +1102,7 @@ Clicker.onInit(function() {
 		components: {
 			building: true,
 			improves: {
-				Brainpower: 0.04
+				Brainpower: 0.08
 			},
 			increases: {
 				Teacher: 3
@@ -1172,27 +1220,27 @@ Clicker.onInit(function() {
 				Water: 500,
 			},
 			worker: {
-				rate: 33,
+				rate: 23,
 				provides: {
 					Water: 10
 				}
 			},
 			consumer: {
-				rate: 7,
+				rate: 13,
 				consumes: {
-					Pollution: 1,
-					Energy: 1
+					Pollution: 50,
+					Energy: 3
 				}
 			},
 			created: {
 				time: 400,
 				cost: {
 					'Cash': 5000,
-					'Glass': 50,
-					'Steel': 100,
+					'Glass': 20,
+					'Steel': 40,
 					'Reinforced Concrete': 10,
 					'Computer': 1,
-					'Gold': 20
+					'Gold': 10
 				}
 			},
 			requires: {
@@ -1216,7 +1264,7 @@ Clicker.onInit(function() {
 			},
 			increases: {
 				Banker: 5,
-				Cash: 250000
+				Cash: 50000
 			},
 //		worker: {
 //			rate: 4,
@@ -1228,12 +1276,12 @@ Clicker.onInit(function() {
 			created: {
 				time: 500,
 				cost: {
-					'Cash': 5000,
-					'Glass': 50,
-					'Steel': 100,
-					'Reinforced Concrete': 50,
-					'Computer': 10,
-					'Gold': 50
+					'Cash': 50000,
+					'Glass': 20,
+					'Steel': 20,
+					'Reinforced Concrete': 20,
+					'Computer': 5,
+					'Gold': 30
 				}
 			},
 			requires: {
@@ -1308,7 +1356,7 @@ Clicker.onInit(function() {
 				cost: {
 					'Cash': 100000,
 					'Reinforced Concrete': 20,
-					'Steel': 100,
+					'Steel': 50,
 					'Computer': 15
 				}
 			},
@@ -1347,9 +1395,10 @@ Clicker.onInit(function() {
 			created: {
 				time: 1200,
 				cost: {
-					'Cash': 10000,
+					'Cash': 750000,
 					'Reinforced Concrete': 100,
 					'Steel': 200,
+					'Engineer': 10,
 					'Computer': 20
 				}
 			},
@@ -1376,6 +1425,8 @@ Clicker.onInit(function() {
 			if (Clicker.game().globalRates.mined > 100) {
 				Clicker.game().globalRates.mined = 100;
 			}
+			
+			Clicker.game().items.Ore.maximum += newLevel * 600;
 		}
 	});
 
@@ -1385,6 +1436,8 @@ Clicker.onInit(function() {
 		levelUp: function(newLevel) {
 			var current = Clicker.game().items.Brainpower.rates.raw;
 			Clicker.game().items.Brainpower.rates.raw = current + current * (newLevel / 10);
+			
+			Clicker.game().items.Brainpower.maximum += newLevel * 600;
 		}
 	});
 
@@ -1393,8 +1446,9 @@ Clicker.onInit(function() {
 		icon: 'icons/civics/icon_24569.svg',
 		levelUp: function(newLevel) {
 			var current = Clicker.game().items.Cash.rates.raw;
-			Clicker.game().items.Cash.rates.raw = current + current * (newLevel / 10);
+
 			Clicker.game().items.People.rates.raw = newLevel;
+			Clicker.game().items.People.maximum += newLevel * 10;
 		}
 	});
 
@@ -1403,7 +1457,7 @@ Clicker.onInit(function() {
 		icon: 'icons/economics/icon_29406.svg',
 		levelUp: function(newLevel) {
 			var current = Clicker.game().items.Cash.rates.raw;
-			Clicker.game().items.Cash.rates.raw = current + current * (newLevel / 4);
+			Clicker.game().items.Cash.rates.raw = current + current * (newLevel / 10);
 		}
 	});
 	Clicker.addTopic({
@@ -1411,7 +1465,9 @@ Clicker.onInit(function() {
 		icon: 'icons/technology/icon_1870.svg',
 		levelUp: function(newLevel) {
 			var current = Clicker.game().items.Water.rates.raw;
-			Clicker.game().items.Water.rates.raw = current + current * (newLevel / 5);
+			Clicker.game().items.Water.rates.raw = current + current * (newLevel / 10);
+			
+			Clicker.game().items.Energy.maximum += newLevel * 10;
 		}
 	});
 
@@ -1422,9 +1478,13 @@ Clicker.onInit(function() {
 			var items = Clicker.game().byComponent('building');
 			if (items && items.length) {
 				for (var i = 0; i < items.length; i++) {
+					if (items[i].fixed) {
+						continue;
+					}
 					items[i].maximum += newLevel * 4;
 				}
 			}
+			Clicker.game().items.Water.maximum += newLevel * 10;
 		}
 	});
 });

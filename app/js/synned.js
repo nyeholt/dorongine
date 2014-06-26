@@ -24,7 +24,7 @@ Clicker.start();
 		
 		$(document).on('click','#graphbtn', function () {
 			if (!graphDiv) {
-				graphDiv = $('<div id="graphdiv-container"><span id="graph">Loading...</span></div>');
+				graphDiv = $('<div id="graphdiv-container"><span id="graph">Loading...</span><div id="graphoptions"></div></div>');
 				graphDiv.css({
 					position: 'fixed',
 					top: '5%',
@@ -38,6 +38,7 @@ Clicker.start();
 					display: 'none'
 				});
 				$('body').append(graphDiv);
+				$('#graphoptions').css('height', '50px');
 			}
 			
 			if (graphDiv.is(':visible')) {
@@ -60,7 +61,7 @@ Clicker.start();
 				// create the graph
 				$('#graph').sparkline(data[key], {
 					width: '100%',
-					height: '90%',
+					height: '100%',
 					lineColor: Clicker.game().items[key].color,
 					fillColor: false,
 					chartRangeMax: max,

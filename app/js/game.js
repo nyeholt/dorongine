@@ -70,7 +70,7 @@
 				cls = '';
 			}
 			cls = type + ' ' + cls;
-			game.messages.unshift({message: message, class: cls, time: new Date() });
+			game.messages.unshift({message: message, class: cls, time: (new Date()).toLocaleTimeString() });
 			if (game.messages.length > 10) {
 				game.messages.pop();
 			}
