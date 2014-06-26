@@ -14,6 +14,15 @@
 		<div id="container">
 
 		</div>
+		
+		<div id="graphdiv-container">
+			<div id="graphoptions">
+				<div id="graphitems"></div>
+				<button id="graphclose">Close</button>
+				<button id="redraw">Redraw</button>
+			</div>
+			<span id="graph">Loading...</span>
+		</div>
 
 		<script id='template' type='text/ractive'>
 			
@@ -182,7 +191,14 @@
 						<tr>
 						<td class="build-col">
 							{{#this.canBuy(1)}}
-							<button title="{{name}}" on-tap="buyItem"><img title="{{name}}" src="{{icon}}" class="item-icon" /></button>
+							<button title="{{name}}" on-tap="buyItem">
+								<img title="{{name}}" src="{{icon}}" class="item-icon" />
+							</button>
+							{{/this}}
+							{{#this.canBuy(10)}}
+							<button title="10x {{name}}" on-tap="buyItem">
+								x 10
+							</button>
 							{{/this}}
 							{{^this.canBuy(1)}}
 							<img title="{{name}}" src="{{icon}}" class="item-icon" />

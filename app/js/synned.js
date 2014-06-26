@@ -4,6 +4,7 @@ Clicker.start();
 
 ;(function ($) {
 	$(function () {
+		var data = {};
 		
 		$(document).on('click', '#save', function () {
 			Clicker.save();
@@ -22,9 +23,41 @@ Clicker.start();
 			graphDiv.hide();
 		};
 		
+		var drawgraph = function () {
+			$('#graph').text('Loading...');
+			var max = data.max_val;
+			var drawn = false;
+			
+			var include = $('[name=graphitem]');
+			
+			include.each(function () {
+				var key = $(this).val();
+				if ($(this).is(':checked')) {
+					// create the graph
+					$('#graph').sparkline(data[key], {
+						width: '100%',
+						height: '100%',
+						lineColor: Clicker.game().items[key].color,
+						fillColor: false,
+	//					chartRangeMax: max,
+						composite: drawn
+					});
+
+					drawn = true;
+				}
+				
+			});
+		}
+		
 		$(document).on('click','#graphbtn', function () {
+			var src = $('#graphsrc').val();
+			data = Clicker.game().stats[src];
+			if (!data) {
+				return;
+			}
+
 			if (!graphDiv) {
-				graphDiv = $('<div id="graphdiv-container"><span id="graph">Loading...</span><div id="graphoptions"></div></div>');
+				graphDiv = $('#graphdiv-container');
 				graphDiv.css({
 					position: 'fixed',
 					top: '5%',
@@ -39,37 +72,32 @@ Clicker.start();
 				});
 				$('body').append(graphDiv);
 				$('#graphoptions').css('height', '50px');
+
+				$('#graphclose').click(closeGraph);
+				$('#redraw').click(drawgraph);
 			}
-			
-			if (graphDiv.is(':visible')) {
-				closeGraph();
-				return;
-			}
-			graphDiv.click(closeGraph);
-			graphDiv.show();
-			
-			var src = $('#graphsrc').val();
-			var data = Clicker.game().stats[src];
-			
-			var max = data.max_val;
-			var drawn = false;
+
+			var graphItems = $('#graphitems');
+			graphItems.empty();
+
 			for (var key in data) {
 				if (key === 'max_val') {
 					continue;
 				}
+				var opt = $('<input type="checkbox" name="graphitem" checked>');
+				opt.val(key);
 
-				// create the graph
-				$('#graph').sparkline(data[key], {
-					width: '100%',
-					height: '100%',
-					lineColor: Clicker.game().items[key].color,
-					fillColor: false,
-					chartRangeMax: max,
-					composite: drawn
-				});
-
-				drawn = true;
+				graphItems.append($('<label>').append(opt).append(key));
 			}
+
+			if (graphDiv.is(':visible')) {
+				closeGraph();
+				return;
+			}
+			
+			graphDiv.show();
+			
+			drawgraph();
 		});
 	});
 })(jQuery);
