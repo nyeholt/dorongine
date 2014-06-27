@@ -6,6 +6,11 @@ Clicker.start();
 	$(function () {
 		var data = {};
 		
+		$(document).on('click', '#restart', function () {
+			Clicker.init();
+			Clicker.start();
+		})
+		
 		$(document).on('click', '#save', function () {
 			Clicker.save();
 		})

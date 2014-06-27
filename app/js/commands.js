@@ -35,7 +35,8 @@ Clicker.onInit(function() {
 		name: 'buyItem',
 		execute: function() {
 			var item = this.context;
-			var volume = this.volume ? this.volume : 1;
+			
+			var volume = this.volume ? this.volume : (item.buyVolume ? parseInt(item.buyVolume) : 1);
 			if (item.canBuy(volume) && item.canAdd(volume)) {
 				Clicker.queueBuild(item, volume);
 			}
@@ -46,9 +47,9 @@ Clicker.onInit(function() {
 		name: 'sellItem',
 		execute: function() {
 			var item = this.context;
-			var volume = this.volume ? this.volume : 1;
+			var volume = this.volume ? this.volume : (item.buyVolume ? parseInt(item.buyVolume) : 1);
 			if (item.amount > volume) {
-				Clicker.queueBuild(item, volume);
+				
 			}
 		}
 	})
@@ -73,9 +74,9 @@ Clicker.onInit(function() {
 
 				nextRand = Clicker.random() * 100;
 
-				if (toMine && toMine.rates.mined > nextRand) {
+				if (toMine && toMine.rates.mined > nextRand && toMine.canAdd(1)) {
 					toMine.add(1);
-				}
+				} 
 			}
 		}
 	});

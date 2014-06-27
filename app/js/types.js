@@ -642,7 +642,7 @@ Clicker.onInit(function() {
 			created: {
 				time: 5,
 				cost: {
-					'Steel': 20
+					'Steel': 3 
 				}
 			},
 			requires: {
@@ -862,7 +862,7 @@ Clicker.onInit(function() {
 		components: {
 			building: true,
 			created: {
-				time: 150,
+				time: 20,
 				cost: {
 					'Cash': 300,
 					'Copper': 5
@@ -1264,7 +1264,7 @@ Clicker.onInit(function() {
 			},
 			increases: {
 				Banker: 5,
-				Cash: 50000
+				Cash: 1000000
 			},
 //		worker: {
 //			rate: 4,
@@ -1382,13 +1382,13 @@ Clicker.onInit(function() {
 			worker: {
 				rate: 5,
 				provides: {
-					Energy: 10
+					Energy: 50
 				}
 			},
 			consumer: {
 				rate: 30,
 				consumes: {
-					Water: 20,
+					Water: 100,
 					FuelRod: 5
 				}
 			},
@@ -1436,7 +1436,6 @@ Clicker.onInit(function() {
 		levelUp: function(newLevel) {
 			var current = Clicker.game().items.Brainpower.rates.raw;
 			Clicker.game().items.Brainpower.rates.raw = current + current * (newLevel / 10);
-			
 			Clicker.game().items.Brainpower.maximum += newLevel * 600;
 		}
 	});

@@ -143,6 +143,9 @@
 			if (!item.components) {
 				item.components = {};
 			}
+			if (!item.buyVolume) {
+				item.buyVolume = 1;
+			}
 			
 //			types.items[item.name] = item;
 
@@ -282,6 +285,9 @@
 			game.byComponent = byComponent;
 			for (var type in game.items) {
 				game.items[type] = jQuery.extend({}, Item, game.items[type]);
+				if (!game.items[type].buyVolume) {
+					game.items[type].buyVolume = 1;
+				}
 			}
 		},
 		random: function (min, max) {
@@ -359,7 +365,7 @@
 		canBuy: function (volume) {
 			var item = this;
 			if (!volume) {
-				volume = 1;
+				volume = item.buyVolume ? parseInt(item.buyVolume) : 1;
 			}
 			var okay = true;
 			if (item.components.created && item.components.created.cost) {
@@ -395,9 +401,6 @@
 			if (game.items[name]) {
 				return game.items[name].icon;
 			}
-			
-			console.log("Iconfor " + name);
-			
 			return types.topics[name].icon;
 		}
 	};

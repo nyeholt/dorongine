@@ -239,8 +239,12 @@ Clicker.onInit(function() {
 			}
 			volume = volume ? volume : 1;
 			if (this.payFor(item, volume)) {
+				var stepMulti = volume;
+				if (volume > 5) {
+					stepMulti = 5 + Math.floor(volume / 10);
+				}
 				Clicker.game().buildQueue.push({
-					totalSteps: steps * volume,
+					totalSteps: steps * stepMulti,
 					currentStep: 0,
 					volume: volume,
 					item: item
