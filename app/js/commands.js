@@ -77,6 +77,7 @@ Clicker.onInit(function() {
 				if (toMine && toMine.rates.mined > nextRand && toMine.canAdd(1)) {
 					toMine.add(1);
 				} 
+				i++;
 			}
 		}
 	});
