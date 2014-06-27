@@ -37,7 +37,8 @@ Items to build with goods
 Buildings that either improve abilities, or perform actions on your behalf. 
 
 
-
+CC Attribution: still to be collated, but suffice to say that all icons in use are from http://thenounproject.com/,
+and all licenses can be found in the icons/ folder. 
 
 
 
