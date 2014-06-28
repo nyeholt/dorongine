@@ -1,8 +1,11 @@
 
-Clicker.init();
-Clicker.start();
 
 ;(function ($) {
+	
+	Clicker.init();
+	Clicker.load();
+	Clicker.start();
+	
 	$(function () {
 		var data = {};
 		
