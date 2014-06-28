@@ -23,6 +23,61 @@
 			</div>
 			<span id="graph">Loading...</span>
 		</div>
+		
+		<script id="buildableRow" type="text/ractive">
+		{{#this.meetsRequirements()}}
+		<tr>
+		<td class="build-col">
+			{{#this.canBuy(1)}}
+			<button title="{{name}}" on-tap="buyItem"><img title="{{name}}" src="{{icon}}" class="item-icon" /></button>
+			{{/this}}
+			{{^this.canBuy(1)}}
+			<img title="{{name}}" src="{{icon}}" class="item-icon" />
+			{{/this}}
+		</td>
+		<td>
+		<span class="item-amount">{{amount}} / {{maximum}}</span>
+		</td>
+
+			<td>
+			{{#components.requires.topics :topic}}
+				<span class="requirement"><img title="{{topic}}" src="{{iconfor(topic)}}" class="required-icon" /> {{this}}</span>
+			{{/components}}
+			{{#components.requires.items :item}}
+				<span class="requirement"><img title="{{item}}" src="{{iconfor(item)}}" class="required-icon" /> {{this}}</span>
+			{{/components}}
+			</td>
+
+			<td>
+			{{#components.created.cost :resource}}
+			<span class="requirement"><img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}</span>
+			{{/components}}
+			</td>
+
+			<td>
+			{{#components.consumer.consumes :resource}}
+			<span class="requirement"><img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}</span>
+			{{/components}}
+			{{#rates.consumer}}
+			/ {{rates.consumer}} ticks
+			{{/rates}}
+			</td>
+
+			<td>
+			{{#components.worker.provides :resource}}
+			<span class="requirement"><img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}</span>
+			{{/components}}
+			</td>
+
+			<td>
+			{{#components.improves :resource}}
+			<span class="requirement"><img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}</span>
+			{{/components}}
+			</td>
+
+		</tr>
+		{{/meetsRequirements}}	
+		</script>
 
 		<script id='template' type='text/ractive'>
 			
@@ -195,76 +250,9 @@
 					</tr>
 					
 					{{# game.byComponent('goods') }}
-					{{#this.meetsRequirements()}}
 					
-						<tr>
-						<td class="build-col">
-							
-							{{#this.canBuy()}}
-							<button title="{{name}}" on-tap="buyItem">
-								<img title="{{name}}" src="{{icon}}" class="item-icon" />
-							</button>
-							
-							
-							{{/this}}
-							
-							{{^this.canBuy()}}
-							<img title="{{name}}" src="{{icon}}" class="item-icon" />
-							{{/this}}
-							
-							
-							<select value="{{buyVolume}}">
-								<option value="1">1</option>
-								<option value="10">10</option>
-								<option value="20">20</option>
-								<option value="50">50</option>
-								<option value="100">100</option>
-							</select>
-							
-						</td>
-						<td>
-						<span class="item-amount">{{amount}} / {{maximum}}</span>
-						</td>
-
-						
-							<td>
-							{{#components.requires.topics :topic}}
-								<span class="requirement"><img title="{{topic}}" src="{{iconfor(topic)}}" class="required-icon" /> {{this}}</span>
-							{{/components}}
-							{{#components.requires.items :item}}
-								<span class="requirement"><img title="{{item}}" src="{{iconfor(item)}}" class="required-icon" /> {{this}}</span>
-							{{/components}}
-							</td>
-
-							<td>
-							{{#components.created.cost :resource}}
-							<span class="requirement"><img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}</span>
-							{{/components}}
-							
-							</td>
-
-							<td>
-							{{#components.consumer.consumes :resource}}
-							<span class="requirement"><img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}</span>
-							{{/components}}
-							
-							</td>
-
-
-							<td>
-							{{#components.worker.provides :resource}}
-							<span class="requirement"><img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}</span>
-							{{/components}}
-							</td>
-
-							<td>
-							{{#components.improves :resource}}
-							<span class="requirement"><img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}</span>
-							{{/components}}
-							</td>
+					{{>buildableRow}}
 					
-						</tr>
-					{{/meetsRequirements}}
 					{{/game}}
 				</table>
 				
@@ -281,59 +269,7 @@
 					</tr>
 					
 					{{# game.byComponent('building') }}
-					{{#this.meetsRequirements()}}
-						<tr>
-						<td class="build-col">
-							{{#this.canBuy(1)}}
-							<button title="{{name}}" on-tap="buyItem"><img title="{{name}}" src="{{icon}}" class="item-icon" /></button>
-							{{/this}}
-							{{^this.canBuy(1)}}
-							<img title="{{name}}" src="{{icon}}" class="item-icon" />
-							{{/this}}
-						</td>
-						<td>
-						<span class="item-amount">{{amount}} / {{maximum}}</span>
-						</td>
-						
-							<td>
-							{{#components.requires.topics :topic}}
-								<span class="requirement"><img title="{{topic}}" src="{{iconfor(topic)}}" class="required-icon" /> {{this}}</span>
-							{{/components}}
-							{{#components.requires.items :item}}
-								<span class="requirement"><img title="{{item}}" src="{{iconfor(item)}}" class="required-icon" /> {{this}}</span>
-							{{/components}}
-							</td>
-
-
-								<td>
-							{{#components.created.cost :resource}}
-							<span class="requirement"><img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}</span>
-							{{/components}}
-							</td>
-
-							<td>
-							{{#components.consumer.consumes :resource}}
-							<span class="requirement"><img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}</span>
-							{{/components}}
-							{{#rates.consumer}}
-							/ {{rates.consumer}} ticks
-							{{/rates}}
-							</td>
-
-							<td>
-							{{#components.worker.provides :resource}}
-							<span class="requirement"><img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}</span>
-							{{/components}}
-							</td>
-
-							<td>
-							{{#components.improves :resource}}
-							<span class="requirement"><img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}</span>
-							{{/components}}
-							</td>
-					
-						</tr>
-						{{/meetsRequirements}}
+						{{>buildableRow}}
 					{{/game}}
 				</table>
 			</div>

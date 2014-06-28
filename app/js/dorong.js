@@ -17,7 +17,7 @@
 		$(document).on('click', '#save', function () {
 			Clicker.save();
 		})
-		
+
 		$(document).on('click', '#load', function () {
 			Clicker.load();
 		})
