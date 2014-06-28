@@ -393,6 +393,11 @@
 				return game.items[name].icon;
 			}
 			return types.topics[name].icon;
+		},
+		hasEnoughItem: function (name, volume) {
+			if (game.items[name]) {
+				return game.items[name].amount >= volume;
+			}
 		}
 	};
 	

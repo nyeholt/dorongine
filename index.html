@@ -50,7 +50,9 @@
 
 			<td>
 			{{#components.created.cost :resource}}
-			<span class="requirement"><img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}</span>
+			<span class="requirement {{^hasEnoughItem(resource,this)}}notenough{{/hasEnoughItem}}">
+				<img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}
+			</span>
 			{{/components}}
 			</td>
 

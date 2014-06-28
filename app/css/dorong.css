@@ -185,3 +185,7 @@ button {
 .right-align-contents {
 	text-align: right;
 }
+
+.requirement.notenough {
+	color: #b92c28;
+}
