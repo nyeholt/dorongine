@@ -3,25 +3,7 @@
 	var gameLoop;
 	var commandLoop;
 
-	var byComponent = function (component, mapped) {
-		var items;
-		if (mapped) {
-			items = {};
-		} else {
-			items = [];
-		}
-		
-		for (var k in this.items) {
-			if (this.items[k].components[component]) {
-				if (mapped) {
-					items[k] = this.items[k];
-				} else {
-					items.push(this.items[k])
-				}
-			}
-		}
-		return items;
-	};
+	var ractiveObservers = [];
 
 	var game = {};
 	
@@ -82,6 +64,14 @@
 		init: function () {
 			clearInterval(gameLoop);
 			clearInterval(commandLoop);
+			
+			
+			// delete observers
+			for (var i = 0; i < ractiveObservers.length; i++) {
+				ractiveObservers[i].cancel();
+			}
+			
+			ractiveObservers = [];
 
 			game = {
 				ticks: 0,
@@ -181,7 +171,8 @@
 				active: false,
 				percentage: 0
 			};
-			this.ractive.observe('game.topics.' + topic.name +'.active', this.updateTopics);
+			
+			ractiveObservers.push(this.ractive.observe('game.topics.' + topic.name +'.active', this.updateTopics));
 //			this.ractive.set('game', game);
 		},
 		updateTopics: function () {
@@ -213,12 +204,12 @@
 		addCommand: function (command) {
 			availableCommands[command.name] = command;
 
-			this.ractive.on(command.name, function (button) {
+			ractiveObservers.push(this.ractive.on(command.name, function (button) {
 				if (button.context) {
 					var cmd = Clicker.newCommand(command.name, button.context);
 					Clicker.runCommand(cmd);
 				}
-			});
+			}));
 		},
 		newCommand: function (name, context) {
 			var cmd = availableCommands[name];
@@ -405,8 +396,27 @@
 		}
 	};
 	
+	var byComponent = function (component, mapped) {
+		var items;
+		if (mapped) {
+			items = {};
+		} else {
+			items = [];
+		}
+		
+		for (var k in this.items) {
+			if (this.items[k].components[component]) {
+				if (mapped) {
+					items[k] = this.items[k];
+				} else {
+					items.push(this.items[k])
+				}
+			}
+		}
+		return items;
+	};
+	
 	var seed = (new Date()).getTime() % 100000;	
-
 	window.Clicker = new ClickerGame(seed);
 
 })();
