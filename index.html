@@ -93,7 +93,7 @@
 		{{#this.meetsRequirements()}}
 		<tr>
 		<td class="build-col">
-			{{#this.canBuy(1)}}
+			{{#this.canBuy()}}
 			<button title="{{name}}" on-tap="buyItem"><img title="{{name}}" src="{{icon}}" class="item-icon" /></button>
 
 			<select value="{{buyVolume}}">
@@ -104,7 +104,7 @@
 			</select>
 
 			{{/this}}
-			{{^this.canBuy(1)}}
+			{{^this.canBuy()}}
 			<img title="{{name}}" src="{{icon}}" class="item-icon" />
 			{{/this}}
 			</td>
