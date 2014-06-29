@@ -130,6 +130,7 @@
 			
 		},
 		addItem: function (item) {
+			item.pending = 0;
 			if (!item.components) {
 				item.components = {};
 			}
@@ -275,9 +276,14 @@
 			// rebind functions
 			game.byComponent = byComponent;
 			for (var type in game.items) {
+				
 				game.items[type] = jQuery.extend({}, Item, game.items[type]);
-				if (!game.items[type].buyVolume) {
-					game.items[type].buyVolume = 1;
+				var item = game.items[type];
+				if (!item.buyVolume) {
+					item.buyVolume = 1;
+				}
+				if (typeof item.pending === 'undefined') {
+					item.pending = 0;
 				}
 			}
 		},
@@ -363,7 +369,9 @@
 				for (var itemType in item.components.created.cost) {
 					// check stock levels
 					var requiredAmount = item.components.created.cost[itemType] * volume;
-					if (game.items[itemType].amount < requiredAmount) {
+					
+					var total = game.items[itemType].amount;
+					if (total < requiredAmount) {
 						okay = false;
 						break;
 					}
@@ -378,7 +386,8 @@
 			}
 			
 			var max = this.maximum ? this.maximum : 1000;
-			if (number > 0 && this.amount >= max) {
+			
+			if (number > 0 && (this.amount + number + this.pending) >= max) {
 				return false;
 			}
 

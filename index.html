@@ -95,20 +95,20 @@
 		<td class="build-col">
 			{{#this.canBuy()}}
 			<button title="{{name}}" on-tap="buyItem"><img title="{{name}}" src="{{icon}}" class="item-icon" /></button>
-
+			{{/this}}
+			{{^this.canBuy()}}
+			<img title="{{name}}" src="{{icon}}" class="item-icon" />
+			{{/this}}
+			
 			<select value="{{buyVolume}}">
 				<option value="1">x1</option>
 				<option value="10">x10</option>
 				<option value="20">x20</option>
 				<option value="50">x50</option>
 			</select>
-
-			{{/this}}
-			{{^this.canBuy()}}
-			<img title="{{name}}" src="{{icon}}" class="item-icon" />
-			{{/this}}
-			</td>
 			
+			</td>
+
 			{{>itemInfo}}
 			
 		</tr>

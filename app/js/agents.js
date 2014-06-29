@@ -225,6 +225,11 @@ Clicker.onInit(function() {
 				if (volume > 5) {
 					stepMulti = 5 + Math.floor(volume / 10);
 				}
+				// mark pending amount
+				if (typeof item.pending === 'undefined') {
+					item.pending = 0;
+				}
+				item.pending += volume;
 				Clicker.game().buildQueue.push({
 					totalSteps: steps * stepMulti,
 					currentStep: 0,
@@ -302,10 +307,10 @@ Clicker.onInit(function() {
 				Clicker.message("Created " + this.current.volume + " " + this.current.item.name, 'good', this.current.item.name);
 			}
 			
+			this.current.item.pending -= this.current.volume;
 			this.current.item.applyImprovement();
 		},
 		finalise: function() {
-			
 			this.current = null;
 			Clicker.game().buildQueue.splice(this.buildIndex, 1);
 		}
