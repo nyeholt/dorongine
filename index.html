@@ -24,20 +24,10 @@
 			<span id="graph">Loading...</span>
 		</div>
 		
-		<script id="buildableRow" type="text/ractive">
-		{{#this.meetsRequirements()}}
-		<tr>
-		<td class="build-col">
-			{{#this.canBuy(1)}}
-			<button title="{{name}}" on-tap="buyItem"><img title="{{name}}" src="{{icon}}" class="item-icon" /></button>
-			{{/this}}
-			{{^this.canBuy(1)}}
-			<img title="{{name}}" src="{{icon}}" class="item-icon" />
-			{{/this}}
-		</td>
-		<td>
-		<span class="item-amount">{{amount}} / {{maximum}}</span>
-		</td>
+		<script id="itemInfo" type="text/ractive">
+			<td>
+			<span class="item-amount">{{amount}} / {{maximum}}</span>
+			</td>
 
 			<td>
 			{{#components.requires.topics :topic}}
@@ -50,10 +40,18 @@
 
 			<td>
 			{{#components.created.cost :resource}}
-			<span class="requirement {{^hasEnoughItem(resource,this)}}notenough{{/hasEnoughItem}}">
+			<span class="requirement">
 				<img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}
 			</span>
-			{{/components}}
+			{{/components.created.cost}}
+			</td>
+			
+			<td>
+			{{#components.created.gives :resource}}
+			<span class="requirement">
+				<img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}
+			</span>
+			{{/components.created.gives}}
 			</td>
 
 			<td>
@@ -61,22 +59,58 @@
 			<span class="requirement"><img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}</span>
 			{{/components}}
 			{{#rates.consumer}}
+			<span class="rate-info">
 			/ {{rates.consumer}} ticks
+			</span>
 			{{/rates}}
 			</td>
 
 			<td>
 			{{#components.worker.provides :resource}}
-			<span class="requirement"><img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}</span>
+			<span class="requirement">
+			<img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}
+			</span>
 			{{/components}}
+			{{#rates.worker}}
+			<span class="rate-info">
+			/ {{rates.worker}} ticks
+			</span>
+			{{/rates}}
 			</td>
 
 			<td>
 			{{#components.improves :resource}}
-			<span class="requirement"><img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}</span>
+			<span class="requirement">
+			<img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this * 100}}%
+			
+			</span>
 			{{/components}}
 			</td>
 
+		</script>
+		
+		<script id="buildableRow" type="text/ractive">
+		{{#this.meetsRequirements()}}
+		<tr>
+		<td class="build-col">
+			{{#this.canBuy(1)}}
+			<button title="{{name}}" on-tap="buyItem"><img title="{{name}}" src="{{icon}}" class="item-icon" /></button>
+
+			<select value="{{buyVolume}}">
+				<option value="1">x1</option>
+				<option value="10">x10</option>
+				<option value="20">x20</option>
+				<option value="50">x50</option>
+			</select>
+
+			{{/this}}
+			{{^this.canBuy(1)}}
+			<img title="{{name}}" src="{{icon}}" class="item-icon" />
+			{{/this}}
+			</td>
+			
+			{{>itemInfo}}
+			
 		</tr>
 		{{/meetsRequirements}}	
 		</script>
@@ -103,11 +137,12 @@
 			<thead>
 				<tr>
 				<th><img src="{{game.items.People.icon}}" title="People" class="item-icon" /></th>
-				<th>{{game.items.People.amount}} / {{game.items.People.maximum}}</th>
 				<th></th>
+				<th>{{game.items.People.amount}} / {{game.items.People.maximum}}</th>
 				
 				<th>Required</th>
 				<th>Cost</th>
+				<th>Gives</th>
 				<th>Consumes</th>
 				<th>Provides</th>
 				<th>Improves</th>
@@ -119,39 +154,10 @@
 					{{#this.meetsRequirements()}}
 					<tr>
 					<td><img title="{{name}}" src="{{icon}}" class="item-icon" /></td>
-					<td>{{amount}} / {{maximum}}</td>
 					<td>{{#this.canBuy(1)}}<button on-tap="buyItem">Hire</button>{{/this}}</td>
 
-					<td>
-					{{#components.requires.topics :topic}}
-						<span class="requirement"><img title="{{topic}}" src="{{iconfor(topic)}}" class="required-icon" /> {{this}}</span>
-					{{/components}}
-					</td>
-
-						<td>
-					{{#components.created.cost :resource}}
-					<span class="requirement"><img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}</span>
-					{{/components}}
-					</td>
+					{{>itemInfo}}
 					
-					<td>
-					{{#components.consumer.consumes :resource}}
-					<span class="requirement"><img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}</span>
-					{{/components}}
-					</td>
-					
-					
-					<td>
-					{{#components.worker.provides :resource}}
-					<span class="requirement"><img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}</span>
-					{{/components}}
-					</td>
-					
-					<td>
-					{{#components.improves :resource}}
-					<span class="requirement"><img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}</span>
-					{{/components}}
-					</td>
 					
 					</tr>
 					
@@ -217,21 +223,17 @@
 					<td>
 					{{#this.canBuy()}}
 					<button title="{{name}}" on-tap="buyItem">
-					{{components.created.cost.Cash}}
+					${{components.created.cost.Cash}}
 					</button>
 					{{/this}}
-
 						<select value="{{buyVolume}}">
-							<option value="1">1</option>
-							<option value="10">10</option>
-							<option value="20">20</option>
-							<option value="50">50</option>
-							<option value="100">100</option>
+							<option value="1">x1</option>
+							<option value="10">x10</option>
+							<option value="20">x20</option>
+							<option value="50">x50</option>
+							<option value="100">x100</option>
 						</select>
-					
-					
 					</td>
-					
 					</tr>
 					{{/ game}}
 				</table>
@@ -246,6 +248,7 @@
 					<th>Amount</th>
 					<th>Requires</th>
 					<th>Cost</th>
+					<th>Gives</th>
 					<th>Consumes</th>
 					<th>Provides</th>
 					<th>Improves</th>
@@ -265,6 +268,7 @@
 					<th>Amount</th>
 					<th>Requires</th>
 					<th>Cost</th>
+					<th>Gives</th>
 					<th>Consumes</th>
 					<th>Provides</th>
 					<th>Improves</th>

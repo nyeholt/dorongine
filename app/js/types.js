@@ -1114,6 +1114,9 @@ Clicker.onInit(function() {
 					'Cement': 10,
 					'Wood': 30,
 					'Book': 5
+				},
+				gives: {
+					Brainpower: 200
 				}
 			},
 			requires: {
