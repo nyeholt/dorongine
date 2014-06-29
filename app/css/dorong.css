@@ -112,7 +112,11 @@ body {
 }
 
 .resource-max {
-	color: #ccc;
+	color: #888;
+}
+
+.rate-info {
+	color: #888;
 }
 
 .knowledge-input input {
@@ -136,7 +140,6 @@ body {
 	width: 33%;
 	float: left;
 }
-
 
 .message {
 	height: 18px;

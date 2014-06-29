@@ -1,21 +1,3 @@
-//
-//Clicker.addTicker({
-//	name: 'Migration',
-//	onTick: 60,
-//	currentTick: 0,
-//	tick: function () {
-//		this.currentTick++;
-//		
-//		if (this.currentTick >= this.onTick) {
-//			// add a person
-//			var num = Math.floor(Clicker.game().items.People.rates.raw);
-//
-//			Clicker.game().items.People.amount += num;
-//			
-//			this.currentTick = 0;
-//		}
-//	}
-//});
 
 Clicker.onInit(function() {
 	Clicker.addTicker({
@@ -156,26 +138,28 @@ Clicker.onInit(function() {
 	Clicker.addTicker({
 		name: 'Researcher',
 		maxLevel: 10,
-		researchMinAmount: 10, // level required before research will be applied, prevents 10% on first item blocking all others.
+		researchAmount: 10, // level required before research will be applied, prevents 10% on first item blocking all others.
 		tick: function() {
 			var amount = Clicker.game().items.Brainpower.amount;
-			if (amount > this.researchMinAmount) {
+			var perTick = 0;
+			
+			for (var k in Clicker.game().topics) {
+				++perTick;
+			}
+			if (amount > perTick) {
 				var totalUsed = 0;
 				for (var name in Clicker.game().topics) {
 					var topic = Clicker.game().topics[name];
 
 					if (topic.percentage > 0) {
-						var toAdd = Math.floor((topic.percentage / 100) * amount);
+						var toAdd = (topic.percentage / 100) * perTick;
 						topic.knowledge += toAdd;
 
 						totalUsed += toAdd;
 
 						if (topic.knowledge >= topic.target) {
-							amount += topic.knowledge - topic.target;
-							topic.knowledge = 0;
-
+							topic.knowledge -= topic.target;
 							topic.target = Math.pow(topic.level + 2, 3) * 100;
-							
 							topic.target = topic.target * .66;
 
 							if (topic.level < this.maxLevel) {
@@ -189,7 +173,8 @@ Clicker.onInit(function() {
 						}
 					}
 				}
-				Clicker.game().items.Brainpower.amount -= totalUsed;
+
+				Clicker.game().items.Brainpower.amount -= perTick;
 			}
 		}
 	});
