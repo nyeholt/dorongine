@@ -405,7 +405,7 @@
 			
 			var max = this.maximum ? this.maximum : 1000;
 			
-			if (number > 0 && (this.amount + number + this.pending) >= max) {
+			if (number > 0 && (this.amount + number + this.pending) > max) {
 				return false;
 			}
 
