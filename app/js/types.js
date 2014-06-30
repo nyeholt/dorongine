@@ -400,6 +400,9 @@ Clicker.onInit(function() {
 				cost: {
 					'Cash': 5
 				}
+			},
+			market: {
+				
 			}
 		}
 	});
@@ -415,8 +418,10 @@ Clicker.onInit(function() {
 				cost: {
 					'Cash': 5
 				}
+			},
+			market: {
+				
 			}
-
 		}
 	});
 	
@@ -431,6 +436,9 @@ Clicker.onInit(function() {
 				cost: {
 					'Cash': 10
 				}
+			},
+			market: {
+				
 			}
 
 		}
@@ -449,6 +457,9 @@ Clicker.onInit(function() {
 				cost: {
 					'Cash': 10
 				}
+			},
+			market: {
+				
 			}
 		}
 	});
@@ -464,6 +475,9 @@ Clicker.onInit(function() {
 				cost: {
 					'Cash': 20
 				}
+			},
+			market: {
+				
 			}
 		}
 	});
@@ -479,6 +493,9 @@ Clicker.onInit(function() {
 				cost: {
 					'Cash': 50
 				}
+			},
+			market: {
+				
 			}
 
 		}
@@ -495,6 +512,9 @@ Clicker.onInit(function() {
 				cost: {
 					'Cash': 50
 				}
+			},
+			market: {
+				
 			}
 
 		}
@@ -509,8 +529,11 @@ Clicker.onInit(function() {
 			created: {
 				time: 1,
 				cost: {
-					'Cash': 75
+					'Cash': 250
 				}
+			},
+			market: {
+				
 			}
 		}
 	});
@@ -524,8 +547,11 @@ Clicker.onInit(function() {
 			created: {
 				time: 1,
 				cost: {
-					'Cash': 200
+					'Cash': 500
 				}
+			},
+			market: {
+				
 			}
 		}
 	});
@@ -575,6 +601,7 @@ Clicker.onInit(function() {
 		icon: 'icons/fuel/icon_17625.svg',
 		maximum: 10,
 		components: {
+			goods: true,
 			created: {
 				time: 1,
 				cost: {

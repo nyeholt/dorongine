@@ -264,7 +264,12 @@ Clicker.onInit(function() {
 			var allItems = Clicker.game().items;
 			var volume = volume ? volume : 1;
 
-			var transactionRecord = {};
+			var transactionRecord = {
+				type: 'buy',
+				item: item.name,
+				volume: volume,
+				items: {}
+			};
 
 			if (item.components.created && item.components.created.cost) {
 				for (var itemType in item.components.created.cost) {
@@ -272,7 +277,7 @@ Clicker.onInit(function() {
 					var requiredAmount = item.components.created.cost[itemType] * volume;
 					if (allItems[itemType].amount >= requiredAmount) {
 						allItems[itemType].amount -= requiredAmount;
-						transactionRecord[itemType] = requiredAmount;
+						transactionRecord.items[itemType] = requiredAmount;
 					} else {
 						Clicker.log("Item " + itemType + " was checked for sufficient amount, but there doesn't seem to be enough now");
 						Clicker.log(transactionRecord);

@@ -211,7 +211,8 @@
 					<tr>
 					<td></td><td><button on-tap="mine">Mining at {{game.globalRates.mined}}% efficiency</button></td>
 					</tr>
-					{{# game.byComponent('mined') }}
+					<!-- display all market items - regardless of whether they're mined -->
+					{{# game.byComponent('market') }}
 					<tr>
 					<td width="60%">
 					<img title="{{name}}" class="item-icon" src="{{icon}}" /> {{rates.mined}}% efficiency
@@ -223,9 +224,10 @@
 					<td>
 					{{#this.canBuy()}}
 					<button title="{{name}}" on-tap="buyItem">
-					${{components.created.cost.Cash}}
+					${{formatted(components.market.buy)}}
 					</button>
 					{{/this}}
+
 						<select value="{{buyVolume}}">
 							<option value="1">x1</option>
 							<option value="10">x10</option>
@@ -233,6 +235,13 @@
 							<option value="50">x50</option>
 							<option value="100">x100</option>
 						</select>
+
+					{{#amount > buyVolume}}
+					<button title="{{name}}" on-tap="sellItem">
+					${{formatted(components.market.sell)}}
+					</button>
+					{{/amount}}
+					
 					</td>
 					</tr>
 					{{/ game}}

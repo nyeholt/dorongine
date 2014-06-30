@@ -152,7 +152,22 @@
 			item.rates = rates;
 			item.amount = item.defaultAmount ? item.defaultAmount : 0;
 			item.existed = item.amount;
+			
+			if (item.components.market) {
+				if (!item.components.market.base) {
+					item.components.market.base = item.components.created.cost.Cash;
+				}
+				
+				if (!item.components.market.buy) {
+					item.components.market.buy = item.components.market.base;
+				}
+				if (!item.components.market.sell) {
+					item.components.market.sell = item.components.market.base * .90;
+				}
+			}
 
+			// check to see if it's got a cash-only cost, in which case it's
+			// also considered a sellable
 			game.items[item.name] = item;
 //			{
 //				amount: 0,
@@ -335,6 +350,9 @@
 		},
 		formattedAmount: function () {
 			return this.amount;
+		},
+		formatted: function (val) {
+			return Number(val).toFixed(2); 
 		},
 		meetsRequirements: function () {
 			if (!this.components.requires) {

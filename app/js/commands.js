@@ -51,8 +51,20 @@ Clicker.onInit(function() {
 		execute: function() {
 			var item = this.context;
 			var volume = this.volume ? this.volume : (item.buyVolume ? parseInt(item.buyVolume) : 1);
-			if (item.amount > volume) {
+			if (item.amount >= volume && item.components.market.sell > 0) {
+				var transactionRecord = {type: 'sell', item: item.name, items: {}};
+				transactionRecord.items[item.name] = volume;
 				
+				var total = item.components.market.sell * volume;
+				
+				transactionRecord.volume = volume;
+				transactionRecord.price = item.components.market.sell;
+				transactionRecord.total = total;
+				
+				item.amount -= volume;
+				Clicker.game().items.Cash.amount += total;
+				
+				Clicker.game().transactions.push(transactionRecord);
 			}
 		}
 	})
