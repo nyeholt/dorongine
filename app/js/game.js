@@ -385,11 +385,16 @@
 				volume = item.buyVolume ? parseInt(item.buyVolume) : 1;
 			}
 			var okay = true;
-			if (item.components.created && item.components.created.cost) {
+			
+			if (item.components.market && item.components.market.buy) {
+				var total = volume * item.components.market.buy;
+				if (total <= game.items.Cash.amount) {
+					okay = true;
+				}
+			} else if (item.components.created && item.components.created.cost) {
 				for (var itemType in item.components.created.cost) {
 					// check stock levels
 					var requiredAmount = item.components.created.cost[itemType] * volume;
-					
 					var total = game.items[itemType].amount;
 					if (total < requiredAmount) {
 						okay = false;
@@ -397,7 +402,7 @@
 					}
 				}
 			}
-			
+
 			return okay && this.canAdd(volume) && this.meetsRequirements();
 		}, 
 		canAdd: function (number) {

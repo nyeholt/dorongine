@@ -216,7 +216,7 @@ Clicker.onInit(function() {
 		buildIndex: 0,
 		queueItem: function(item, volume) {
 			var steps = 1;
-			if (item.components.created.time) {
+			if (item.components.created && item.components.created.time) {
 				steps = item.components.created.time;
 			}
 			volume = volume ? volume : 1;
@@ -270,8 +270,22 @@ Clicker.onInit(function() {
 				volume: volume,
 				items: {}
 			};
+			
+			// allow for items that are solely traded on the market
+			if (item.components.market && item.components.market.buy && item.canBuy(volume)) {
+				transactionRecord.volume = volume;
+				transactionRecord.price = item.components.market.buy;
+				var total = volume * transactionRecord.price;
+				transactionRecord.total = total;
+				allItems.Cash.amount -= total;
+				
+				item.components.market.lastBuy = Clicker.game().ticks;
+				
+				// rejig buy/sell values
+				item.components.market.buy += item.components.market.buy * .05;
+				item.components.market.sell += item.components.market.sell * .04;
 
-			if (item.components.created && item.components.created.cost) {
+			} else if (item.components.created && item.components.created.cost) {
 				for (var itemType in item.components.created.cost) {
 					// check stock levels
 					var requiredAmount = item.components.created.cost[itemType] * volume;
@@ -288,6 +302,7 @@ Clicker.onInit(function() {
 					}
 				}
 			}
+
 			if (!Clicker.game().transactions) {
 				Clicker.game().transactions = [];
 			}
@@ -302,12 +317,12 @@ Clicker.onInit(function() {
 			}
 			this.current.item.add(this.current.volume);
 			
-			if (this.current.item.components.created.gives) {
+			if (this.current.item.components.created && this.current.item.components.created.gives) {
 				for (var type in this.current.item.components.created.gives) {
 					Clicker.game().items[type].add(this.current.item.components.created.gives[type]);
 				}
 			}
-			
+
 			if (this.current.totalSteps > 50) {
 				Clicker.message("Created " + this.current.volume + " " + this.current.item.name, 'good', this.current.item.name);
 			}

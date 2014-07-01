@@ -65,6 +65,11 @@ Clicker.onInit(function() {
 				Clicker.game().items.Cash.amount += total;
 				
 				Clicker.game().transactions.push(transactionRecord);
+				
+				item.components.market.lastSell = Clicker.game().ticks;
+				
+				item.components.market.sell -= item.components.market.sell * .05;
+				item.components.market.buy -= item.components.market.sell * .04;
 			}
 		}
 	})

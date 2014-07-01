@@ -395,14 +395,8 @@ Clicker.onInit(function() {
 			'mined': {
 				rate: 100
 			},
-			created: {
-				time: 1,
-				cost: {
-					'Cash': 5
-				}
-			},
 			market: {
-				
+				base: 5
 			}
 		}
 	});
@@ -413,14 +407,8 @@ Clicker.onInit(function() {
 		maximum: 50,
 		components: {
 			'mined': {rate: 95},
-			created: {
-				time: 1,
-				cost: {
-					'Cash': 5
-				}
-			},
 			market: {
-				
+				base: 5
 			}
 		}
 	});
@@ -431,13 +419,8 @@ Clicker.onInit(function() {
 		maximum: 50,
 		components: {
 			'mined': {rate: 80},
-			created: {
-				time: 1,
-				cost: {
-					'Cash': 10
-				}
-			},
 			market: {
+				base: 10
 				
 			}
 
@@ -452,14 +435,8 @@ Clicker.onInit(function() {
 			'mined': {
 				rate: 70
 			},
-			created: {
-				time: 1,
-				cost: {
-					'Cash': 10
-				}
-			},
 			market: {
-				
+				base: 10
 			}
 		}
 	});
@@ -470,14 +447,8 @@ Clicker.onInit(function() {
 		maximum: 20,
 		components: {
 			'mined': {rate: 70},
-			created: {
-				time: 1,
-				cost: {
-					'Cash': 20
-				}
-			},
 			market: {
-				
+				base: 20
 			}
 		}
 	});
@@ -488,14 +459,8 @@ Clicker.onInit(function() {
 		maximum: 20,
 		components: {
 			'mined': {rate: 60},
-			created: {
-				time: 1,
-				cost: {
-					'Cash': 50
-				}
-			},
 			market: {
-				
+				base: 50
 			}
 
 		}
@@ -507,14 +472,8 @@ Clicker.onInit(function() {
 		maximum: 10,
 		components: {
 			'mined': {rate: 20},
-			created: {
-				time: 1,
-				cost: {
-					'Cash': 50
-				}
-			},
 			market: {
-				
+				base: 50
 			}
 
 		}
@@ -526,14 +485,8 @@ Clicker.onInit(function() {
 		maximum: 10,
 		components: {
 			'mined': {rate: 10},
-			created: {
-				time: 1,
-				cost: {
-					'Cash': 250
-				}
-			},
 			market: {
-				
+				base: 250
 			}
 		}
 	});
@@ -544,14 +497,9 @@ Clicker.onInit(function() {
 		maximum: 10,
 		components: {
 			'mined': { rate: 5 },
-			created: {
-				time: 1,
-				cost: {
-					'Cash': 500
-				}
-			},
+			
 			market: {
-				
+				base: 500
 			}
 		}
 	});
