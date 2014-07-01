@@ -99,6 +99,9 @@
 			{{^this.canBuy()}}
 			<img title="{{name}}" src="{{icon}}" class="item-icon" />
 			{{/this}}
+			</td>
+			
+			<td>
 			
 			<select value="{{buyVolume}}">
 				<option value="1">x1</option>
@@ -190,11 +193,19 @@
 					<th></th>
 					<th width="10%">Research active</th>
 				</tr>
-				{{# game.topics :name}}
+				{{#game.topics :topic_name}}
 				<tr>
-				<td><img src="{{icon}}" title="{{name}}" class="item-icon" /></td>
+				<td><img src="{{icon}}" title="{{topic_name}}" class="item-icon" /></td>
 				<td>Level {{level}}</td>
-				<td><progress max="{{target}}" value="{{knowledge}}"></progress></td>
+				<td>
+					<div><progress max="{{target}}" value="{{knowledge}}"></progress></div>
+					<div class="progress-info">
+					Needed for: 
+					{{#game.byTopic(topic_name, level+1)}}
+					<img title="{{name}}" src="{{icon}}" class="item-icon" />
+					{{/game.byTopic }}
+					</div>
+				</td>
 				<td class="knowledge-input">
 					<input type="checkbox" checked="{{active}}" />
 				</td>
@@ -205,12 +216,19 @@
 
 			<div id="resources" class="holder">
 				
-				
 				<div id="mined-resources">
 				<table>
 					<tr>
-					<td></td><td><button on-tap="mine">Mining at {{game.globalRates.mined}}% efficiency</button></td>
+					
+					<td></td>
+					<td><button on-tap="mine">Mining at {{game.globalRates.mined}}% efficiency</button></td>
+					
+					<td width="90px">Buy</td>
+					<td width="90px">Number</td>
+					<td width="90px">Sell</td>
+					
 					</tr>
+					
 					<!-- display all market items - regardless of whether they're mined -->
 					{{# game.byComponent('market') }}
 					<tr>
@@ -227,7 +245,9 @@
 					${{formatted(components.market.buy * buyVolume)}}
 					</button>
 					{{/this}}
+					</td>
 
+					<td>
 						<select value="{{buyVolume}}">
 							<option value="1">x1</option>
 							<option value="10">x10</option>
@@ -235,14 +255,16 @@
 							<option value="50">x50</option>
 							<option value="100">x100</option>
 						</select>
-
+					</td>
+					
+					<td>
 					{{#amount > buyVolume}}
 					<button title="{{name}}" on-tap="sellItem">
 					${{formatted(components.market.sell * buyVolume)}}
 					</button>
 					{{/amount}}
-					
 					</td>
+					
 					</tr>
 					{{/ game}}
 				</table>
@@ -253,8 +275,9 @@
 				
 				<table>
 					<tr>
-					<th>Item</th>
-					<th>Amount</th>
+					<th width="60px">Item</th>
+					<th width="60px"><!--volume dropdown --></th>
+					<th width="100px">Amount</th>
 					<th>Requires</th>
 					<th>Cost</th>
 					<th>Gives</th>
@@ -273,8 +296,9 @@
 				<h2>Buildings</h2>
 				<table>
 					<tr>
-					<th>Item</th>
-					<th>Amount</th>
+					<th width="60px">Item</th>
+					<th width="60px"><!--volume dropdown --></th>
+					<th width="100px">Amount</th>
 					<th>Requires</th>
 					<th>Cost</th>
 					<th>Gives</th>

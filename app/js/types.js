@@ -725,9 +725,8 @@ Clicker.onInit(function() {
 				}
 			},
 			requires: {
-				topics: {
-					'Technology': 2,
-					'Manufacturing': 2
+				items: {
+					Chip: 1
 				}
 			},
 			improves: {
@@ -894,7 +893,6 @@ Clicker.onInit(function() {
 					'Cash': 300,
 					'Copper': 5
 				}
-				
 			},
 			worker: {
 				rate: 32,
@@ -1121,7 +1119,6 @@ Clicker.onInit(function() {
 		}
 	});
 
-	
 	Clicker.addItem({
 		name: 'School',
 		icon: 'icons/school/icon_4405.svg',
@@ -1276,7 +1273,7 @@ Clicker.onInit(function() {
 			requires: {
 				topics: {
 					'Civics': 2,
-					'Economics': 3
+					'Technology': 3
 				}
 			}
 		}

@@ -86,7 +86,8 @@
 				buildQueue: [],
 				transactions: [],
 				messages: [],
-				byComponent: byComponent
+				byComponent: byComponent,
+				byTopic: byTopic
 			};
 			
 			tickers = [];
@@ -290,8 +291,9 @@
 			game = newgame;
 			// rebind functions
 			game.byComponent = byComponent;
+			game.byTopic = byTopic;
+			
 			for (var type in game.items) {
-				
 				game.items[type] = jQuery.extend({}, Item, game.items[type]);
 				var item = game.items[type];
 				if (!item.buyVolume) {
@@ -426,6 +428,25 @@
 				return game.items[name].amount >= volume;
 			}
 		}
+	};
+	
+	var byTopic = function (topic, level) {
+		var items = [];
+		var ignoreLevel = false;
+		if (typeof level === 'undefined') {
+			ignoreLevel = true;
+		}
+
+		for (var i in this.items) {
+			if (this.items[i].components.requires && 
+				this.items[i].components.requires.topics &&
+				this.items[i].components.requires.topics[topic] &&
+				(ignoreLevel || this.items[i].components.requires.topics[topic] === level)
+			) {
+				items.push(this.items[i]);
+			}
+		}
+		return items;
 	};
 	
 	var byComponent = function (component, mapped) {
