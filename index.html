@@ -4,7 +4,7 @@
 	<head>
 		<meta content='user-scalable=0' name='viewport' />
 
-		<title>Dorong</title>
+		<title>Dorongine</title>
 		<link href="css/bootstrap.css" rel="stylesheet" type="text/css"></link>
 		<link href="css/bootstrap-theme.css" rel="stylesheet" type="text/css"></link>
 		<link href="app/css/dorong.css" rel="stylesheet" type="text/css"></link>
@@ -15,11 +15,93 @@
 
 		</div>
 		
+		<div id="dialog-div">
+			
+		</div>
+		
+		<div id="updates-page" class="dialog-page">
+			<h2>Updates</h2>
+			<p>
+				Contact me via <a href="https://github.com/nyeholt" target="_blank">Github</a> or <a href="https://twitter.com/nyeholt" target="_blank">Twitter</a>. Or Reddit...
+			</p>
+			<p>
+				Jul 02, 2014
+			</p>
+			
+			<ul>
+				<li>Improved market component to provide price fluctuations for buy/sell based on buy/sell events</li>
+				<li>Always reload the last saved game on app init </li>
+				<li>Account for pending queued builds when determining whether we can add more</li>
+				<li>Added version checks for game saves</li>
+			</ul>
+			
+			<p>
+				
+			</p>
+			
+			
+		</div>
+		
+		<div id="about-page" class="dialog-page">
+			<h2>About Dorongine</h2>
+			<p>
+				Contact me via <a href="https://github.com/nyeholt" target="_blank">Github</a> or <a href="https://twitter.com/nyeholt" target="_blank">Twitter</a>. Or Reddit...
+			</p>
+			
+			<p>A brief summary is below...</p>
+			
+<p>Raw resources that you click to harvest. </p>
+
+<ul>
+<li>Cash for buying things</li>
+<li>Brainpower for research</li>
+<li>Energy for running things</li>
+<li>Ore for providing base materials</li>
+<li>Water as a consumable</li>
+<li>Crime will make you pay... (not yet implemented) </li>
+<li>Pollution to make you sick</li>
+</ul>
+
+<p>Different employable roles  to do your clicking </p>
+
+<ul>
+<li>Employees make your Cash</li>
+<li>Miners dig your Ore</li>
+<li>Engineers are useful for... something</li>
+<li>Bankers increase your Cash</li>
+<li>Teachers provide your Brainpower</li>
+<li>Professors accelerate learning</li>
+<li>Scientists are a bit of an enigma still</li>
+</ul>
+
+<p>Different topics to assign research to - different topics provide different benefits</p>
+
+<ul>
+<li>Mining increases your ability to get things out of the ground</li>
+<li>Education is needed to speed up your brainpower</li>
+<li>Civics make everything a little better</li>
+<li>Economics improves your ability to spend (or save)</li>
+<li>Technology makes things easier
+	<ul>
+		<li>Manufacturing lets you build things</li>
+		<li>mineable items</li>
+		<li>goods to be built</li>
+		<li>Buildings that either improve abilities, or perform actions on your behalf. </li>
+	</ul>
+</li>
+
+
+</ul>
+</div>	
+			
+		</div>
+		
 		<div id="graphdiv-container">
 			<div id="graphoptions">
-				<div id="graphitems"></div>
 				<button id="graphclose">Close</button>
 				<button id="redraw">Redraw</button>
+				<div id="graphitems"></div>
+				
 			</div>
 			<span id="graph">Loading...</span>
 		</div>
@@ -215,7 +297,6 @@
 			</div>
 
 			<div id="resources" class="holder">
-				
 				<div id="mined-resources">
 				<table>
 					<tr>
@@ -347,6 +428,8 @@
 						<button id="graphbtn">~</button>
 					</div>
 					<div>
+						<a href="#updates-page" class="dialog-page">Updates</a> .
+						<a href="#about-page" class="dialog-page">About</a> . 
 						<button id="restart">Restart</button>
 						<button id="load">load</button>
 						<button id="save">save</button>

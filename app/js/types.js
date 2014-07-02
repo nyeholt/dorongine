@@ -156,7 +156,7 @@ Clicker.onInit(function() {
 				rate: 5,
 				provides: {
 					Cash: 1,
-					Crime: -0.01
+					Crime: -0.02		// negative because the base rate is negative
 				}
 			},
 			created: {
@@ -252,8 +252,8 @@ Clicker.onInit(function() {
 			worker: {
 				rate: 5,
 				provides: {
-					Cash: 5,
-					Crime: 0.1
+					Cash: 6,
+					Crime: -0.1
 				}
 			},
 			created: {

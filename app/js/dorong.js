@@ -7,6 +7,11 @@
 	Clicker.start();
 	
 	$(function () {
+		
+		var dialogDiv;
+		
+		var graphDiv;
+		
 		var data = {};
 		
 		$(document).on('click', '#restart', function () {
@@ -26,9 +31,12 @@
 			
 		})
 
-		var graphDiv;
-		var closeGraph = function () {
-			graphDiv.hide();
+		
+		
+		
+		var closeDialog = function () {
+			dialogDiv.hide();
+			return false;
 		};
 		
 		var drawgraph = function () {
@@ -38,13 +46,15 @@
 			
 			var include = $('[name=graphitem]');
 			
+			var height = (dialogDiv.height() - 100);
+			
 			include.each(function () {
 				var key = $(this).val();
 				if ($(this).is(':checked')) {
 					// create the graph
 					$('#graph').sparkline(data[key], {
 						width: '100%',
-						height: '100%',
+						height: height + 'px',
 						lineColor: Clicker.game().items[key].color,
 						fillColor: false,
 	//					chartRangeMax: max,
@@ -57,6 +67,9 @@
 			});
 		}
 		
+		$(document).on('click', '#graphclose', closeDialog);
+		$(document).on('click', '#redraw', drawgraph);
+
 		$(document).on('click','#graphbtn', function () {
 			var src = $('#graphsrc').val();
 			data = Clicker.game().stats[src];
@@ -66,24 +79,9 @@
 
 			if (!graphDiv) {
 				graphDiv = $('#graphdiv-container');
-				graphDiv.css({
-					position: 'fixed',
-					top: '5%',
-					left: '5%',
-					background: '#fff',
-					width: '90%',
-					height: '90%',
-					margin: '10px auto',
-					border: '2px solid #aaa',
-					'padding-top': '20px',
-					display: 'none'
-				});
-				$('body').append(graphDiv);
-				$('#graphoptions').css('height', '50px');
-
-				$('#graphclose').click(closeGraph);
-				$('#redraw').click(drawgraph);
 			}
+			
+			$('#graphoptions').css('height', '50px');
 
 			var graphItems = $('#graphitems');
 			graphItems.empty();
@@ -97,15 +95,53 @@
 
 				graphItems.append($('<label>').append(opt).append(key));
 			}
-
-			if (graphDiv.is(':visible')) {
-				closeGraph();
-				return;
-			}
 			
-			graphDiv.show();
-			
+			showDialog(graphDiv);
 			drawgraph();
 		});
+
+		function showDialog(html) {
+			if (!dialogDiv) {
+				dialogDiv = $('#dialog-div');
+				dialogDiv.css({
+					position: 'fixed',
+					top: '5%',
+					left: '5%',
+					background: '#fff',
+					width: '90%',
+					height: '90%',
+					margin: '10px auto',
+					border: '2px solid #aaa',
+					'padding-top': '20px',
+					display: 'none'
+				});
+				
+				var dialogContent = $('<div class="dialog-content">');
+				dialogDiv.append(dialogContent);
+				
+				var closer = $('<a href="#">close</a>');
+				closer.css({
+					position: 'absolute',
+					top: '3px',
+					right: '2px'
+				});
+				
+				closer.click(closeDialog);
+				dialogDiv.append(closer);
+			}
+
+			dialogDiv.find('.dialog-content').html(html);
+			dialogDiv.show();
+		};
+		
+		$(document).on('click', '.dialog-page', function (e) {
+			e.preventDefault();
+			
+			var elem = $($(this).attr('href'));
+			if (elem.length) {
+				showDialog(elem.html());
+			}
+			return false;
+		})
 	});
 })(jQuery);
