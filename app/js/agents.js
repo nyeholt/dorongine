@@ -283,7 +283,11 @@ Clicker.onInit(function() {
 				
 				// rejig buy/sell values
 				item.components.market.buy += item.components.market.buy * (volume * 0.01);
-				item.components.market.sell += item.components.market.sell * (volume * 0.008);
+				
+				var opt1 = item.components.market.sell + item.components.market.sell * (volume * 0.008);
+				var opt2 =  transactionRecord.price - transactionRecord.price * (volume * 0.008);
+				
+				item.components.market.sell = Math.min(opt1, opt2);
 
 			} else if (item.components.created && item.components.created.cost) {
 				for (var itemType in item.components.created.cost) {

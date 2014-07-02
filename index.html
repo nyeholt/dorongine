@@ -108,7 +108,7 @@
 		
 		<script id="itemInfo" type="text/ractive">
 			<td>
-			<span class="item-amount">{{amount}} / {{maximum}}</span>
+			<span class="item-amount">{{amount}} / {{maximum}} {{#amount >= 1 && !components.employable }}<button on-tap="destroy">X</button>{{/amount}} </span>
 			</td>
 
 			<td>
@@ -181,6 +181,8 @@
 			{{^this.canBuy()}}
 			<img title="{{name}}" src="{{icon}}" class="item-icon" />
 			{{/this}}
+			
+			 
 			</td>
 			
 			<td>
@@ -194,6 +196,8 @@
 			
 			</td>
 
+			
+			
 			{{>itemInfo}}
 			
 		</tr>
@@ -222,7 +226,8 @@
 			<thead>
 				<tr>
 				<th><img src="{{game.items.People.icon}}" title="People" class="item-icon" /></th>
-				<th></th>
+				<th width="60px"></th>
+				<th width="60px"></th>
 				<th>{{game.items.People.amount}} / {{game.items.People.maximum}}</th>
 				
 				<th>Required</th>
@@ -240,9 +245,9 @@
 					<tr>
 					<td><img title="{{name}}" src="{{icon}}" class="item-icon" /></td>
 					<td>{{#this.canBuy(1)}}<button on-tap="buyItem">Hire</button>{{/this}}</td>
+					<td>{{#amount >= 1}}<button on-tap="destroy">Fire</button>{{/amount}}</td>
 
 					{{>itemInfo}}
-					
 					
 					</tr>
 					

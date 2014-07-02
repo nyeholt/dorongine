@@ -958,12 +958,13 @@ Clicker.onInit(function() {
 				rate: 1
 			},
 			increases: {
-				Miner: 10
+				Miner: 3
 			},
 			worker: {
 				rate: 9,
 				provides: {
-					Pollution: -2
+					Pollution: -2,
+					Ore: 3
 				}
 			},
 			consumer: {

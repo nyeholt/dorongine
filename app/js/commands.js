@@ -73,6 +73,18 @@ Clicker.onInit(function() {
 			}
 		}
 	})
+	
+	Clicker.addCommand({
+		name: 'destroy',
+		execute: function () {
+			var item = this.context;
+			Clicker.message('Destroying a ' + item.name);
+			
+			if (item.amount > 0) {
+				item.amount--;
+			}
+		}
+	})
 
 // for the amount of ore consumed, generated a single random ore item
 	Clicker.addCommand({

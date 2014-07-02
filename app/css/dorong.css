@@ -142,7 +142,7 @@ body {
 }
 
 .message {
-	height: 18px;
+	min-height: 18px;
 	padding: 2px;
 	margin-bottom: 2px;
 }
@@ -227,4 +227,13 @@ button {
 
 .dialog-page {
 	display: none;
+}
+
+.item-amount button {
+	background: transparent;
+	border: none;
+	text-decoration: underline;
+	border-radius: none;
+	width: 20px;
+	height: auto;
 }
