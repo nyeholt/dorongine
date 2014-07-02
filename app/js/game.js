@@ -163,7 +163,7 @@
 					item.components.market.buy = item.components.market.base;
 				}
 				if (!item.components.market.sell) {
-					item.components.market.sell = item.components.market.base * .90;
+					item.components.market.sell = item.components.market.base * .95;
 				}
 			}
 

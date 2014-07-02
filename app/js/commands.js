@@ -68,8 +68,8 @@ Clicker.onInit(function() {
 				
 				item.components.market.lastSell = Clicker.game().ticks;
 				
-				item.components.market.sell -= item.components.market.sell * .05;
-				item.components.market.buy -= item.components.market.sell * .04;
+				item.components.market.sell -= item.components.market.sell * (volume * 0.01);
+				item.components.market.buy -= item.components.market.sell * (volume * 0.008);
 			}
 		}
 	})

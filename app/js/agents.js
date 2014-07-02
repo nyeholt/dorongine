@@ -282,8 +282,8 @@ Clicker.onInit(function() {
 				item.components.market.lastBuy = Clicker.game().ticks;
 				
 				// rejig buy/sell values
-				item.components.market.buy += item.components.market.buy * .05;
-				item.components.market.sell += item.components.market.sell * .04;
+				item.components.market.buy += item.components.market.buy * (volume * 0.01);
+				item.components.market.sell += item.components.market.sell * (volume * 0.008);
 
 			} else if (item.components.created && item.components.created.cost) {
 				for (var itemType in item.components.created.cost) {
@@ -334,7 +334,75 @@ Clicker.onInit(function() {
 			this.current = null;
 			Clicker.game().buildQueue.splice(this.buildIndex, 1);
 		}
-	})
+	});
+	
+	Clicker.addFastTicker({
+		name: 'MarketAnalyst',
+		onTick: 11,
+		currentTick: 0,
+		resetAfter: 13,
+		tick: function () {
+			this.currentTick++;
+			var gameTick = Clicker.game().ticks;
+			
+			if (this.currentTick >= this.onTick) {
+				var items = Clicker.game().byComponent('market');
+				
+				for (var i in items) {
+					var market = items[i].components.market;
+					
+					var lastTransaction = 0;
+					if (market.lastBuy && market.lastSell) {
+						lastTransaction = Math.max(market.lastBuy, market.lastSell);
+					} else if (market.lastBuy > 0) {
+						lastTransaction = market.lastBuy;
+					} else if (market.lastSell > 0) {
+						lastTransaction = market.lastSell;
+					}
+
+					var diff = market.base * .02;
+					var sellBase = market.base * .95;
+					
+					if (lastTransaction > 0 && ((lastTransaction + this.resetAfter) <= gameTick)) {
+						if (market.buy > market.base) {
+							// decrease
+							market.buy -= diff;
+							market.lastBuy = gameTick;
+							if (market.buy < market.base) {
+								market.buy = market.base;
+								market.lastBuy = 0;
+							}
+						} else if (market.buy < market.base) {
+							market.buy += diff;
+							market.lastBuy = gameTick;
+							if (market.buy > market.base) {
+								market.buy = market.base;
+								market.lastBuy = 0;
+							}
+						}
+
+						if (market.sell > sellBase) {
+							market.sell -= diff;
+							market.lastSell = gameTick;
+							if (market.sell < sellBase) {
+								market.sell = sellBase;
+								market.lastSell = 0;
+							}
+						} else if (market.sell < sellBase) {
+							market.sell += diff;
+							market.lastSell = gameTick;
+							if (market.sell > sellBase) {
+								market.sell = sellBase;
+								market.lastSell = 0;
+							}
+						}
+					}
+				}
+
+				this.currentTick = 0;
+			}
+		}
+	});
 
 	Clicker.addTicker({
 		name: 'StatsCollector',
