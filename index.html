@@ -258,7 +258,7 @@
 					</td>
 					
 					<td>
-					{{#amount > buyVolume}}
+					{{#amount >= buyVolume}}
 					<button title="{{name}}" on-tap="sellItem">
 					${{formatted(components.market.sell * buyVolume)}}
 					</button>

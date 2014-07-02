@@ -1,5 +1,8 @@
 
 ;(function () {
+	
+	var VERSION = 0.1;
+	
 	var gameLoop;
 	var commandLoop;
 
@@ -74,6 +77,7 @@
 			ractiveObservers = [];
 
 			game = {
+				version: VERSION,
 				ticks: 0,
 				items: {},
 				globalRates: {
@@ -303,6 +307,12 @@
 					item.pending = 0;
 				}
 			}
+			
+			if (!oldgame.version || oldgame.version < VERSION) {
+				// keep the old set version around!
+				game.version = oldgame.version;
+				alert("Your save version is now out of date - you may want to hit 'Restart' if you notice any weird things happening");
+			}
 		},
 		random: function (min, max) {
 			var x = Math.sin(this.seed++) * 10000;
@@ -388,8 +398,8 @@
 			
 			if (item.components.market && item.components.market.buy) {
 				var total = volume * item.components.market.buy;
-				if (total <= game.items.Cash.amount) {
-					okay = true;
+				if (total > game.items.Cash.amount) {
+					okay = false;
 				}
 			} else if (item.components.created && item.components.created.cost) {
 				for (var itemType in item.components.created.cost) {
