@@ -134,7 +134,7 @@
 			dialogDiv.show();
 		};
 		
-		$(document).on('click', '.dialog-page', function (e) {
+		$(document).on('click', '.dialog-link', function (e) {
 			e.preventDefault();
 			
 			var elem = $($(this).attr('href'));

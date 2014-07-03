@@ -361,8 +361,7 @@ Clicker.onInit(function() {
 				rate: 5,
 				provides: {
 					Brainpower: 2,
-					Water: 2,
-					Pollution: -5
+					Water: 5
 				}
 			},
 			created: {
@@ -436,7 +435,7 @@ Clicker.onInit(function() {
 				rate: 70
 			},
 			market: {
-				base: 10
+				base: 15
 			}
 		}
 	});
@@ -553,13 +552,79 @@ Clicker.onInit(function() {
 			created: {
 				time: 1,
 				cost: {
-					Oil: 10,
+					Oil: 2,
 					Energy: 2
 				}
 			},
 			requires: {
 				topics: {
 					'Manufacturing': 2
+				}
+			}
+		}
+	});
+	
+	Clicker.addItem({
+		name: 'Truck',
+		icon: 'icons/truck/icon_2558.svg',
+		maximum: 10,
+		components: {
+			goods: true,
+			created: {
+				time: 25,
+				cost: {
+					Steel: 5,
+					Glass: 2,
+					Oil: 5
+				}
+			},
+			consumer: {
+				rate: 17,
+				consumes: {
+					Fuel: 1
+				}
+			},
+			worker: {
+				rate: 11,
+				provides: {
+					Ore: 2,
+					Cash: 10,
+					Pollution: 1
+				}
+			},
+			
+			requires: {
+				items: {
+					'Highway': 1
+				}
+			}
+		}
+	});
+	
+	Clicker.addItem({
+		name: 'Plane',
+		icon: 'icons/plane/icon_88.svg',
+		maximum: 10,
+		components: {
+			goods: true,
+			created: {
+				time: 50,
+				cost: {
+					Cash: 500,
+					Steel: 25,
+					Glass: 5,
+					Oil: 10
+				}
+			},
+			worker: {
+				rate: 21,
+				provides: {
+					Cash: 100
+				}
+			},
+			requires: {
+				items: {
+					'Airport': 1
 				}
 			}
 		}
@@ -733,7 +798,7 @@ Clicker.onInit(function() {
 	Clicker.addItem({
 		name: 'Sunburst',
 		icon: 'icons/energy/icon_2766.svg',
-		maximum: 10,
+		maximum: 100,
 		fixed: true,
 		components: {
 			goods: true,
@@ -885,6 +950,33 @@ Clicker.onInit(function() {
 				},
 				items: {
 					Engineer: 1
+				}
+			}
+		}
+	});
+	
+	Clicker.addItem({
+		name: 'Highway',
+		icon: 'icons/highway/icon_7534.svg',
+		maximum: 5,
+		components: {
+			building: true,
+			created: {
+				time: 200,
+				cost: {
+					'Cash': 400,
+					'Wood': 10,
+					'Cement': 30
+				}
+			},
+			improves: {
+				Ore: 0.05,
+				Cash: 0.05,
+				Water: 0.05
+			},
+			requires: {
+				topics: {
+					'Manufacturing': 1
 				}
 			}
 		}
@@ -1228,6 +1320,35 @@ Clicker.onInit(function() {
 		}
 	});
 
+	Clicker.addItem({
+		name: 'Airport',
+		icon: 'icons/airport/icon_14018.svg',
+		maximum: 5,
+		components: {
+			building: true,
+			created: {
+				time: 300,
+				cost: {
+					'Cash': 30000,
+					'Cement': 100,
+					Glass: 20,
+					Oil: 50,
+					'Water Tank': 2
+				}
+			},
+			improves: {
+				Cash: 0.10,
+				Water: 0.15,
+				Energy: 0.15
+			},
+			requires: {
+				topics: {
+					'Civics': 2,
+					'Technology': 2
+				}
+			}
+		}
+	});
 
 	Clicker.addItem({
 		name: 'Bank',
@@ -1376,6 +1497,9 @@ Clicker.onInit(function() {
 					'Steel': 200,
 					'Engineer': 10,
 					'Computer': 20
+				},
+				gives: {
+					Energy: 10000
 				}
 			},
 			requires: {

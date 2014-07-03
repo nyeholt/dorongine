@@ -146,6 +146,10 @@ Clicker.onInit(function() {
 			for (var k in Clicker.game().topics) {
 				++perTick;
 			}
+
+			perTick += Clicker.game().items.Teacher.amount;
+			perTick += Clicker.game().items.School.amount;
+
 			if (amount > perTick) {
 				var totalUsed = 0;
 				for (var name in Clicker.game().topics) {
@@ -284,10 +288,10 @@ Clicker.onInit(function() {
 				// rejig buy/sell values
 				item.components.market.buy += item.components.market.buy * (volume * 0.01);
 				
-				var opt1 = item.components.market.sell + item.components.market.sell * (volume * 0.008);
-				var opt2 =  transactionRecord.price - transactionRecord.price * (volume * 0.008);
+				// var opt1 = item.components.market.sell + item.components.market.sell * (volume * 0.008);
+				var opt2 =  transactionRecord.price * 0.93;
 				
-				item.components.market.sell = Math.min(opt1, opt2);
+				item.components.market.sell = opt2; // Math.min(opt1, opt2);
 
 			} else if (item.components.created && item.components.created.cost) {
 				for (var itemType in item.components.created.cost) {
@@ -340,11 +344,12 @@ Clicker.onInit(function() {
 		}
 	});
 	
-	Clicker.addFastTicker({
+	Clicker.addTicker({
 		name: 'MarketAnalyst',
 		onTick: 11,
 		currentTick: 0,
 		resetAfter: 13,
+		baseDecrease: 0.03,
 		tick: function () {
 			this.currentTick++;
 			var gameTick = Clicker.game().ticks;
@@ -354,7 +359,7 @@ Clicker.onInit(function() {
 				
 				for (var i in items) {
 					var market = items[i].components.market;
-					
+
 					var lastTransaction = 0;
 					if (market.lastBuy && market.lastSell) {
 						lastTransaction = Math.max(market.lastBuy, market.lastSell);
@@ -363,8 +368,10 @@ Clicker.onInit(function() {
 					} else if (market.lastSell > 0) {
 						lastTransaction = market.lastSell;
 					}
+					
+					var economics = Clicker.game().topics.Economics.level + 1;
 
-					var diff = market.base * .02;
+					var diff = market.buy * (economics * this.baseDecrease);
 					var sellBase = market.base * .95;
 					
 					if (lastTransaction > 0 && ((lastTransaction + this.resetAfter) <= gameTick)) {
