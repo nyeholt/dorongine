@@ -288,6 +288,10 @@
 			var data = localStorage.getItem(this.name + '-game');
 			var oldgame = JSON.parse(data);
 			
+			if (!oldgame) {
+				return;
+			}
+			
 			var newgame = jQuery.extend(true, {}, game, oldgame);
 			game = newgame;
 			// rebind functions
