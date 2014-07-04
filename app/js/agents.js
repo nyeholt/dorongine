@@ -70,7 +70,6 @@ Clicker.onInit(function() {
 									base *= raw[prov].rates.raw;
 								}
 								var toAdd = worker.amount * base;
-								Clicker.log("Doing work by " + worker.name + " creating " + toAdd + " for " + prov);
 								if (Clicker.game().items[prov]) {
 									var addto = Clicker.game().items[prov];
 
@@ -207,7 +206,6 @@ Clicker.onInit(function() {
 				Clicker.game().items.Ore.amount = amount;
 
 				for (var i = 0; i < numToProcess; i++) {
-					Clicker.log("Mining " + numToProcess);
 					var cmd = Clicker.newCommand('mine');
 					Clicker.runCommand(cmd);
 				}

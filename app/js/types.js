@@ -167,7 +167,7 @@ Clicker.onInit(function() {
 				}
 			},
 			consumer: {// consumers 
-				rate: 30,
+				rate: 33,
 				consumes: {
 					Energy: 1
 				}
@@ -196,7 +196,7 @@ Clicker.onInit(function() {
 				}
 			},
 			consumer: {// consumers 
-				rate: 30,
+				rate: 31,
 				consumes: {
 					Energy: 2
 				}
@@ -230,7 +230,7 @@ Clicker.onInit(function() {
 				}
 			},
 			consumer: {// consumers 
-				rate: 30,
+				rate: 29,
 				consumes: {
 					Cash: 5
 				}
@@ -264,7 +264,7 @@ Clicker.onInit(function() {
 				}
 			},
 			consumer: {// consumers 
-				rate: 30,
+				rate: 33,
 				consumes: {
 					Water: 3,
 					Energy: 5
@@ -298,7 +298,7 @@ Clicker.onInit(function() {
 				}
 			},
 			consumer: {// consumers 
-				rate: 30,
+				rate: 29,
 				consumes: {
 					Energy: 4,
 					Cash: 5
@@ -616,8 +616,14 @@ Clicker.onInit(function() {
 					Oil: 10
 				}
 			},
+			consumer: {
+				rate: 33,
+				consumes: {
+					Fuel: 1
+				}
+			},
 			worker: {
-				rate: 21,
+				rate: 17,
 				provides: {
 					Cash: 100
 				}
@@ -757,8 +763,8 @@ Clicker.onInit(function() {
 			created: {
 				time: 100,
 				cost: {
-					'Gold': 5,
-					'Actinide': 10
+					'Gold': 10,
+					'Actinide': 5
 				}
 			},
 			requires: {
@@ -1296,7 +1302,7 @@ Clicker.onInit(function() {
 			consumer: {
 				rate: 13,
 				consumes: {
-					Pollution: 50,
+					Pollution: 25,
 					Energy: 3
 				}
 			},
@@ -1474,7 +1480,10 @@ Clicker.onInit(function() {
 		components: {
 			building: true,
 			improves: {
-				Energy: 0.5
+				Energy: 1
+			},
+			increases: {
+				'Energy': 10000
 			},
 			worker: {
 				rate: 5,
@@ -1483,7 +1492,7 @@ Clicker.onInit(function() {
 				}
 			},
 			consumer: {
-				rate: 30,
+				rate: 181,
 				consumes: {
 					Water: 100,
 					FuelRod: 5
@@ -1492,14 +1501,14 @@ Clicker.onInit(function() {
 			created: {
 				time: 1200,
 				cost: {
-					'Cash': 750000,
+					'Cash': 500000,
 					'Reinforced Concrete': 100,
 					'Steel': 200,
 					'Engineer': 10,
 					'Computer': 20
 				},
 				gives: {
-					Energy: 10000
+					Energy: 1000
 				}
 			},
 			requires: {
