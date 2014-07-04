@@ -1,32 +1,19 @@
 
 ;(function () {
+	
+	var VERSION = 0.1;
+	
 	var gameLoop;
 	var commandLoop;
 
-	var byComponent = function (component, mapped) {
-		var items;
-		if (mapped) {
-			items = {};
-		} else {
-			items = [];
-		}
-		
-		for (var k in this.items) {
-			if (this.items[k].components[component]) {
-				if (mapped) {
-					items[k] = this.items[k];
-				} else {
-					items.push(this.items[k])
-				}
-			}
-		}
-		return items;
-	};
+	var ractiveObservers = [];
 
 	var game = {};
 	
 	var tickers = [];
 	var fastTickers = [];
+	
+	var itemsByComponent = {};
 
 	var types = {
 		
@@ -82,8 +69,18 @@
 		init: function () {
 			clearInterval(gameLoop);
 			clearInterval(commandLoop);
+			
+			
+			// delete observers
+			for (var i = 0; i < ractiveObservers.length; i++) {
+				ractiveObservers[i].cancel();
+			}
+			
+			ractiveObservers = [];
+			itemsByComponent = {};
 
 			game = {
+				version: VERSION,
 				ticks: 0,
 				items: {},
 				globalRates: {
@@ -96,7 +93,8 @@
 				buildQueue: [],
 				transactions: [],
 				messages: [],
-				byComponent: byComponent
+				byComponent: byComponent,
+				byTopic: byTopic
 			};
 			
 			tickers = [];
@@ -140,6 +138,7 @@
 			
 		},
 		addItem: function (item) {
+			item.pending = 0;
 			if (!item.components) {
 				item.components = {};
 			}
@@ -161,14 +160,23 @@
 			item.rates = rates;
 			item.amount = item.defaultAmount ? item.defaultAmount : 0;
 			item.existed = item.amount;
+			
+			if (item.components.market) {
+				if (!item.components.market.base) {
+					item.components.market.base = item.components.created.cost.Cash;
+				}
+				
+				if (!item.components.market.buy) {
+					item.components.market.buy = item.components.market.base;
+				}
+				if (!item.components.market.sell) {
+					item.components.market.sell = item.components.market.base * .95;
+				}
+			}
 
 			game.items[item.name] = item;
-//			{
-//				amount: 0,
-//				rates: rates
-//			};
-
-//			this.ractive.set('types', types);
+			
+			storeByComponent(item);
 		},
 		
 		addTopic: function (topic) {
@@ -181,7 +189,8 @@
 				active: false,
 				percentage: 0
 			};
-			this.ractive.observe('game.topics.' + topic.name +'.active', this.updateTopics);
+			
+			ractiveObservers.push(this.ractive.observe('game.topics.' + topic.name +'.active', this.updateTopics));
 //			this.ractive.set('game', game);
 		},
 		updateTopics: function () {
@@ -213,12 +222,12 @@
 		addCommand: function (command) {
 			availableCommands[command.name] = command;
 
-			this.ractive.on(command.name, function (button) {
+			ractiveObservers.push(this.ractive.on(command.name, function (button) {
 				if (button.context) {
 					var cmd = Clicker.newCommand(command.name, button.context);
 					Clicker.runCommand(cmd);
 				}
-			});
+			}));
 		},
 		newCommand: function (name, context) {
 			var cmd = availableCommands[name];
@@ -283,11 +292,27 @@
 			game = newgame;
 			// rebind functions
 			game.byComponent = byComponent;
+			game.byTopic = byTopic;
+			
+			itemsByComponent = {};
+			
 			for (var type in game.items) {
 				game.items[type] = jQuery.extend({}, Item, game.items[type]);
-				if (!game.items[type].buyVolume) {
-					game.items[type].buyVolume = 1;
+				var item = game.items[type];
+				if (!item.buyVolume) {
+					item.buyVolume = 1;
 				}
+				if (typeof item.pending === 'undefined') {
+					item.pending = 0;
+				}
+				
+				storeByComponent(item);
+			}
+			
+			if (!oldgame.version || oldgame.version < VERSION) {
+				// keep the old set version around!
+				game.version = oldgame.version;
+				alert("Your save version is now out of date - you may want to hit 'Restart' if you notice any weird things happening");
 			}
 		},
 		random: function (min, max) {
@@ -339,6 +364,9 @@
 		formattedAmount: function () {
 			return this.amount;
 		},
+		formatted: function (val) {
+			return Number(val).toFixed(2); 
+		},
 		meetsRequirements: function () {
 			if (!this.components.requires) {
 				return true;
@@ -368,17 +396,24 @@
 				volume = item.buyVolume ? parseInt(item.buyVolume) : 1;
 			}
 			var okay = true;
-			if (item.components.created && item.components.created.cost) {
+			
+			if (item.components.market && item.components.market.buy) {
+				var total = volume * item.components.market.buy;
+				if (total > game.items.Cash.amount) {
+					okay = false;
+				}
+			} else if (item.components.created && item.components.created.cost) {
 				for (var itemType in item.components.created.cost) {
 					// check stock levels
 					var requiredAmount = item.components.created.cost[itemType] * volume;
-					if (game.items[itemType].amount < requiredAmount) {
+					var total = game.items[itemType].amount;
+					if (total < requiredAmount) {
 						okay = false;
 						break;
 					}
 				}
 			}
-			
+
 			return okay && this.canAdd(volume) && this.meetsRequirements();
 		}, 
 		canAdd: function (number) {
@@ -387,7 +422,8 @@
 			}
 			
 			var max = this.maximum ? this.maximum : 1000;
-			if (number > 0 && this.amount >= max) {
+			
+			if (number > 0 && (this.amount + number + this.pending) > max) {
 				return false;
 			}
 
@@ -402,11 +438,77 @@
 				return game.items[name].icon;
 			}
 			return types.topics[name].icon;
+		},
+		hasEnoughItem: function (name, volume) {
+			if (game.items[name]) {
+				return game.items[name].amount >= volume;
+			}
 		}
 	};
 	
-	var seed = (new Date()).getTime() % 100000;	
+	var byTopic = function (topic, level) {
+		var items = [];
+		var ignoreLevel = false;
+		if (typeof level === 'undefined') {
+			ignoreLevel = true;
+		}
 
+		for (var i in this.items) {
+			if (this.items[i].components.requires && 
+				this.items[i].components.requires.topics &&
+				this.items[i].components.requires.topics[topic] &&
+				(ignoreLevel || this.items[i].components.requires.topics[topic] === level)
+			) {
+				items.push(this.items[i]);
+			}
+		}
+		return items;
+	};
+	
+	var storeByComponent = function (item) {
+		for (var cname in item.components) {
+			var existing = itemsByComponent[cname];
+			if (!existing) {
+				existing = [];
+			}
+			existing.push(item);
+			itemsByComponent[cname] = existing;
+		}	
+	};
+	
+	var byComponent = function (component, mapped) {
+		var items;
+		if (mapped) {
+			items = {};
+		} else {
+			items = [];
+		}
+		
+		var saved = itemsByComponent[component];
+		if (saved) {
+			if (mapped) {
+				for (var i = 0; i < saved.length; i++) {
+					items[saved[i].name] = saved[i];
+				}
+			} else {
+				items = saved;
+			}
+			return items;
+		}
+		
+		for (var k in this.items) {
+			if (this.items[k].components[component]) {
+				if (mapped) {
+					items[k] = this.items[k];
+				} else {
+					items.push(this.items[k])
+				}
+			}
+		}
+		return items;
+	};
+	
+	var seed = (new Date()).getTime() % 100000;	
 	window.Clicker = new ClickerGame(seed);
 
 })();

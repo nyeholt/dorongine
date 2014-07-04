@@ -17,12 +17,12 @@ Clicker.onInit(function() {
 				} else {
 					stats[this.context.name] += 1;
 				}
-				
+
 				if (stats[this.context.name] % 100 === 0 && current.bonus) {
 					var toAdd = stats[this.context.name] / 100;
 					Clicker.message(stats[this.context.name] + " click bonus awarded for " + current.name + " - Keep clicking!", 'good', current.name);
 					if (typeof ga === 'function') {
-						ga('send', 'event', 'game', 'player', 'bonus' , toAdd);
+						ga('send', 'event', 'game', 'player', 'bonus', toAdd);
 					}
 					increase = toAdd * current.bonus;
 				}
@@ -38,21 +38,53 @@ Clicker.onInit(function() {
 		name: 'buyItem',
 		execute: function() {
 			var item = this.context;
-			
+
 			var volume = this.volume ? this.volume : (item.buyVolume ? parseInt(item.buyVolume) : 1);
 			if (item.canBuy(volume) && item.canAdd(volume)) {
 				Clicker.queueBuild(item, volume);
 			}
 		}
 	});
-	
+
 	Clicker.addCommand({
 		name: 'sellItem',
 		execute: function() {
 			var item = this.context;
 			var volume = this.volume ? this.volume : (item.buyVolume ? parseInt(item.buyVolume) : 1);
-			if (item.amount > volume) {
+			if (item.amount >= volume && item.components.market.sell > 0) {
+				var transactionRecord = {type: 'sell', item: item.name, items: {}};
+				transactionRecord.items[item.name] = volume;
+
+				var total = item.components.market.sell * volume;
+
+				transactionRecord.volume = volume;
+				transactionRecord.price = item.components.market.sell;
+				transactionRecord.total = total;
+
+				item.amount -= volume;
+				Clicker.game().items.Cash.amount += total;
+
+				Clicker.game().transactions.push(transactionRecord);
+
+				item.components.market.lastSell = Clicker.game().ticks;
+
+				item.components.market.sell -= item.components.market.sell * (volume * 0.01);
 				
+				var opt1 = item.components.market.buy - item.components.market.buy * (volume * 0.008);
+				var opt2 = transactionRecord.price + transactionRecord.price * (volume * 0.008);
+				item.components.market.buy = Math.max(opt1, opt2);
+			}
+		}
+	})
+
+	Clicker.addCommand({
+		name: 'destroy',
+		execute: function() {
+			var item = this.context;
+			Clicker.message('Destroying a ' + item.name);
+
+			if (item.amount > 0) {
+				item.amount--;
 			}
 		}
 	})
@@ -79,7 +111,7 @@ Clicker.onInit(function() {
 
 				if (toMine && toMine.rates.mined > nextRand && toMine.canAdd(1)) {
 					toMine.add(1);
-				} 
+				}
 				i++;
 			}
 		}

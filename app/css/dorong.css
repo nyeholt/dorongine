@@ -112,7 +112,11 @@ body {
 }
 
 .resource-max {
-	color: #ccc;
+	color: #888;
+}
+
+.rate-info {
+	color: #888;
 }
 
 .knowledge-input input {
@@ -137,9 +141,8 @@ body {
 	float: left;
 }
 
-
 .message {
-	height: 18px;
+	min-height: 18px;
 	padding: 2px;
 	margin-bottom: 2px;
 }
@@ -184,4 +187,53 @@ button {
 
 .right-align-contents {
 	text-align: right;
+}
+
+.requirement.notenough {
+	color: #b92c28;
+}
+
+.dialog-content {
+	padding: 0px 10px 0px 10px;
+	overflow: auto;
+	height: 100%;
+}
+
+
+.dialog-content h1      { font-size: 2em;       /* 2*16 = 32 */       font-weight: bold;  margin-bottom: 10px;       }
+.dialog-content h2      { font-size: 1.5em;     /* 1.5*16 = 24 */     font-weight: bold; margin-bottom: 10px;   }
+.dialog-content h3      { font-size: 1.17em;    /* 1.17*16 = 18.72 */ font-weight: bold; margin-bottom: 10px; }
+.dialog-content h4      { font-size: 1em;       /* 1*16 = 16 */       font-weight: bold; margin-bottom: 10px; }
+.dialog-content h5      { font-size: 0.83em;    /* 0.83*16 = 13.28 */ font-weight: bold; margin-bottom: 10px;}
+.dialog-content h6      { font-size: 0.75em;    /* 0.75*16 = 12 */    font-weight: bold; margin-bottom: 10px; }
+
+.dialog-content p { 
+	line-height: 1.5;
+    margin: 0 0 1em;    
+}
+
+
+.dialog-content ul, .dialog-content ol, .dialog-content dl {
+	line-height: 1.5;
+	margin-bottom: 1.11111rem;
+	list-style-position: inside;
+	font-family: inherit;
+	list-style-type: disc;
+}
+
+.dialog-content li {
+	margin-left: 10px;
+}
+
+.dialog-page {
+	display: none;
+}
+
+.item-amount button {
+	background: transparent;
+	border: none;
+	text-decoration: underline;
+	border-radius: none;
+	width: 20px;
+	height: auto;
 }
