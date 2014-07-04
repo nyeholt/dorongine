@@ -12,6 +12,8 @@
 	
 	var tickers = [];
 	var fastTickers = [];
+	
+	var itemsByComponent = {};
 
 	var types = {
 		
@@ -75,6 +77,7 @@
 			}
 			
 			ractiveObservers = [];
+			itemsByComponent = {};
 
 			game = {
 				version: VERSION,
@@ -171,15 +174,9 @@
 				}
 			}
 
-			// check to see if it's got a cash-only cost, in which case it's
-			// also considered a sellable
 			game.items[item.name] = item;
-//			{
-//				amount: 0,
-//				rates: rates
-//			};
-
-//			this.ractive.set('types', types);
+			
+			storeByComponent(item);
 		},
 		
 		addTopic: function (topic) {
@@ -297,6 +294,8 @@
 			game.byComponent = byComponent;
 			game.byTopic = byTopic;
 			
+			itemsByComponent = {};
+			
 			for (var type in game.items) {
 				game.items[type] = jQuery.extend({}, Item, game.items[type]);
 				var item = game.items[type];
@@ -306,6 +305,8 @@
 				if (typeof item.pending === 'undefined') {
 					item.pending = 0;
 				}
+				
+				storeByComponent(item);
 			}
 			
 			if (!oldgame.version || oldgame.version < VERSION) {
@@ -464,12 +465,35 @@
 		return items;
 	};
 	
+	var storeByComponent = function (item) {
+		for (var cname in item.components) {
+			var existing = itemsByComponent[cname];
+			if (!existing) {
+				existing = [];
+			}
+			existing.push(item);
+			itemsByComponent[cname] = existing;
+		}	
+	};
+	
 	var byComponent = function (component, mapped) {
 		var items;
 		if (mapped) {
 			items = {};
 		} else {
 			items = [];
+		}
+		
+		var saved = itemsByComponent[component];
+		if (saved) {
+			if (mapped) {
+				for (var i = 0; i < saved.length; i++) {
+					items[saved[i].name] = saved[i];
+				}
+			} else {
+				items = saved;
+			}
+			return items;
 		}
 		
 		for (var k in this.items) {
