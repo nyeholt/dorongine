@@ -180,6 +180,7 @@ Clicker.onInit(function() {
 
 	Clicker.addItem({
 		name: 'Employee',
+		description: 'Employees make you money. Add a town hall to hire more',
 		icon: 'icons/employee/icon_961.svg',
 		maximum: 15,
 		components: {

@@ -35,7 +35,6 @@ Clicker.onInit(function() {
 								toRemove.amount -= number;
 								Clicker.game().items.Sick.amount++;
 							}
-
 						}
 					}
 				}
