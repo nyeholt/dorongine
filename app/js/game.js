@@ -145,6 +145,9 @@
 			if (!item.buyVolume) {
 				item.buyVolume = 1;
 			}
+			if (!item.description) {
+				item.description = item.name;
+			}
 			
 //			types.items[item.name] = item;
 
@@ -514,6 +517,13 @@
 	
 	var seed = (new Date()).getTime() % 100000;	
 	window.Clicker = new ClickerGame(seed);
+
+	if (!window._t) {
+		// translation stub
+		window._t = function (str) {
+			return str;
+		}
+	}
 
 })();
 

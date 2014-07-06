@@ -16,6 +16,28 @@ Clicker.onInit(function() {
 	});
 
 	Clicker.addItem({
+		name: 'Energy',
+		description: _t('Items use energy to perform their function'),
+		color: '#F9B700',
+		icon: 'icons/energy/icon_2766.svg',
+		bonus: 50,			// bonus after 100 clicks
+		maximum: 1000,
+		formattedAmount: function() {
+			return Number(this.amount).toFixed(2);
+		},
+		
+		components: {
+			requires: {
+				items: {
+					Employee: 1
+				}
+			},
+			'raw': {rate: 1},
+			'collected': true
+		}
+	});
+
+	Clicker.addItem({
 		name: 'Brainpower',
 		color: '#E60084',
 		icon: 'icons/brain/icon_38934.svg',
@@ -25,26 +47,16 @@ Clicker.onInit(function() {
 			return Number(this.amount).toFixed(2);
 		},
 		components: {
+			requires: {
+				items: {
+					Employee: 5
+				}
+			},
 			'raw': {rate: 1},
 			'collected': true
 		}
 	});
-
-	Clicker.addItem({
-		name: 'Energy',
-		color: '#F9B700',
-		icon: 'icons/energy/icon_2766.svg',
-		bonus: 50,			// bonus after 100 clicks
-		maximum: 1000,
-		formattedAmount: function() {
-			return Number(this.amount).toFixed(2);
-		},
-		components: {
-			'raw': {rate: 1},
-			'collected': true
-		}
-	});
-
+	
 	Clicker.addItem({
 		name: 'Ore',
 		color: '#4F1700',
@@ -55,6 +67,11 @@ Clicker.onInit(function() {
 			return Number(this.amount).toFixed(2);
 		},
 		components: {
+			requires: {
+				topics: {
+					Mining: 1
+				}
+			},
 			'raw': {rate: 1},
 			'collected': true
 		}
@@ -70,6 +87,11 @@ Clicker.onInit(function() {
 			return Number(this.amount).toFixed(2);
 		},
 		components: {
+			requires: {
+				topics: {
+					Technology: 1
+				}
+			},
 			'raw': {rate: 1},
 			'collected': true
 		}
@@ -84,6 +106,11 @@ Clicker.onInit(function() {
 			return Number(this.amount).toFixed(2);
 		},
 		components: {
+			requires: {
+				topics: {
+					Technology: 1
+				}
+			},
 			'raw': {rate: -1},
 			'collected': true
 		}
@@ -98,6 +125,11 @@ Clicker.onInit(function() {
 			return Number(this.amount).toFixed(2);
 		},
 		components: {
+			requires: {
+				topics: {
+					Technology: 1
+				}
+			},
 			'raw': {rate: -1},
 			'collected': true
 		}
@@ -285,9 +317,9 @@ Clicker.onInit(function() {
 		components: {
 			employable: true,
 			worker: {
-				rate: 5,
+				rate: 2,
 				provides: {
-					Brainpower: 2
+					Brainpower: 1
 				}
 			},
 			created: {

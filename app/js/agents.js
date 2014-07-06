@@ -147,7 +147,7 @@ Clicker.onInit(function() {
 			}
 
 			perTick += Clicker.game().items.Teacher.amount;
-			perTick += Clicker.game().items.School.amount;
+			perTick += (Clicker.game().items.School.amount*2);
 
 			if (amount > perTick) {
 				var totalUsed = 0;
@@ -177,7 +177,7 @@ Clicker.onInit(function() {
 					}
 				}
 
-				Clicker.game().items.Brainpower.amount -= perTick;
+				Clicker.game().items.Brainpower.amount -= totalUsed;
 			}
 		}
 	});

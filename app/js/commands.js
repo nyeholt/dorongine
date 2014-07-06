@@ -98,10 +98,6 @@ Clicker.onInit(function() {
 			while (i < this.perOp) {
 				var nextRand = Clicker.random() * 100;
 
-				if (nextRand >= Clicker.game().globalRates.mined) {
-					return;
-				}
-
 				var mineable = Clicker.game().byComponent('mined');
 				var rand = Clicker.random(0, mineable.length - 1);
 
