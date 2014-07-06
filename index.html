@@ -285,6 +285,37 @@
 				</table>
 			</div>
 
+			<div id="knowledge" class="holder">
+				<h2>Research</h2>
+				<p>Research improves existing items, and allows the creation of others</p>
+				<p>Create schools and hire teachers to increase rate of research</p>
+				<table>
+				<tr>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th width="10%">Research active</th>
+				</tr>
+				{{#game.topics :topic_name}}
+				<tr>
+				<td><img src="{{icon}}" title="{{topic_name}}" class="item-icon" /></td>
+				<td>Level {{level}}</td>
+				<td>
+				<div><progress max="{{target}}" value="{{knowledge}}"></progress></div>
+				<div class="progress-info">
+				Needed for: 
+				{{#game.byTopic(topic_name, level+1)}}
+				<img title="{{name}}" src="{{icon}}" class="item-icon" />
+				{{/game.byTopic }}
+				</div>
+				</td>
+				<td class="knowledge-input">
+				<input type="checkbox" checked="{{active}}" />
+				</td>
+				</tr>
+				{{/ game.topics}}
+				</table>
+			</div>
 			
 
 			<div id="resources" class="holder">
@@ -345,6 +376,9 @@
 
 			<div id="creatable"  class="holder">
 				<h2>Items</h2>
+				
+				<p>Do some research to unlock items</p>
+				
 				<table class="items-table">
 				<tr>
 				<th width="60px">Item</th>
@@ -367,6 +401,9 @@
 
 				
 				<h2>Buildings</h2>
+				
+				<p>Do some research to unlock buildings</p>
+				
 				<table>
 				<tr>
 				<th width="60px">Item</th>
@@ -386,40 +423,8 @@
 				</table>
 			</div>
 			
-			<div id="knowledge" class="holder">
-				<h2>Research</h2>
-				<p>Research improves existing items, and allows the creation of others</p>
-				<p>Create schools and hire teachers to increase rate of research</p>
-				<table>
-				<tr>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th width="10%">Research active</th>
-				</tr>
-				{{#game.topics :topic_name}}
-				<tr>
-				<td><img src="{{icon}}" title="{{topic_name}}" class="item-icon" /></td>
-				<td>Level {{level}}</td>
-				<td>
-				<div><progress max="{{target}}" value="{{knowledge}}"></progress></div>
-				<div class="progress-info">
-				Needed for: 
-				{{#game.byTopic(topic_name, level+1)}}
-				<img title="{{name}}" src="{{icon}}" class="item-icon" />
-				{{/game.byTopic }}
-				</div>
-				</td>
-				<td class="knowledge-input">
-				<input type="checkbox" checked="{{active}}" />
-				</td>
-				</tr>
-				{{/ game.topics}}
-				</table>
-			</div>
 			
 			
-
 
 			<div id="footer">
 

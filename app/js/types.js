@@ -69,7 +69,7 @@ Clicker.onInit(function() {
 		components: {
 			requires: {
 				topics: {
-					Mining: 1
+					Technology: 2
 				}
 			},
 			'raw': {rate: 1},
@@ -236,7 +236,7 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Mining': 1
+					'Education': 2
 				}
 			}
 		}
@@ -270,7 +270,8 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Civics': 1
+					//'Civics': 1
+					'Education': 2
 				}
 			}
 		}
@@ -550,7 +551,7 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Manufacturing': 1
+					'Technology': 1
 				}
 			}
 		}
@@ -726,7 +727,7 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Manufacturing': 1
+					'Economics': 1
 				},
 				items: {
 					'Miner': 5
@@ -954,7 +955,7 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Manufacturing': 1
+					'Manufacturing': 2
 				},
 				items: {
 					Engineer: 1
@@ -985,7 +986,7 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Manufacturing': 1
+					'Manufacturing': 2
 				},
 				items: {
 					Engineer: 1
@@ -1015,7 +1016,7 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Manufacturing': 1
+					'Economics': 1
 				}
 			}
 		}
@@ -1042,7 +1043,7 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Civics': 2,
+					//'Civics': 2,
 					'Manufacturing': 2
 				}
 			}
@@ -1072,50 +1073,7 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Technology': 2,
-					'Manufacturing': 1
-				}
-			}
-		}
-	});
-
-	Clicker.addItem({
-		name: 'Mine',
-		icon: 'icons/mine/icon_8497.svg',
-		maximum: 5,
-		components: {
-			building: true,
-			mine: {
-				rate: 1
-			},
-			increases: {
-				Miner: 3
-			},
-			worker: {
-				rate: 9,
-				provides: {
-					Pollution: -2,
-					Ore: 3
-				}
-			},
-			consumer: {
-				rate: 30,
-				consumes: {
-					Water: 5,
-					Energy: 5
-				}
-			},
-			created: {
-				time: 300,
-				cost: {
-					'Cash': 500,
-					'Wood': 20,
-					'Iron': 10
-				}
-			},
-			requires: {
-				topics: {
-					'Manufacturing': 1
+					'Technology': 2
 				}
 			}
 		}
@@ -1160,6 +1118,48 @@ Clicker.onInit(function() {
 			}
 		}
 	});
+
+	Clicker.addItem({
+		name: 'Mine',
+		icon: 'icons/mine/icon_8497.svg',
+		maximum: 5,
+		components: {
+			building: true,
+			mine: {
+				rate: 1
+			},
+			increases: {
+				Miner: 3
+			},
+			worker: {
+				rate: 9,
+				provides: {
+					Pollution: -2,
+					Ore: 3
+				}
+			},
+			consumer: {
+				rate: 30,
+				consumes: {
+					Water: 5,
+					Energy: 5
+				}
+			},
+			created: {
+				time: 300,
+				cost: {
+					'Cash': 500,
+					'Wood': 20,
+					'Iron': 10
+				}
+			},
+			requires: {
+				topics: {
+					'Manufacturing': 2
+				}
+			}
+		}
+	});
 	
 
 	Clicker.addItem({
@@ -1192,7 +1192,7 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Civics': 1,
+					//'Civics': 1,
 					'Economics': 2
 				}
 			}
@@ -1268,7 +1268,7 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Civics': 1,
+					// 'Civics': 1,
 					'Education': 2
 				}
 			}
@@ -1307,7 +1307,6 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Education': 2,
 					'Technology': 3
 				}
 			}
@@ -1352,7 +1351,7 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Civics': 2,
+					//'Civics': 2,
 					'Technology': 3
 				}
 			}
@@ -1382,8 +1381,8 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Civics': 2,
-					'Technology': 2
+//					'Civics': 2,
+					'Economics': 2
 				}
 			}
 		}
@@ -1422,7 +1421,7 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Civics': 2,
+//					'Civics': 2,
 					'Economics': 3
 				}
 			}
@@ -1467,7 +1466,7 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Civics': 2,
+//					'Civics': 2,
 					'Education': 3
 				}
 			}
@@ -1498,8 +1497,8 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Education': 3,
-					'Civics': 2
+					'Education': 3
+					//'Civics': 2
 				}
 			}
 		}
@@ -1555,22 +1554,22 @@ Clicker.onInit(function() {
 			}
 		}
 	});
-
-	Clicker.addTopic({
-		increaseBy: 10,
-		name: 'Mining',
-		icon: 'icons/mining/icon_42900.svg',
-		levelUp: function(newLevel) {
-			if (Clicker.game().globalRates.mined < 100) {
-				Clicker.game().globalRates.mined += this.increaseBy;
-			}
-			if (Clicker.game().globalRates.mined > 100) {
-				Clicker.game().globalRates.mined = 100;
-			}
-			
-			Clicker.game().items.Ore.maximum += newLevel * 600;
-		}
-	});
+//
+//	Clicker.addTopic({
+//		increaseBy: 10,
+//		name: 'Mining',
+//		icon: 'icons/mining/icon_42900.svg',
+//		levelUp: function(newLevel) {
+//			if (Clicker.game().globalRates.mined < 100) {
+//				Clicker.game().globalRates.mined += this.increaseBy;
+//			}
+//			if (Clicker.game().globalRates.mined > 100) {
+//				Clicker.game().globalRates.mined = 100;
+//			}
+//			
+//			Clicker.game().items.Ore.maximum += newLevel * 600;
+//		}
+//	});
 
 	Clicker.addTopic({
 		name: 'Education',
@@ -1579,19 +1578,24 @@ Clicker.onInit(function() {
 			var current = Clicker.game().items.Brainpower.rates.raw;
 			Clicker.game().items.Brainpower.rates.raw = current + current * (newLevel / 10);
 			Clicker.game().items.Brainpower.maximum += newLevel * 600;
-		}
-	});
-
-	Clicker.addTopic({
-		name: 'Civics',
-		icon: 'icons/civics/icon_24569.svg',
-		levelUp: function(newLevel) {
-			var current = Clicker.game().items.Cash.rates.raw;
+			
+			current = Clicker.game().items.Cash.rates.raw;
 
 			Clicker.game().items.People.rates.raw = newLevel;
 			Clicker.game().items.People.maximum += newLevel * 10;
 		}
 	});
+
+//	Clicker.addTopic({
+//		name: 'Civics',
+//		icon: 'icons/civics/icon_24569.svg',
+//		levelUp: function(newLevel) {
+//			var current = Clicker.game().items.Cash.rates.raw;
+//
+//			Clicker.game().items.People.rates.raw = newLevel;
+//			Clicker.game().items.People.maximum += newLevel * 10;
+//		}
+//	});
 
 	Clicker.addTopic({
 		name: 'Economics',
@@ -1625,7 +1629,8 @@ Clicker.onInit(function() {
 					items[i].maximum += newLevel * 4;
 				}
 			}
-			Clicker.game().items.Water.maximum += newLevel * 10;
+			Clicker.game().items.Water.maximum += newLevel * 100;
+			Clicker.game().items.Ore.maximum += newLevel * 600;
 		}
 	});
 });

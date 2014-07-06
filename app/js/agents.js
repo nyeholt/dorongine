@@ -162,7 +162,7 @@ Clicker.onInit(function() {
 						if (topic.knowledge >= topic.target) {
 							topic.knowledge -= topic.target;
 							topic.target = Math.pow(topic.level + 2, 3) * 100;
-							topic.target = topic.target * .66;
+							topic.target = topic.target * .33;
 
 							if (topic.level < this.maxLevel) {
 								topic.level++;
