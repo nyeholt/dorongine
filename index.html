@@ -316,7 +316,7 @@
 			<tr>
 
 			<td></td>
-			<td><button on-tap="mine">Mining at {{game.globalRates.mined}}% efficiency</button></td>
+			<td><button on-tap="mine">Mine now</button></td>
 
 			<td width="90px">Buy</td>
 			<td width="90px">Number</td>
@@ -328,7 +328,7 @@
 			{{# game.byComponent('market') }}
 			<tr>
 			<td width="60%">
-			<img title="{{name}}" class="item-icon" src="{{icon}}" /> {{rates.mined}}% efficiency
+			<img title="{{name}}" class="item-icon" src="{{icon}}" /> {{rates.mined}}% chance
 			</td>
 			<td>
 			<span class="resource-count">{{amount}} / {{maximum}}</span>

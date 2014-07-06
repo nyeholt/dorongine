@@ -153,9 +153,9 @@ Clicker.onInit(function() {
 		components: {
 			employable: true,
 			worker: {
-				rate: 5,
+				rate: 1,
 				provides: {
-					Cash: 1,
+					Cash: 0.5,
 					Crime: -0.02		// negative because the base rate is negative
 				}
 			},
@@ -167,7 +167,7 @@ Clicker.onInit(function() {
 				}
 			},
 			consumer: {// consumers 
-				rate: 33,
+				rate: 27,
 				consumes: {
 					Energy: 1
 				}
