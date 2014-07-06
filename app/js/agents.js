@@ -192,6 +192,7 @@ Clicker.onInit(function() {
 			var miners = Clicker.game().byComponent('mine');
 			if (amount > 0 && miners.length) {
 				var numToProcess = 0;
+
 				for (var i = 0, c = miners.length; i < c; i++) {
 					var miner = miners[i];
 					var rate = miner.rates.mine;
@@ -202,12 +203,12 @@ Clicker.onInit(function() {
 
 				numToProcess = amount > numToProcess ? numToProcess : amount;
 				amount -= numToProcess;
+
 				Clicker.game().items.Ore.amount = amount;
 
-				for (var i = 0; i < numToProcess; i++) {
-					var cmd = Clicker.newCommand('mine');
-					Clicker.runCommand(cmd);
-				}
+				var cmd = Clicker.newCommand('mine');
+				cmd.numToMine = numToProcess;
+				Clicker.runCommand(cmd);
 			}
 		}
 	});

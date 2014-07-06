@@ -193,6 +193,10 @@ button {
 	color: #b92c28;
 }
 
+.items-table {
+	margin-bottom: 10px;
+}
+
 .dialog-content {
 	padding: 0px 10px 0px 10px;
 	overflow: auto;
