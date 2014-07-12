@@ -79,9 +79,7 @@ Clicker.onInit(function() {
 				Clicker.game().transactions.push(transactionRecord);
 
 				item.components.market.lastSell = Clicker.game().ticks;
-
 				item.components.market.sell -= item.components.market.sell * (volume * 0.01);
-				
 				var opt1 = item.components.market.buy - item.components.market.buy * (volume * 0.008);
 				var opt2 = transactionRecord.price + transactionRecord.price * (volume * 0.008);
 				item.components.market.buy = Math.max(opt1, opt2);

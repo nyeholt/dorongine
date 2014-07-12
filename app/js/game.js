@@ -256,19 +256,38 @@
 			types.techs[tech.name] = tech;
 		},
 		addTicker: function (listener) {
+			if (listener.onTick) {
+				listener.currentTick = 0;
+			}
 			tickers.push(listener);
 		},
 		addFastTicker: function (listener) {
+			if (listener.onTick) {
+				listener.currentTick = 0;
+			}
 			fastTickers.push(listener);
 		},
 		tick: function () {
 			++game.ticks;
+			var l = tickers;
 			for (var i = 0, c = tickers.length; i < c; i++) {
-				tickers[i].tick();
+				var ticker = tickers[i];
+				
+				if (ticker.onTick) {
+					// calculate whether to tick this time around or not
+					ticker.currentTick++;
+					if (ticker.currentTick >= ticker.onTick) {
+						ticker.tick();
+						ticker.currentTick = 0;
+					}
+				} else {
+					ticker.tick();
+				}
 			}
 
 			this.ractive.set('types', types);
 		},
+		// process any command and fast tickers
 		processCommands: function () {
 			if (this.commands.length) {
 				var command = this.commands.shift();
@@ -278,7 +297,18 @@
 				}
 			}
 			for (var i = 0, c = fastTickers.length; i < c; i++) {
-				fastTickers[i].tick();
+				var ticker = fastTickers[i];
+				
+				if (ticker.onTick) {
+					// calculate whether to tick this time around or not
+					ticker.currentTick++;
+					if (ticker.currentTick >= ticker.onTick) {
+						ticker.tick();
+						ticker.currentTick = 0;
+					}
+				} else {
+					ticker.tick();
+				}
 			}
 			this.ractive.set('game', game);
 		},
@@ -374,7 +404,7 @@
 		formatted: function (val) {
 			return Number(val).toFixed(2); 
 		},
-		meetsRequirements: function () {
+		meetsRequirements: function (checkItems) {
 			if (!this.components.requires) {
 				return true;
 			}
@@ -387,14 +417,17 @@
 				}
 			}
 
-			if (this.components.requires.items) {
-				for (var item in this.components.requires.items) {
-					if (game.items[item].amount < this.components.requires.items[item]) {
-						return false;
+			if (checkItems) {
+				if (this.components.requires.items) {
+					for (var item in this.components.requires.items) {
+						if (game.items[item].amount < this.components.requires.items[item]) {
+							return false;
+						}
 					}
 				}
-			}
 
+			}
+			
 			return true;
 		},
 		canBuy: function (volume) {

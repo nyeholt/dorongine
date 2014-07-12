@@ -983,7 +983,7 @@ Clicker.onInit(function() {
 			created: {
 				time: 100,
 				cost: {
-					'Cash': 200,
+					'Cash': 100,
 					'Copper': 1
 				},
 				gives: {
