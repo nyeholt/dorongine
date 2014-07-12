@@ -40,6 +40,7 @@ Clicker.onInit(function() {
 	Clicker.addItem({
 		name: 'Brainpower',
 		color: '#E60084',
+		description: 'Use Brainpower to research topics',
 		icon: 'icons/brain/icon_38934.svg',
 		bonus: 50,			// bonus after 100 clicks
 		maximum: 1000,
@@ -108,7 +109,7 @@ Clicker.onInit(function() {
 		components: {
 			requires: {
 				topics: {
-					Technology: 1
+					Economics: 2
 				}
 			},
 			'raw': {rate: -1},
@@ -127,7 +128,7 @@ Clicker.onInit(function() {
 		components: {
 			requires: {
 				topics: {
-					Technology: 1
+					Manufacturing: 2
 				}
 			},
 			'raw': {rate: -1},
@@ -188,7 +189,7 @@ Clicker.onInit(function() {
 			worker: {
 				rate: 1,
 				provides: {
-					Cash: 0.5,
+					Cash: 0.50,
 					Crime: -0.02		// negative because the base rate is negative
 				}
 			},
@@ -202,7 +203,7 @@ Clicker.onInit(function() {
 			consumer: {// consumers 
 				rate: 27,
 				consumes: {
-					Energy: 1
+					Energy: 2
 				}
 			}
 		}
@@ -329,6 +330,9 @@ Clicker.onInit(function() {
 				cost: {
 					Cash: 250,
 					Employee: 1
+				},
+				gives: {
+					Brainpower: 50
 				}
 			},
 			consumer: {// consumers 
@@ -567,6 +571,9 @@ Clicker.onInit(function() {
 				time: 10,
 				cost: {
 					'Wood': 2
+				},
+				gives: {
+					'Brainpower': 25
 				}
 			},
 			requires: {
@@ -803,7 +810,6 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Technology': 3,
 					'Manufacturing': 4
 				}
 			}
@@ -1091,8 +1097,8 @@ Clicker.onInit(function() {
 			worker: {
 				rate: 4,
 				provides: {
-					Energy: 1,
-					Pollution: -1.5
+					Energy: 2,
+					Pollution: -1
 				}
 			},
 			consumer: {
@@ -1114,8 +1120,12 @@ Clicker.onInit(function() {
 			requires: {
 				topics: {
 					'Manufacturing': 1
+				},
+				items: {
+					Water: 7,
+					Coal: 5
 				}
-			}
+			}	
 		}
 	});
 
@@ -1156,6 +1166,9 @@ Clicker.onInit(function() {
 			requires: {
 				topics: {
 					'Manufacturing': 2
+				},
+				items: {
+					Ore: 10
 				}
 			}
 		}
@@ -1343,10 +1356,9 @@ Clicker.onInit(function() {
 				cost: {
 					'Cash': 5000,
 					'Glass': 20,
-					'Steel': 40,
-					'Reinforced Concrete': 10,
-					'Computer': 1,
-					'Gold': 10
+					'Steel': 20,
+					'Reinforced Concrete': 5,
+					'Computer': 1
 				}
 			},
 			requires: {

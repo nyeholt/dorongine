@@ -186,9 +186,11 @@ Clicker.onInit(function() {
 	 */
 	Clicker.addTicker({
 		name: 'Miner',
-		maxLevel: 10,
+		multiplier: 2,
 		tick: function() {
 			var amount = Clicker.game().items.Ore.amount;
+			var techLevel = Clicker.game().topics.Technology.level;
+			techLevel = techLevel > 0 ? techLevel : 1;
 			var miners = Clicker.game().byComponent('mine');
 			if (amount > 0 && miners.length) {
 				var numToProcess = 0;
@@ -197,7 +199,7 @@ Clicker.onInit(function() {
 					var miner = miners[i];
 					var rate = miner.rates.mine;
 					if (!miner.disabled) {
-						numToProcess += rate * miner.amount;
+						numToProcess += /*techLevel */ (rate * miner.amount);
 					}
 				}
 
