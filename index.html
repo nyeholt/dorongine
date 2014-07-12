@@ -241,7 +241,7 @@
 
 			<div id="raw-resources">
 			{{# game.byComponent('collected') }}
-				{{#this.meetsRequirements()}}
+				{{#this.meetsRequirements(true)}}
 				<div class="raw-res">
 				<button data-type="{{name}}" on-tap="collectItem" title="{{name}}: {{description}}" style="background-color: {{color}}">
 				<img src="{{icon}}" title="{{name}}" class="raw-icon" />
