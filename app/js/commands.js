@@ -41,7 +41,19 @@ Clicker.onInit(function() {
 
 			var volume = this.volume ? this.volume : (item.buyVolume ? parseInt(item.buyVolume) : 1);
 			if (item.canBuy(volume) && item.canAdd(volume)) {
+				// record the purchase
 				Clicker.queueBuild(item, volume);
+				
+				var stats = Clicker.game().stats.buy;
+				if (!stats) {
+					stats = {};
+				}
+				if (!stats[item.name]) {
+					stats[item.name] = volume;
+				} else {
+					stats[item.name] += volume;
+				}
+				Clicker.game().stats.buy = stats;
 			}
 		}
 	});
@@ -67,9 +79,7 @@ Clicker.onInit(function() {
 				Clicker.game().transactions.push(transactionRecord);
 
 				item.components.market.lastSell = Clicker.game().ticks;
-
 				item.components.market.sell -= item.components.market.sell * (volume * 0.01);
-				
 				var opt1 = item.components.market.buy - item.components.market.buy * (volume * 0.008);
 				var opt2 = transactionRecord.price + transactionRecord.price * (volume * 0.008);
 				item.components.market.buy = Math.max(opt1, opt2);
@@ -92,22 +102,17 @@ Clicker.onInit(function() {
 // for the amount of ore consumed, generated a single random ore item
 	Clicker.addCommand({
 		name: 'mine',
-		perOp: 1,
+		numToMine: 1,
 		execute: function() {
 			var i = 0;
-			while (i < this.perOp) {
-				var nextRand = Clicker.random() * 100;
-
-				if (nextRand >= Clicker.game().globalRates.mined) {
-					return;
-				}
-
+			while (i < this.numToMine) {
+				// choose which mineable item to actually 'mine' 
 				var mineable = Clicker.game().byComponent('mined');
 				var rand = Clicker.random(0, mineable.length - 1);
 
 				var toMine = mineable[rand];
 
-				nextRand = Clicker.random() * 100;
+				var nextRand = Clicker.random() * 100;
 
 				if (toMine && toMine.rates.mined > nextRand && toMine.canAdd(1)) {
 					toMine.add(1);

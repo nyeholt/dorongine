@@ -24,6 +24,30 @@
 			<p>
 				Contact me via <a href="https://github.com/nyeholt" target="_blank">Github</a> or <a href="https://twitter.com/nyeholt" target="_blank">Twitter</a>. Or Reddit...
 			</p>
+			
+			<p>
+				Jul 12, 2014
+			</p>
+			
+			<ul>
+			<li>Simplified the initial phase of the game to be less overwhelming on first go, to try and lead people into the various bits and pieces. Still some work to go though - thanks to those who have given feedback around this!</li>
+			<li>Added random process that will give a big boost boost or reduction in price for some items for a period of time</li>
+			<li>Changed some of the types to be a little 'simpler' to get things going to avoid some of the pointless grind that could otherwise eventuate. Will be introducing some new elements around Crime and Pollution to counter this later on :)</li>
+			<li>Mining consumption of Ore tweaked, removing the out-of-place 'Mine' button</li>
+			<li>Changed batteries to be cheaper for getting Cash based energy, and replaced what they were with a Power Pack</li>
+			<li>Added tidal power for power gen</li>
+			<li>Reduced consumption and increased output of Nuclear power</li>
+			</ul>
+
+			<p>Still to come</p>
+
+			<ul>
+			<li>Better stats display</li>
+			<li>Crime effects, countering buildings</li>
+			<li>Deaths...</li>
+			<li>Different building streams depending on how you're playing the game. ie Lots of Crime might mean thefts, murders etc, but you may have an option of buildings like strip clubs, drug dens etc...</li>
+			</ul>
+			
 			<p>
 				Jul 04, 2014
 			</p>
@@ -217,197 +241,217 @@
 
 			<div id="raw-resources">
 			{{# game.byComponent('collected') }}
-			<div class="raw-res">
-			<button data-type="{{name}}" on-tap="collectItem" title="{{name}}" style="background-color: {{color}}">
-			<img src="{{icon}}" title="{{name}}" class="raw-icon" />
-			</button>
-			<div class="resource-count">{{this.formattedAmount()}}</div>
-			<div class="resource-max" title="{{rates.raw}}">{{maximum}}</div>
-			<div class="resource-mods"></div>
-			</div>
+				{{#this.meetsRequirements()}}
+				<div class="raw-res">
+				<button data-type="{{name}}" on-tap="collectItem" title="{{name}}: {{description}}" style="background-color: {{color}}">
+				<img src="{{icon}}" title="{{name}}" class="raw-icon" />
+				</button>
+				<div class="resource-count">{{this.formattedAmount()}}</div>
+				<div class="resource-max" title="{{rates.raw}}">{{maximum}}</div>
+				<div class="resource-mods"></div>
+				</div>
+				{{/meetsRequirements}}
 			{{/ game}}
 
 
 			</div>
 
 			<div id="population" class="holder">
-			<table>
-			<thead>
-			<tr>
-			<th><img src="{{game.items.People.icon}}" title="People" class="item-icon" /></th>
-			<th width="60px"></th>
-			<th width="60px"></th>
-			<th>{{game.items.People.amount}} / {{game.items.People.maximum}}</th>
+				<h2>Employees</h2>
+				<p>Hire employees to do your work (clicking) for you. To get more people, create a Town Hall</p>
+				<table>
+				<thead>
+				<tr>
+				<th><img src="{{game.items.People.icon}}" title="People" class="item-icon" /></th>
+				<th width="60px"></th>
+				<th width="60px"></th>
+				<th>{{game.items.People.amount}} / {{game.items.People.maximum}}</th>
 
-			<th>Required</th>
-			<th>Cost</th>
-			<th>Gives</th>
-			<th>Consumes</th>
-			<th>Provides</th>
-			<th>Improves</th>
+				<th>Required</th>
+				<th>Cost</th>
+				<th>Gives</th>
+				<th>Consumes</th>
+				<th>Provides</th>
+				<th>Improves</th>
 
-			</tr>
-			</thead>
-			<tbody>
-			{{# game.byComponent('employable') }}
-			{{#this.meetsRequirements()}}
-			<tr>
-			<td><img title="{{name}}" src="{{icon}}" class="item-icon" /></td>
-			<td>{{#this.canBuy(1)}}<button on-tap="buyItem">Hire</button>{{/this}}</td>
-			<td>{{#amount >= 1}}<button on-tap="destroy">Fire</button>{{/amount}}</td>
+				</tr>
+				</thead>
+				<tbody>
+				{{# game.byComponent('employable') }}
+				{{#this.meetsRequirements()}}
+				<tr>
+				<td><img title="{{name}}" src="{{icon}}" class="item-icon" /></td>
+				<td>{{#this.canBuy(1)}}<button on-tap="buyItem">Hire</button>{{/this}}</td>
+				<td>{{#amount >= 1}}<button on-tap="destroy">Fire</button>{{/amount}}</td>
 
-			{{>itemInfo}}
+				{{>itemInfo}}
 
-			</tr>
+				</tr>
 
-			{{/meetsRequirements}}
+				{{/meetsRequirements}}
 
-			{{/game}}
-			<tr>
-			<td><img src="{{game.items.Sick.icon}}" title="Sick People" class="item-icon" /></td>
-			<td>{{game.items.Sick.amount}}</td>
+				{{/game}}
+				<tr>
+				<td><img src="{{game.items.Sick.icon}}" title="Sick People" class="item-icon" /></td>
+				<td>{{game.items.Sick.amount}}</td>
 
-			<td><img src="{{game.items.Dead.icon}}" title="Dead People" class="item-icon" /></td>
-			<td>{{game.items.Dead.amount}}</td>
+				<td><img src="{{game.items.Dead.icon}}" title="Dead People" class="item-icon" /></td>
+				<td>{{game.items.Dead.amount}}</td>
 
-			<td></td>
+				<td></td>
 
-			<td></td>
-			<td></td>
-			<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
 
-			</tr>
-			</tbody>
-			</table>
+				</tr>
+				</tbody>
+				</table>
 			</div>
 
 			<div id="knowledge" class="holder">
-			<table>
-			<tr>
-			<th></th>
-			<th></th>
-			<th></th>
-			<th width="10%">Research active</th>
-			</tr>
-			{{#game.topics :topic_name}}
-			<tr>
-			<td><img src="{{icon}}" title="{{topic_name}}" class="item-icon" /></td>
-			<td>Level {{level}}</td>
-			<td>
-			<div><progress max="{{target}}" value="{{knowledge}}"></progress></div>
-			<div class="progress-info">
-			Needed for: 
-			{{#game.byTopic(topic_name, level+1)}}
-			<img title="{{name}}" src="{{icon}}" class="item-icon" />
-			{{/game.byTopic }}
-			</div>
-			</td>
-			<td class="knowledge-input">
-			<input type="checkbox" checked="{{active}}" />
-			</td>
-			</tr>
-			{{/ game.topics}}
-			</table>
+				<h2>Research</h2>
+				<p>Research improves existing items, and allows the creation of others</p>
+				<p>Create schools and hire teachers to increase rate of research</p>
+				<table>
+				<tr>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th width="10%">Research active</th>
+				</tr>
+				{{#game.topics :topic_name}}
+				<tr>
+				<td><img src="{{icon}}" title="{{topic_name}}" class="item-icon" /></td>
+				<td>Level {{level}}</td>
+				<td>
+				<div><progress max="{{target}}" value="{{knowledge}}"></progress></div>
+				<div class="progress-info">
+				Needed for: 
+				{{#game.byTopic(topic_name, level+1)}}
+				<img title="{{name}}" src="{{icon}}" class="item-icon" />
+				{{/game.byTopic }}
+				</div>
+				</td>
+				<td class="knowledge-input">
+				<input type="checkbox" checked="{{active}}" />
+				</td>
+				</tr>
+				{{/ game.topics}}
+				</table>
 			</div>
 
 			<div id="resources" class="holder">
-			<div id="mined-resources">
-			<table>
-			<tr>
+				<div id="mined-resources">
+				<h2>Resources</h2>
+				<p>These resources form the basis of items that you can create, and buildings that you can construct</p>
+				<p>You can pay for resources in cash, or mine them using a Mine</p>
+				<p>Keep an eye out for market variations!</p>
+				<table>
+				<tr>
 
-			<td></td>
-			<td><button on-tap="mine">Mining at {{game.globalRates.mined}}% efficiency</button></td>
+				<td></td>
+				<td><!-- <button on-tap="mine">Mine now</button>--></td>
 
-			<td width="90px">Buy</td>
-			<td width="90px">Number</td>
-			<td width="90px">Sell</td>
+				<td width="90px">Buy</td>
+				<td width="90px">Number</td>
+				<td width="90px">Sell</td>
 
-			</tr>
+				</tr>
 
-			<!-- display all market items - regardless of whether they're mined -->
-			{{# game.byComponent('market') }}
-			<tr>
-			<td width="60%">
-			<img title="{{name}}" class="item-icon" src="{{icon}}" /> {{rates.mined}}% efficiency
-			</td>
-			<td>
-			<span class="resource-count">{{amount}} / {{maximum}}</span>
-			</td>
+				<!-- display all market items - regardless of whether they're mined -->
+				{{# game.byComponent('market') }}
+				<tr>
+				<td width="60%">
+				<img title="{{name}}: {{description}}" class="item-icon" src="{{icon}}" /> <!-- {{rates.mined}}% chance -->
+				</td>
+				<td>
+				<span class="resource-count">{{amount}} / {{maximum}}</span>
+				</td>
 
-			<td>
-			{{#this.canBuy()}}
-			<button title="{{name}}" on-tap="buyItem">
-			${{formatted(components.market.buy * buyVolume)}}
-			</button>
-			{{/this}}
-			</td>
+				<td>
+				{{#this.canBuy()}}
+				<button title="{{name}}" on-tap="buyItem">
+				${{formatted(components.market.buy * buyVolume)}}
+				</button>
+				{{/this}}
+				</td>
 
-			<td>
-			<select value="{{buyVolume}}">
-			<option value="1">x1</option>
-			<option value="10">x10</option>
-			<option value="20">x20</option>
-			<option value="50">x50</option>
-			<option value="100">x100</option>
-			</select>
-			</td>
+				<td>
+				<select value="{{buyVolume}}">
+				<option value="1">x1</option>
+				<option value="10">x10</option>
+				<option value="20">x20</option>
+				<option value="50">x50</option>
+				<option value="100">x100</option>
+				</select>
+				</td>
 
-			<td>
-			{{#amount >= buyVolume}}
-			<button title="{{name}}" on-tap="sellItem">
-			${{formatted(components.market.sell * buyVolume)}}
-			</button>
-			{{/amount}}
-			</td>
+				<td>
+				{{#amount >= buyVolume}}
+				<button title="{{name}}" on-tap="sellItem">
+				${{formatted(components.market.sell * buyVolume)}}
+				</button>
+				{{/amount}}
+				</td>
 
-			</tr>
-			{{/ game}}
-			</table>
-			</div>
+				</tr>
+				{{/ game}}
+				</table>
+				</div>
 			</div>
 
 			<div id="creatable"  class="holder">
+				<h2>Items</h2>
+				
+				<p>Do some research to unlock items</p>
+				
+				<table class="items-table">
+				<tr>
+				<th width="60px">Item</th>
+				<th width="60px"><!--volume dropdown --></th>
+				<th width="100px">Amount</th>
+				<th>Requires</th>
+				<th>Cost</th>
+				<th>Gives</th>
+				<th>Consumes</th>
+				<th>Provides</th>
+				<th>Improves</th>
+				</tr>
 
-			<table>
-			<tr>
-			<th width="60px">Item</th>
-			<th width="60px"><!--volume dropdown --></th>
-			<th width="100px">Amount</th>
-			<th>Requires</th>
-			<th>Cost</th>
-			<th>Gives</th>
-			<th>Consumes</th>
-			<th>Provides</th>
-			<th>Improves</th>
-			</tr>
+				{{# game.byComponent('goods') }}
 
-			{{# game.byComponent('goods') }}
+				{{>buildableRow}}
 
-			{{>buildableRow}}
+				{{/game}}
+				</table>
 
-			{{/game}}
-			</table>
+				
+				<h2>Buildings</h2>
+				
+				<p>Do some research to unlock buildings</p>
+				
+				<table>
+				<tr>
+				<th width="60px">Item</th>
+				<th width="60px"><!--volume dropdown --></th>
+				<th width="100px">Amount</th>
+				<th>Requires</th>
+				<th>Cost</th>
+				<th>Gives</th>
+				<th>Consumes</th>
+				<th>Provides</th>
+				<th>Improves</th>
+				</tr>
 
-			<h2>Buildings</h2>
-			<table>
-			<tr>
-			<th width="60px">Item</th>
-			<th width="60px"><!--volume dropdown --></th>
-			<th width="100px">Amount</th>
-			<th>Requires</th>
-			<th>Cost</th>
-			<th>Gives</th>
-			<th>Consumes</th>
-			<th>Provides</th>
-			<th>Improves</th>
-			</tr>
-
-			{{# game.byComponent('building') }}
-			{{>buildableRow}}
-			{{/game}}
-			</table>
+				{{# game.byComponent('building') }}
+				{{>buildableRow}}
+				{{/game}}
+				</table>
 			</div>
-
+			
+			
+			
 
 			<div id="footer">
 

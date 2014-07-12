@@ -16,22 +16,8 @@ Clicker.onInit(function() {
 	});
 
 	Clicker.addItem({
-		name: 'Brainpower',
-		color: '#E60084',
-		icon: 'icons/brain/icon_38934.svg',
-		bonus: 50,			// bonus after 100 clicks
-		maximum: 1000,
-		formattedAmount: function() {
-			return Number(this.amount).toFixed(2);
-		},
-		components: {
-			'raw': {rate: 1},
-			'collected': true
-		}
-	});
-
-	Clicker.addItem({
 		name: 'Energy',
+		description: _t('Items use energy to perform their function'),
 		color: '#F9B700',
 		icon: 'icons/energy/icon_2766.svg',
 		bonus: 50,			// bonus after 100 clicks
@@ -39,12 +25,39 @@ Clicker.onInit(function() {
 		formattedAmount: function() {
 			return Number(this.amount).toFixed(2);
 		},
+		
 		components: {
+			requires: {
+				items: {
+					Employee: 1
+				}
+			},
 			'raw': {rate: 1},
 			'collected': true
 		}
 	});
 
+	Clicker.addItem({
+		name: 'Brainpower',
+		color: '#E60084',
+		description: 'Use Brainpower to research topics',
+		icon: 'icons/brain/icon_38934.svg',
+		bonus: 50,			// bonus after 100 clicks
+		maximum: 1000,
+		formattedAmount: function() {
+			return Number(this.amount).toFixed(2);
+		},
+		components: {
+			requires: {
+				items: {
+					Employee: 5
+				}
+			},
+			'raw': {rate: 1},
+			'collected': true
+		}
+	});
+	
 	Clicker.addItem({
 		name: 'Ore',
 		color: '#4F1700',
@@ -55,6 +68,11 @@ Clicker.onInit(function() {
 			return Number(this.amount).toFixed(2);
 		},
 		components: {
+			requires: {
+				topics: {
+					Technology: 2
+				}
+			},
 			'raw': {rate: 1},
 			'collected': true
 		}
@@ -70,6 +88,11 @@ Clicker.onInit(function() {
 			return Number(this.amount).toFixed(2);
 		},
 		components: {
+			requires: {
+				topics: {
+					Technology: 1
+				}
+			},
 			'raw': {rate: 1},
 			'collected': true
 		}
@@ -84,6 +107,11 @@ Clicker.onInit(function() {
 			return Number(this.amount).toFixed(2);
 		},
 		components: {
+			requires: {
+				topics: {
+					Economics: 2
+				}
+			},
 			'raw': {rate: -1},
 			'collected': true
 		}
@@ -98,6 +126,11 @@ Clicker.onInit(function() {
 			return Number(this.amount).toFixed(2);
 		},
 		components: {
+			requires: {
+				topics: {
+					Manufacturing: 2
+				}
+			},
 			'raw': {rate: -1},
 			'collected': true
 		}
@@ -148,14 +181,15 @@ Clicker.onInit(function() {
 
 	Clicker.addItem({
 		name: 'Employee',
+		description: 'Employees make you money. Add a town hall to hire more',
 		icon: 'icons/employee/icon_961.svg',
 		maximum: 15,
 		components: {
 			employable: true,
 			worker: {
-				rate: 5,
+				rate: 1,
 				provides: {
-					Cash: 1,
+					Cash: 0.50,
 					Crime: -0.02		// negative because the base rate is negative
 				}
 			},
@@ -167,9 +201,9 @@ Clicker.onInit(function() {
 				}
 			},
 			consumer: {// consumers 
-				rate: 33,
+				rate: 27,
 				consumes: {
-					Energy: 1
+					Energy: 2
 				}
 			}
 		}
@@ -203,7 +237,7 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Mining': 1
+					'Education': 2
 				}
 			}
 		}
@@ -237,7 +271,8 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Civics': 1
+					//'Civics': 1
+					'Education': 2
 				}
 			}
 		}
@@ -285,9 +320,9 @@ Clicker.onInit(function() {
 		components: {
 			employable: true,
 			worker: {
-				rate: 5,
+				rate: 2,
 				provides: {
-					Brainpower: 2
+					Brainpower: 1
 				}
 			},
 			created: {
@@ -295,6 +330,9 @@ Clicker.onInit(function() {
 				cost: {
 					Cash: 250,
 					Employee: 1
+				},
+				gives: {
+					Brainpower: 50
 				}
 			},
 			consumer: {// consumers 
@@ -517,7 +555,7 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Manufacturing': 1
+					'Technology': 1
 				}
 			}
 		}
@@ -533,6 +571,9 @@ Clicker.onInit(function() {
 				time: 10,
 				cost: {
 					'Wood': 2
+				},
+				gives: {
+					'Brainpower': 25
 				}
 			},
 			requires: {
@@ -693,7 +734,7 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Manufacturing': 1
+					'Economics': 1
 				},
 				items: {
 					'Miner': 5
@@ -769,7 +810,6 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Technology': 3,
 					'Manufacturing': 4
 				}
 			}
@@ -921,10 +961,38 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Manufacturing': 1
+					'Manufacturing': 2
 				},
 				items: {
 					Engineer: 1
+				}
+			}
+		}
+	});
+	
+	
+	Clicker.addItem({
+		name: 'Battery',
+		icon: 'icons/battery/icon_2952.svg',
+		maximum: 25,
+		components: {
+			building: true,
+			increases: {
+				Energy: 200
+			},
+			created: {
+				time: 100,
+				cost: {
+					'Cash': 100,
+					'Copper': 1
+				},
+				gives: {
+					Energy: 100
+				}
+			},
+			requires: {
+				topics: {
+					'Technology': 1
 				}
 			}
 		}
@@ -952,7 +1020,7 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Manufacturing': 1
+					'Manufacturing': 2
 				},
 				items: {
 					Engineer: 1
@@ -963,6 +1031,7 @@ Clicker.onInit(function() {
 	
 	Clicker.addItem({
 		name: 'Highway',
+		description: 'Transport increases industry output - allows for the creation of Trucks',
 		icon: 'icons/highway/icon_7534.svg',
 		maximum: 5,
 		components: {
@@ -982,7 +1051,7 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Manufacturing': 1
+					'Economics': 1
 				}
 			}
 		}
@@ -995,7 +1064,7 @@ Clicker.onInit(function() {
 		components: {
 			building: true,
 			increases: {
-				Water: 300
+				Water: 750
 			},
 			created: {
 				time: 250,
@@ -1009,21 +1078,21 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Civics': 2,
+					//'Civics': 2,
 					'Manufacturing': 2
 				}
 			}
 		}
 	});
 	
-	Clicker.addItem({
-		name: 'Battery',
-		icon: 'icons/battery/icon_2952.svg',
+		Clicker.addItem({
+		name: 'Power Pack',
+		icon: 'icons/powerpack/icon_14417.svg',
 		maximum: 25,
 		components: {
 			building: true,
 			increases: {
-				Energy: 300
+				Energy: 1000
 			},
 			created: {
 				time: 150,
@@ -1039,10 +1108,53 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Technology': 2,
-					'Manufacturing': 1
+					'Technology': 2
 				}
 			}
+		}
+	});
+
+	Clicker.addItem({
+		name: 'Power Plant',
+		icon: 'icons/powerplant/icon_2071.svg',
+		maximum: 5,
+		components: {
+			building: true,
+			improves: {
+				Energy: 0.20
+			},
+			worker: {
+				rate: 4,
+				provides: {
+					Energy: 2,
+					Pollution: -1
+				}
+			},
+			consumer: {
+				rate: 30,
+				consumes: {
+					Water: 7,
+					Coal: 5
+				}
+			},
+			created: {
+				time: 200,
+				cost: {
+					'Cash': 500,
+					'Glass': 5,
+					'Iron': 10,
+					'Silicon': 1
+				}
+			},
+			requires: {
+				topics: {
+					'Manufacturing': 1
+				},
+				items: {
+					Water: 7,
+					Coal: 5
+				}
+			}	
 		}
 	});
 
@@ -1082,47 +1194,10 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Manufacturing': 1
-				}
-			}
-		}
-	});
-
-	Clicker.addItem({
-		name: 'Power Plant',
-		icon: 'icons/powerplant/icon_2071.svg',
-		maximum: 5,
-		components: {
-			building: true,
-			improves: {
-				Energy: 0.20
-			},
-			worker: {
-				rate: 4,
-				provides: {
-					Energy: 1,
-					Pollution: -1.5
-				}
-			},
-			consumer: {
-				rate: 30,
-				consumes: {
-					Water: 7,
-					Coal: 5
-				}
-			},
-			created: {
-				time: 200,
-				cost: {
-					'Cash': 500,
-					'Glass': 5,
-					'Iron': 10,
-					'Silicon': 1
-				}
-			},
-			requires: {
-				topics: {
-					'Manufacturing': 1
+					'Manufacturing': 2
+				},
+				items: {
+					Ore: 10
 				}
 			}
 		}
@@ -1159,7 +1234,7 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Civics': 1,
+					//'Civics': 1,
 					'Economics': 2
 				}
 			}
@@ -1235,7 +1310,7 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Civics': 1,
+					// 'Civics': 1,
 					'Education': 2
 				}
 			}
@@ -1274,7 +1349,6 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Education': 2,
 					'Technology': 3
 				}
 			}
@@ -1294,7 +1368,7 @@ Clicker.onInit(function() {
 				Water: 500,
 			},
 			worker: {
-				rate: 23,
+				rate: 13,
 				provides: {
 					Water: 10
 				}
@@ -1311,20 +1385,56 @@ Clicker.onInit(function() {
 				cost: {
 					'Cash': 5000,
 					'Glass': 20,
-					'Steel': 40,
-					'Reinforced Concrete': 10,
-					'Computer': 1,
-					'Gold': 10
+					'Steel': 20,
+					'Reinforced Concrete': 5,
+					'Computer': 1
 				}
 			},
 			requires: {
 				topics: {
-					'Civics': 2,
+					//'Civics': 2,
+					'Technology': 3
+				}
+			}
+		} 
+	});
+
+	
+	Clicker.addItem({
+		name: 'Tidal Power',
+		icon: 'icons/tidalpower/icon_5934.svg',
+		maximum: 5,
+		components: {
+			building: true,
+			improves: {
+				Water: 0.05,
+				Energy: 0.05
+			},
+			worker: {
+				rate: 11,
+				provides: {
+					Energy: 5,
+					Water: 5
+				}
+			},
+			created: {
+				time: 400,
+				cost: {
+					'Cash': 6000,
+					'Steel': 20,
+					'Reinforced Concrete': 10,
+					'Computer': 2
+				}
+			},
+			requires: {
+				topics: {
+					//'Civics': 2,
 					'Technology': 3
 				}
 			}
 		}
 	});
+	
 
 	Clicker.addItem({
 		name: 'Airport',
@@ -1349,8 +1459,8 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Civics': 2,
-					'Technology': 2
+//					'Civics': 2,
+					'Economics': 2
 				}
 			}
 		}
@@ -1389,7 +1499,7 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Civics': 2,
+//					'Civics': 2,
 					'Economics': 3
 				}
 			}
@@ -1434,7 +1544,7 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Civics': 2,
+//					'Civics': 2,
 					'Education': 3
 				}
 			}
@@ -1465,8 +1575,8 @@ Clicker.onInit(function() {
 			},
 			requires: {
 				topics: {
-					'Education': 3,
-					'Civics': 2
+					'Education': 3
+					//'Civics': 2
 				}
 			}
 		}
@@ -1488,14 +1598,14 @@ Clicker.onInit(function() {
 			worker: {
 				rate: 5,
 				provides: {
-					Energy: 50
+					Energy: 100
 				}
 			},
 			consumer: {
 				rate: 181,
 				consumes: {
-					Water: 100,
-					FuelRod: 5
+					Water: 10,
+					FuelRod: 1
 				}
 			},
 			created: {
@@ -1522,22 +1632,22 @@ Clicker.onInit(function() {
 			}
 		}
 	});
-
-	Clicker.addTopic({
-		increaseBy: 10,
-		name: 'Mining',
-		icon: 'icons/mining/icon_42900.svg',
-		levelUp: function(newLevel) {
-			if (Clicker.game().globalRates.mined < 100) {
-				Clicker.game().globalRates.mined += this.increaseBy;
-			}
-			if (Clicker.game().globalRates.mined > 100) {
-				Clicker.game().globalRates.mined = 100;
-			}
-			
-			Clicker.game().items.Ore.maximum += newLevel * 600;
-		}
-	});
+//
+//	Clicker.addTopic({
+//		increaseBy: 10,
+//		name: 'Mining',
+//		icon: 'icons/mining/icon_42900.svg',
+//		levelUp: function(newLevel) {
+//			if (Clicker.game().globalRates.mined < 100) {
+//				Clicker.game().globalRates.mined += this.increaseBy;
+//			}
+//			if (Clicker.game().globalRates.mined > 100) {
+//				Clicker.game().globalRates.mined = 100;
+//			}
+//			
+//			Clicker.game().items.Ore.maximum += newLevel * 600;
+//		}
+//	});
 
 	Clicker.addTopic({
 		name: 'Education',
@@ -1546,19 +1656,24 @@ Clicker.onInit(function() {
 			var current = Clicker.game().items.Brainpower.rates.raw;
 			Clicker.game().items.Brainpower.rates.raw = current + current * (newLevel / 10);
 			Clicker.game().items.Brainpower.maximum += newLevel * 600;
-		}
-	});
-
-	Clicker.addTopic({
-		name: 'Civics',
-		icon: 'icons/civics/icon_24569.svg',
-		levelUp: function(newLevel) {
-			var current = Clicker.game().items.Cash.rates.raw;
+			
+			current = Clicker.game().items.Cash.rates.raw;
 
 			Clicker.game().items.People.rates.raw = newLevel;
 			Clicker.game().items.People.maximum += newLevel * 10;
 		}
 	});
+
+//	Clicker.addTopic({
+//		name: 'Civics',
+//		icon: 'icons/civics/icon_24569.svg',
+//		levelUp: function(newLevel) {
+//			var current = Clicker.game().items.Cash.rates.raw;
+//
+//			Clicker.game().items.People.rates.raw = newLevel;
+//			Clicker.game().items.People.maximum += newLevel * 10;
+//		}
+//	});
 
 	Clicker.addTopic({
 		name: 'Economics',
@@ -1592,7 +1707,8 @@ Clicker.onInit(function() {
 					items[i].maximum += newLevel * 4;
 				}
 			}
-			Clicker.game().items.Water.maximum += newLevel * 10;
+			Clicker.game().items.Water.maximum += newLevel * 100;
+			Clicker.game().items.Ore.maximum += newLevel * 600;
 		}
 	});
 });

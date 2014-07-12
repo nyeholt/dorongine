@@ -3,45 +3,38 @@ Clicker.onInit(function() {
 	Clicker.addTicker({
 		name: 'Disease',
 		onTick: 21,
-		currentTick: 0,
 		tick: function() {
-			this.currentTick++;
+			// trigger a disease
+			var rand = Clicker.random();
+			if (rand > .5) {
+				var pollution = Clicker.game().items.Pollution.amount;
+				if (pollution > 0) {
+					// polution == 10, 1% chance of disease striking
+					var chance = pollution / 1000;
 
-			if (this.currentTick >= this.onTick) {
-				// trigger a disease
-				var rand = Clicker.random();
-				if (rand > .5) {
-					var pollution = Clicker.game().items.Pollution.amount;
-					if (pollution > 0) {
-						// polution == 10, 1% chance of disease striking
-						var chance = pollution / 1000;
+					var dis = Clicker.random();
+					if (dis <= chance) {
+						var employTypes = Clicker.game().byComponent('employable');
+						var key = Clicker.random(0, employTypes.length - 1);
 
-						var dis = Clicker.random();
-						if (dis <= chance) {
-							var employTypes = Clicker.game().byComponent('employable');
-							var key = Clicker.random(0, employTypes.length - 1);
+						var toRemove = employTypes[key];
 
-							var toRemove = employTypes[key];
+						var number = 1;
 
-							var number = 1;
-
-							if (toRemove.amount > 0) {
-								if (number >= toRemove.amount) {
-									number = toRemove.amount;
-								}
-								
-								Clicker.message(number + " " + toRemove.name + " became diseased!", 'bad', 'Sick');
-								
-								toRemove.amount -= number;
-								Clicker.game().items.Sick.amount++;
+						if (toRemove.amount > 0) {
+							if (number >= toRemove.amount) {
+								number = toRemove.amount;
 							}
 
+							Clicker.message(number + " " + toRemove.name + " became diseased!", 'bad', 'Sick');
+
+							toRemove.amount -= number;
+							Clicker.game().items.Sick.amount++;
 						}
 					}
 				}
-
-				this.currentTick = 0;
 			}
+
 		}
 	});
 
@@ -147,7 +140,7 @@ Clicker.onInit(function() {
 			}
 
 			perTick += Clicker.game().items.Teacher.amount;
-			perTick += Clicker.game().items.School.amount;
+			perTick += (Clicker.game().items.School.amount*2);
 
 			if (amount > perTick) {
 				var totalUsed = 0;
@@ -163,7 +156,7 @@ Clicker.onInit(function() {
 						if (topic.knowledge >= topic.target) {
 							topic.knowledge -= topic.target;
 							topic.target = Math.pow(topic.level + 2, 3) * 100;
-							topic.target = topic.target * .66;
+							topic.target = topic.target * .33;
 
 							if (topic.level < this.maxLevel) {
 								topic.level++;
@@ -177,7 +170,7 @@ Clicker.onInit(function() {
 					}
 				}
 
-				Clicker.game().items.Brainpower.amount -= perTick;
+				Clicker.game().items.Brainpower.amount -= totalUsed;
 			}
 		}
 	});
@@ -187,28 +180,31 @@ Clicker.onInit(function() {
 	 */
 	Clicker.addTicker({
 		name: 'Miner',
-		maxLevel: 10,
+		multiplier: 2,
 		tick: function() {
 			var amount = Clicker.game().items.Ore.amount;
+			var techLevel = Clicker.game().topics.Technology.level;
+			techLevel = techLevel > 0 ? techLevel : 1;
 			var miners = Clicker.game().byComponent('mine');
 			if (amount > 0 && miners.length) {
 				var numToProcess = 0;
+
 				for (var i = 0, c = miners.length; i < c; i++) {
 					var miner = miners[i];
 					var rate = miner.rates.mine;
 					if (!miner.disabled) {
-						numToProcess += rate * miner.amount;
+						numToProcess += /*techLevel */ (rate * miner.amount);
 					}
 				}
 
 				numToProcess = amount > numToProcess ? numToProcess : amount;
 				amount -= numToProcess;
+
 				Clicker.game().items.Ore.amount = amount;
 
-				for (var i = 0; i < numToProcess; i++) {
-					var cmd = Clicker.newCommand('mine');
-					Clicker.runCommand(cmd);
-				}
+				var cmd = Clicker.newCommand('mine');
+				cmd.numToMine = numToProcess;
+				Clicker.runCommand(cmd);
 			}
 		}
 	});
@@ -282,13 +278,11 @@ Clicker.onInit(function() {
 				allItems.Cash.amount -= total;
 				
 				item.components.market.lastBuy = Clicker.game().ticks;
-				
 				// rejig buy/sell values
 				item.components.market.buy += item.components.market.buy * (volume * 0.01);
 				
 				// var opt1 = item.components.market.sell + item.components.market.sell * (volume * 0.008);
 				var opt2 =  transactionRecord.price * 0.93;
-				
 				item.components.market.sell = opt2; // Math.min(opt1, opt2);
 
 			} else if (item.components.created && item.components.created.cost) {
@@ -342,125 +336,160 @@ Clicker.onInit(function() {
 		}
 	});
 	
+	// adjusts prices up or down depending on last buy/sell values
 	Clicker.addTicker({
 		name: 'MarketAnalyst',
 		onTick: 11,
-		currentTick: 0,
 		resetAfter: 13,
 		baseDecrease: 0.03,
 		tick: function () {
-			this.currentTick++;
 			var gameTick = Clicker.game().ticks;
-			
-			if (this.currentTick >= this.onTick) {
-				var items = Clicker.game().byComponent('market');
-				
-				for (var i in items) {
-					var market = items[i].components.market;
 
-					var lastTransaction = 0;
-					if (market.lastBuy && market.lastSell) {
-						lastTransaction = Math.max(market.lastBuy, market.lastSell);
-					} else if (market.lastBuy > 0) {
-						lastTransaction = market.lastBuy;
-					} else if (market.lastSell > 0) {
-						lastTransaction = market.lastSell;
-					}
-					
-					var economics = Clicker.game().topics.Economics.level + 1;
+			var items = Clicker.game().byComponent('market');
 
-					var diff = market.buy * (economics * this.baseDecrease);
-					var sellBase = market.base * .95;
-					
-					if (lastTransaction > 0 && ((lastTransaction + this.resetAfter) <= gameTick)) {
-						if (market.buy > market.base) {
-							// decrease
-							market.buy -= diff;
-							market.lastBuy = gameTick;
-							if (market.buy < market.base) {
-								market.buy = market.base;
-								market.lastBuy = 0;
-							}
-						} else if (market.buy < market.base) {
-							market.buy += diff;
-							market.lastBuy = gameTick;
-							if (market.buy > market.base) {
-								market.buy = market.base;
-								market.lastBuy = 0;
-							}
+			for (var i in items) {
+				var market = items[i].components.market;
+
+				var lastTransaction = 0;
+				if (market.lastBuy && market.lastSell) {
+					lastTransaction = Math.max(market.lastBuy, market.lastSell);
+				} else if (market.lastBuy > 0) {
+					lastTransaction = market.lastBuy;
+				} else if (market.lastSell > 0) {
+					lastTransaction = market.lastSell;
+				}
+
+				var economics = Clicker.game().topics.Economics.level + 1;
+
+				var diff = market.buy * (economics * this.baseDecrease);
+				var sellBase = market.base * .95;
+
+				if (lastTransaction > 0 && ((lastTransaction + this.resetAfter) <= gameTick)) {
+					if (market.buy > market.base) {
+						// decrease
+						market.buy -= diff;
+						market.lastBuy = gameTick;
+						if (market.buy < market.base) {
+							market.buy = market.base;
+							market.lastBuy = 0;
 						}
+					} else if (market.buy < market.base) {
+						market.buy += diff;
+						market.lastBuy = gameTick;
+						if (market.buy > market.base) {
+							market.buy = market.base;
+							market.lastBuy = 0;
+						}
+					}
 
+					if (market.sell > sellBase) {
+						market.sell -= diff;
+						market.lastSell = gameTick;
+						if (market.sell < sellBase) {
+							market.sell = sellBase;
+							market.lastSell = 0;
+						}
+					} else if (market.sell < sellBase) {
+						market.sell += diff;
+						market.lastSell = gameTick;
 						if (market.sell > sellBase) {
-							market.sell -= diff;
-							market.lastSell = gameTick;
-							if (market.sell < sellBase) {
-								market.sell = sellBase;
-								market.lastSell = 0;
-							}
-						} else if (market.sell < sellBase) {
-							market.sell += diff;
-							market.lastSell = gameTick;
-							if (market.sell > sellBase) {
-								market.sell = sellBase;
-								market.lastSell = 0;
-							}
+							market.sell = sellBase;
+							market.lastSell = 0;
 						}
 					}
 				}
-
-				this.currentTick = 0;
 			}
+
+		}
+	});
+	
+	Clicker.addTicker({
+		name: 'MarketForces',
+		onTick: 67,
+		tick: function () {
+			if (Clicker.random() < 0.5) {
+				return;
+			}
+
+			var marketed = Clicker.game().byComponent('market');
+			
+			var index = Clicker.random(0, marketed.length - 1);
+			
+			// just dealing with the item's market component
+			var item = marketed[index].components.market;
+			
+			var updown = Clicker.random() > 0.5 ? 1 : -1;
+			
+			// 20-80% price change
+			var change = Clicker.random(50, 90);
+			
+			var newPrice = item.base + (item.base * (change / 100) * updown);
+			
+			if (updown > 0) {
+				item.lastBuy = Clicker.game().ticks;
+			} else {
+				item.lastSell = Clicker.game().ticks;
+			}
+			
+			item.buy = newPrice;
+			item.sell = newPrice * 0.93;
+
+			Clicker.message('Price of ' + marketed[index].name + " changed to " + Number(item.buy).toFixed(2), 'good', marketed[index].name);
+			
+//			// rejig buy/sell values
+//			item.components.market.buy += item.components.market.buy * (volume * 0.01);
+//
+//			// var opt1 = item.components.market.sell + item.components.market.sell * (volume * 0.008);
+//			var opt2 =  transactionRecord.price * 0.93;
+//			item.components.market.sell = opt2;
+			
+			// todo - randomise!
+			
 		}
 	});
 
 	Clicker.addTicker({
 		name: 'StatsCollector',
 		onTick: 10,
-		currentTick: 0,
 		tick: function () {
-			this.currentTick++;
+			// collect data from the items and store
+			var stats = Clicker.game().stats;
 
-			if (this.currentTick >= this.onTick) {
-				// collect data from the items and store
-				var stats = Clicker.game().stats;
-				
-				var items = Clicker.game().byComponent('raw');
+			var items = Clicker.game().byComponent('raw');
 
-				for (var i = 0; i < items.length; i ++) {
-					var existing = stats.amounts[items[i].name];
-					if (!existing) {
-						existing = [0];
-						stats.amounts[items[i].name] = existing;
-					}
-					existing.push(items[i].amount);
-					// track the maximum for graphing purposes
-					if (items[i].amount > stats.amounts.max_val) {
-						stats.amounts.max_val = items[i].amount;
-					}
-
-					var existing = stats.rates[items[i].name];
-					if (!existing) {
-						existing = [0];
-						stats.rates[items[i].name] = existing;
-					}
-					existing.push(items[i].rates.raw);
-					if (items[i].rates.raw > stats.rates.max_val) {
-						stats.rates.max_val = items[i].rates.raw;
-					}
-					
-					var existing = stats.totals[items[i].name];
-					if (!existing) {
-						existing = [0];
-						stats.totals[items[i].name] = existing;
-					}
-					existing.push(items[i].existed);
-					if (items[i].existed > stats.totals.max_val) {
-						stats.totals.max_val = items[i].existed;
-					}
+			for (var i = 0; i < items.length; i ++) {
+				var existing = stats.amounts[items[i].name];
+				if (!existing) {
+					existing = [0];
+					stats.amounts[items[i].name] = existing;
+				}
+				existing.push(items[i].amount);
+				// track the maximum for graphing purposes
+				if (items[i].amount > stats.amounts.max_val) {
+					stats.amounts.max_val = items[i].amount;
 				}
 
-				this.currentTick = 0;
+				var existing = stats.rates[items[i].name];
+				if (!existing) {
+					existing = [0];
+					stats.rates[items[i].name] = existing;
+				}
+				existing.push(items[i].rates.raw);
+				if (items[i].rates.raw > stats.rates.max_val) {
+					stats.rates.max_val = items[i].rates.raw;
+				}
+
+				var existing = stats.totals[items[i].name];
+				if (!existing) {
+					existing = [0];
+					stats.totals[items[i].name] = existing;
+				}
+				existing.push(items[i].existed);
+				if (items[i].existed > stats.totals.max_val) {
+					stats.totals.max_val = items[i].existed;
+				}
 			}
+
 		}
 	});
 });

@@ -90,7 +90,7 @@
 				if (key === 'max_val') {
 					continue;
 				}
-				var opt = $('<input type="checkbox" name="graphitem" checked>');
+				var opt = $('<input type="checkbox" name="graphitem">');
 				opt.val(key);
 
 				graphItems.append($('<label>').append(opt).append(key));
