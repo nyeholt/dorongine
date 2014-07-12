@@ -970,6 +970,34 @@ Clicker.onInit(function() {
 		}
 	});
 	
+	
+	Clicker.addItem({
+		name: 'Battery',
+		icon: 'icons/battery/icon_2952.svg',
+		maximum: 25,
+		components: {
+			building: true,
+			increases: {
+				Energy: 200
+			},
+			created: {
+				time: 100,
+				cost: {
+					'Cash': 200,
+					'Copper': 1
+				},
+				gives: {
+					Energy: 100
+				}
+			},
+			requires: {
+				topics: {
+					'Technology': 1
+				}
+			}
+		}
+	});
+	
 	Clicker.addItem({
 		name: 'Sewer',
 		icon: 'icons/sewer/icon_30146.svg',
@@ -1003,6 +1031,7 @@ Clicker.onInit(function() {
 	
 	Clicker.addItem({
 		name: 'Highway',
+		description: 'Transport increases industry output - allows for the creation of Trucks',
 		icon: 'icons/highway/icon_7534.svg',
 		maximum: 5,
 		components: {
@@ -1035,7 +1064,7 @@ Clicker.onInit(function() {
 		components: {
 			building: true,
 			increases: {
-				Water: 300
+				Water: 750
 			},
 			created: {
 				time: 250,
@@ -1056,14 +1085,14 @@ Clicker.onInit(function() {
 		}
 	});
 	
-	Clicker.addItem({
-		name: 'Battery',
-		icon: 'icons/battery/icon_2952.svg',
+		Clicker.addItem({
+		name: 'Power Pack',
+		icon: 'icons/powerpack/icon_14417.svg',
 		maximum: 25,
 		components: {
 			building: true,
 			increases: {
-				Energy: 300
+				Energy: 1000
 			},
 			created: {
 				time: 150,
@@ -1339,7 +1368,7 @@ Clicker.onInit(function() {
 				Water: 500,
 			},
 			worker: {
-				rate: 23,
+				rate: 13,
 				provides: {
 					Water: 10
 				}
@@ -1367,8 +1396,45 @@ Clicker.onInit(function() {
 					'Technology': 3
 				}
 			}
+		} 
+	});
+
+	
+	Clicker.addItem({
+		name: 'Tidal Power',
+		icon: 'icons/tidalpower/icon_5934.svg',
+		maximum: 5,
+		components: {
+			building: true,
+			improves: {
+				Water: 0.05,
+				Energy: 0.05
+			},
+			worker: {
+				rate: 11,
+				provides: {
+					Energy: 5,
+					Water: 5
+				}
+			},
+			created: {
+				time: 400,
+				cost: {
+					'Cash': 6000,
+					'Steel': 20,
+					'Reinforced Concrete': 10,
+					'Computer': 2
+				}
+			},
+			requires: {
+				topics: {
+					//'Civics': 2,
+					'Technology': 3
+				}
+			}
 		}
 	});
+	
 
 	Clicker.addItem({
 		name: 'Airport',
@@ -1532,14 +1598,14 @@ Clicker.onInit(function() {
 			worker: {
 				rate: 5,
 				provides: {
-					Energy: 50
+					Energy: 100
 				}
 			},
 			consumer: {
 				rate: 181,
 				consumes: {
-					Water: 100,
-					FuelRod: 5
+					Water: 10,
+					FuelRod: 1
 				}
 			},
 			created: {

@@ -219,7 +219,7 @@
 			{{# game.byComponent('collected') }}
 				{{#this.meetsRequirements()}}
 				<div class="raw-res">
-				<button data-type="{{name}}" on-tap="collectItem" title="{{description}}" style="background-color: {{color}}">
+				<button data-type="{{name}}" on-tap="collectItem" title="{{name}}: {{description}}" style="background-color: {{color}}">
 				<img src="{{icon}}" title="{{name}}" class="raw-icon" />
 				</button>
 				<div class="resource-count">{{this.formattedAmount()}}</div>
@@ -316,10 +316,13 @@
 				{{/ game.topics}}
 				</table>
 			</div>
-			
 
 			<div id="resources" class="holder">
 				<div id="mined-resources">
+				<h2>Resources</h2>
+				<p>These resources form the basis of items that you can create, and buildings that you can construct</p>
+				<p>You can pay for resources in cash, or mine them using a Mine</p>
+				<p>Keep an eye out for market variations!</p>
 				<table>
 				<tr>
 
@@ -336,7 +339,7 @@
 				{{# game.byComponent('market') }}
 				<tr>
 				<td width="60%">
-				<img title="{{name}}" class="item-icon" src="{{icon}}" /> <!-- {{rates.mined}}% chance -->
+				<img title="{{name}}: {{description}}" class="item-icon" src="{{icon}}" /> <!-- {{rates.mined}}% chance -->
 				</td>
 				<td>
 				<span class="resource-count">{{amount}} / {{maximum}}</span>
