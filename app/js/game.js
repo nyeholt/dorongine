@@ -454,7 +454,7 @@
 				}
 			}
 
-			return okay && this.canAdd(volume) && this.meetsRequirements();
+			return okay && this.canAdd(volume) && this.meetsRequirements(true);
 		}, 
 		canAdd: function (number) {
 			if (number < 0 && this.amount <= 0) {
