@@ -16,6 +16,7 @@
 		
 		$(document).on('click', '#restart', function () {
 			Clicker.init();
+			Clicker.save();
 			Clicker.start();
 		})
 		

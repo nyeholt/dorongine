@@ -1,7 +1,7 @@
 
 ;(function () {
 	
-	var VERSION = 0.1;
+	var VERSION = 0.2;
 	
 	var gameLoop;
 	var commandLoop;
@@ -454,7 +454,7 @@
 				}
 			}
 
-			return okay && this.canAdd(volume) && this.meetsRequirements();
+			return okay && this.canAdd(volume) && this.meetsRequirements(true);
 		}, 
 		canAdd: function (number) {
 			if (number < 0 && this.amount <= 0) {
