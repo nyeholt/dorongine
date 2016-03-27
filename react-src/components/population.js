@@ -1,4 +1,3 @@
-var ItemInfo = require('./items').ItemInfo;
 var ItemDisplay = require('./items').ItemDisplay;
 
 var PeopleGroup = React.createClass({

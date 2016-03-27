@@ -200,6 +200,13 @@
 			// TODO RACTIVE
 //			ractiveObservers.push(this.ractive.observe('game.topics.' + topic.name +'.active', this.updateTopics));
 		},
+		toggleTopic: function (topicName) {
+			var topic = game.topics[topicName];
+			if (topic) {
+				topic.active = !topic.active;
+			}
+			this.updateTopics();
+		},
 		updateTopics: function () {
 			var currentAmount = 0;
 			var active = [];

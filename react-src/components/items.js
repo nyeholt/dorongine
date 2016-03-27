@@ -1,28 +1,3 @@
-
-var ItemInfo = React.createClass({
-	render: function () {
-		var item = this.props.item;
-		
-		var deleteButton;
-//		if ({item.amount >= 1 && !item.components.employable }<button on-tap="destroy">X</button>}) {
-//			
-//		}
-		
-		return (
-			<span>
-			<td>
-			<span className="item-amount">{item.amount} / {item.maximum}</span>
-			</td>
-			
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			</span>
-		)
-	}
-});
-
 var ItemDisplay = function (item) {
 	
 	var topicReqs;
@@ -77,6 +52,5 @@ var ItemDisplay = function (item) {
 };
 
 module.exports = {
-	ItemInfo: ItemInfo,
 	ItemDisplay: ItemDisplay
 }
