@@ -51,6 +51,32 @@ var ItemDisplay = function (item) {
 	]
 };
 
+var ItemBuyButton = React.createClass({
+	clickBuy: function () {
+		if (this.props.item && this.props.item.canBuy()) {
+			Clicker.runInContext("buyItem", this.props.item);
+		}
+	},
+	render: function () {
+		var item = this.props.item;
+		if (!item) {
+			return null;
+		}
+		var buyButton = null;
+		if (item.canBuy()) {
+			buyButton = (
+				<button title={item.name} onClick={this.clickBuy}>
+				{item.formatted(item.components.market.buy * item.buyVolume)}
+				</button>
+			);
+		}
+		return (
+			buyButton
+		)
+	}
+});
+
 module.exports = {
-	ItemDisplay: ItemDisplay
+	ItemDisplay: ItemDisplay,
+	ItemBuyButton: ItemBuyButton
 }

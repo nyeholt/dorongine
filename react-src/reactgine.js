@@ -1,6 +1,7 @@
 var ActionBar = require('./components/actionbar');
 var PeopleGroup = require('./components/population');
 var KnowledgeTable = require('./components/knowledge');
+var ResourceTable = require('./components/resources');
 
 var AppLayout = React.createClass({
 	componentDidMount: function () {
@@ -18,6 +19,7 @@ var AppLayout = React.createClass({
 			<ActionBar game={game} />
 			<PeopleGroup game={game} />
 			<KnowledgeTable game={game} />
+			<ResourceTable game={game} />
 			</div>
 		);
 	}

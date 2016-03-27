@@ -196,9 +196,6 @@
 				active: false,
 				percentage: 0
 			};
-			
-			// TODO RACTIVE
-//			ractiveObservers.push(this.ractive.observe('game.topics.' + topic.name +'.active', this.updateTopics));
 		},
 		toggleTopic: function (topicName) {
 			var topic = game.topics[topicName];
