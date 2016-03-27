@@ -1,0 +1,511 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta content='user-scalable=0' name='viewport' />
+
+		<title>Dorongine</title>
+		<link href="css/bootstrap.css" rel="stylesheet" type="text/css"></link>
+		<link href="css/bootstrap-theme.css" rel="stylesheet" type="text/css"></link>
+		<link href="app/css/dorong.css" rel="stylesheet" type="text/css"></link>
+	</head>
+	<body>
+
+		<div id="container">
+
+		</div>
+
+		<div id="dialog-div">
+
+		</div>
+
+		<div id="updates-page" class="dialog-page">
+			<h2>Updates</h2>
+			<p>
+				Contact me via <a href="https://github.com/nyeholt" target="_blank">Github</a> or <a href="https://twitter.com/nyeholt" target="_blank">Twitter</a>. Or Reddit...
+			</p>
+			
+			<p>
+				Jul 12, 2014
+			</p>
+			
+			<ul>
+			<li>Simplified the initial phase of the game to be less overwhelming on first go, to try and lead people into the various bits and pieces. Still some work to go though - thanks to those who have given feedback around this!</li>
+			<li>Added random process that will give a big boost boost or reduction in price for some items for a period of time</li>
+			<li>Changed some of the types to be a little 'simpler' to get things going to avoid some of the pointless grind that could otherwise eventuate. Will be introducing some new elements around Crime and Pollution to counter this later on :)</li>
+			<li>Mining consumption of Ore tweaked, removing the out-of-place 'Mine' button</li>
+			<li>Changed batteries to be cheaper for getting Cash based energy, and replaced what they were with a Power Pack</li>
+			<li>Added tidal power for power gen</li>
+			<li>Reduced consumption and increased output of Nuclear power</li>
+			</ul>
+
+			<p>Still to come</p>
+
+			<ul>
+			<li>Better stats display</li>
+			<li>Crime effects, countering buildings</li>
+			<li>Deaths...</li>
+			<li>Different building streams depending on how you're playing the game. ie Lots of Crime might mean thefts, murders etc, but you may have an option of buildings like strip clubs, drug dens etc...</li>
+			</ul>
+			
+			<p>
+				Jul 04, 2014
+			</p>
+
+			<ul>
+				<li>Added new items - Plane, Truck, Highway, Airport</li>
+				<li>Ability to destroy a building / fire an employee</li>
+				<li>Improved market component to provide price fluctuations for buy/sell based on buy/sell events</li>
+				<li>Always reload the last saved game on app init </li>
+				<li>Account for pending queued builds when determining whether we can add more</li>
+				<li>Further tweaking and adjustment of types and rates</li>
+				<li>Added version checks for game saves</li>
+			</ul>
+
+			<p>
+
+			</p>
+
+
+		</div>
+
+		<div id="about-page" class="dialog-page">
+			<h2>About Dorongine</h2>
+			<p>
+				Contact me via <a href="https://github.com/nyeholt" target="_blank">Github</a> or <a href="https://twitter.com/nyeholt" target="_blank">Twitter</a>. Or Reddit...
+			</p>
+
+			<p>A brief summary is below...</p>
+
+			<p>Raw resources that you click to harvest. </p>
+
+			<ul>
+				<li>Cash for buying things</li>
+				<li>Brainpower for research</li>
+				<li>Energy for running things</li>
+				<li>Ore for providing base materials</li>
+				<li>Water as a consumable</li>
+				<li>Crime will make you pay... (not yet implemented) </li>
+				<li>Pollution to make you sick</li>
+			</ul>
+
+			<p>Different employable roles  to do your clicking </p>
+
+			<ul>
+				<li>Employees make your Cash</li>
+				<li>Miners dig your Ore</li>
+				<li>Engineers are useful for... something</li>
+				<li>Bankers increase your Cash</li>
+				<li>Teachers provide your Brainpower</li>
+				<li>Professors accelerate learning</li>
+				<li>Scientists are a bit of an enigma still</li>
+			</ul>
+
+			<p>Different topics to assign research to - different topics provide different benefits</p>
+
+			<ul>
+				<li>Mining increases your ability to get things out of the ground</li>
+				<li>Education is needed to speed up your brainpower</li>
+				<li>Civics make everything a little better</li>
+				<li>Economics improves your ability to spend (or save)</li>
+				<li>Technology makes things easier
+					<ul>
+						<li>Manufacturing lets you build things</li>
+						<li>mineable items</li>
+						<li>goods to be built</li>
+						<li>Buildings that either improve abilities, or perform actions on your behalf. </li>
+					</ul>
+				</li>
+
+
+			</ul>
+
+			<p>
+				CC Attribution: still to be collated, but suffice to say that all icons in use are from 
+				<a href="http://thenounproject.com/" target="_blank">The Noun Project</a> under the CC license. Specific
+				icon licenses can be found in the icons/ folder - a full list will be collated once general dev
+				slows a bit
+			</p>
+
+		</div>	
+
+		<div id="graphdiv-container">
+			<div id="graphoptions">
+				<button id="graphclose">Close</button>
+				<button id="redraw">Redraw</button>
+				<div id="graphitems"></div>
+
+			</div>
+			<span id="graph">Loading...</span>
+		</div>
+
+		<script id="itemInfo" type="text/ractive">
+			<td>
+			<span class="item-amount">{{amount}} / {{maximum}} {{#amount >= 1 && !components.employable }}<button on-tap="destroy">X</button>{{/amount}} </span>
+			</td>
+
+			<td>
+			{{#components.requires.topics :topic}}
+			<span class="requirement"><img title="{{topic}}" src="{{iconfor(topic)}}" class="required-icon" /> {{this}}</span>
+			{{/components}}
+			{{#components.requires.items :item}}
+			<span class="requirement"><img title="{{item}}" src="{{iconfor(item)}}" class="required-icon" /> {{this}}</span>
+			{{/components}}
+			</td>
+
+			<td>
+			{{#components.created.cost :resource}}
+			<span class="requirement">
+			<img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}
+			</span>
+			{{/components.created.cost}}
+			</td>
+
+			<td>
+			{{#components.created.gives :resource}}
+			<span class="requirement">
+			<img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}
+			</span>
+			{{/components.created.gives}}
+			</td>
+
+			<td>
+			{{#components.consumer.consumes :resource}}
+			<span class="requirement"><img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}</span>
+			{{/components}}
+			{{#rates.consumer}}
+			<span class="rate-info">
+			/ {{rates.consumer}} ticks
+			</span>
+			{{/rates}}
+			</td>
+
+			<td>
+			{{#components.worker.provides :resource}}
+			<span class="requirement">
+			<img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this}}
+			</span>
+			{{/components}}
+			{{#rates.worker}}
+			<span class="rate-info">
+			/ {{rates.worker}} ticks
+			</span>
+			{{/rates}}
+			</td>
+
+			<td>
+			{{#components.improves :resource}}
+			<span class="requirement">
+			<img title="{{resource}}" src="{{iconfor(resource)}}" class="required-icon" /> {{this * 100}}%
+
+			</span>
+			{{/components}}
+			</td>
+
+		</script>
+
+		<script id="buildableRow" type="text/ractive">
+			{{#this.meetsRequirements()}}
+			<tr>
+			<td class="build-col">
+			{{#this.canBuy()}}
+			<button title="{{name}}" on-tap="buyItem"><img title="{{name}}" src="{{icon}}" class="item-icon" /></button>
+			{{/this}}
+			{{^this.canBuy()}}
+			<img title="{{name}}" src="{{icon}}" class="item-icon" />
+			{{/this}}
+
+
+			</td>
+
+			<td>
+
+			<select value="{{buyVolume}}">
+			<option value="1">x1</option>
+			<option value="10">x10</option>
+			<option value="20">x20</option>
+			<option value="50">x50</option>
+			</select>
+
+			</td>
+
+
+
+			{{>itemInfo}}
+
+			</tr>
+			{{/meetsRequirements}}	
+		</script>
+
+		<script id='template' type='text/ractive'>
+
+			<div id="raw-resources">
+			{{# game.byComponent('collected') }}
+				{{#this.meetsRequirements(true)}}
+				<div class="raw-res">
+				<button data-type="{{name}}" on-tap="collectItem" title="{{name}}: {{description}}" style="background-color: {{color}}">
+				<img src="{{icon}}" title="{{name}}" class="raw-icon" />
+				</button>
+				<div class="resource-count">{{this.formattedAmount()}}</div>
+				<div class="resource-max" title="{{rates.raw}}">{{maximum}}</div>
+				<div class="resource-mods"></div>
+				</div>
+				{{/meetsRequirements}}
+			{{/ game}}
+
+
+			</div>
+
+			<div id="population" class="holder">
+				<h2>Employees</h2>
+				<p>Hire employees to do your work (clicking) for you. To get more people, create a Town Hall</p>
+				<table>
+				<thead>
+				<tr>
+				<th><img src="{{game.items.People.icon}}" title="People" class="item-icon" /></th>
+				<th width="60px"></th>
+				<th width="60px"></th>
+				<th>{{game.items.People.amount}} / {{game.items.People.maximum}}</th>
+
+				<th>Required</th>
+				<th>Cost</th>
+				<th>Gives</th>
+				<th>Consumes</th>
+				<th>Provides</th>
+				<th>Improves</th>
+
+				</tr>
+				</thead>
+				<tbody>
+				{{# game.byComponent('employable') }}
+				{{#this.meetsRequirements()}}
+				<tr>
+				<td><img title="{{name}}" src="{{icon}}" class="item-icon" /></td>
+				<td>{{#this.canBuy(1)}}<button on-tap="buyItem">Hire</button>{{/this}}</td>
+				<td>{{#amount >= 1}}<button on-tap="destroy">Fire</button>{{/amount}}</td>
+
+				{{>itemInfo}}
+
+				</tr>
+
+				{{/meetsRequirements}}
+
+				{{/game}}
+				<tr>
+				<td><img src="{{game.items.Sick.icon}}" title="Sick People" class="item-icon" /></td>
+				<td>{{game.items.Sick.amount}}</td>
+
+				<td><img src="{{game.items.Dead.icon}}" title="Dead People" class="item-icon" /></td>
+				<td>{{game.items.Dead.amount}}</td>
+
+				<td></td>
+
+				<td></td>
+				<td></td>
+				<td></td>
+
+				</tr>
+				</tbody>
+				</table>
+			</div>
+
+			<div id="knowledge" class="holder">
+				<h2>Research</h2>
+				<p>Research improves existing items, and allows the creation of others</p>
+				<p>Create schools and hire teachers to increase rate of research</p>
+				<table>
+				<tr>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th width="10%">Research active</th>
+				</tr>
+				{{#game.topics :topic_name}}
+				<tr>
+				<td><img src="{{icon}}" title="{{topic_name}}" class="item-icon" /></td>
+				<td>Level {{level}}</td>
+				<td>
+				<div><progress max="{{target}}" value="{{knowledge}}"></progress></div>
+				<div class="progress-info">
+				Needed for: 
+				{{#game.byTopic(topic_name, level+1)}}
+				<img title="{{name}}" src="{{icon}}" class="item-icon" />
+				{{/game.byTopic }}
+				</div>
+				</td>
+				<td class="knowledge-input">
+				<input type="checkbox" checked="{{active}}" />
+				</td>
+				</tr>
+				{{/ game.topics}}
+				</table>
+			</div>
+
+			<div id="resources" class="holder">
+				<div id="mined-resources">
+				<h2>Resources</h2>
+				<p>These resources form the basis of items that you can create, and buildings that you can construct</p>
+				<p>You can pay for resources in cash, or mine them using a Mine</p>
+				<p>Keep an eye out for market variations!</p>
+				<table>
+				<tr>
+
+				<td></td>
+				<td><!-- <button on-tap="mine">Mine now</button>--></td>
+
+				<td width="90px">Buy</td>
+				<td width="90px">Number</td>
+				<td width="90px">Sell</td>
+
+				</tr>
+
+				<!-- display all market items - regardless of whether they're mined -->
+				{{# game.byComponent('market') }}
+				<tr>
+				<td width="60%">
+				<img title="{{name}}: {{description}}" class="item-icon" src="{{icon}}" /> <!-- {{rates.mined}}% chance -->
+				</td>
+				<td>
+				<span class="resource-count">{{amount}} / {{maximum}}</span>
+				</td>
+
+				<td>
+				{{#this.canBuy()}}
+				<button title="{{name}}" on-tap="buyItem">
+				${{formatted(components.market.buy * buyVolume)}}
+				</button>
+				{{/this}}
+				</td>
+
+				<td>
+				<select value="{{buyVolume}}">
+				<option value="1">x1</option>
+				<option value="10">x10</option>
+				<option value="20">x20</option>
+				<option value="50">x50</option>
+				<option value="100">x100</option>
+				</select>
+				</td>
+
+				<td>
+				{{#amount >= buyVolume}}
+				<button title="{{name}}" on-tap="sellItem">
+				${{formatted(components.market.sell * buyVolume)}}
+				</button>
+				{{/amount}}
+				</td>
+
+				</tr>
+				{{/ game}}
+				</table>
+				</div>
+			</div>
+
+			<div id="creatable"  class="holder">
+				<h2>Items</h2>
+				
+				<p>Do some research to unlock items</p>
+				
+				<table class="items-table">
+				<tr>
+				<th width="60px">Item</th>
+				<th width="60px"><!--volume dropdown --></th>
+				<th width="100px">Amount</th>
+				<th>Requires</th>
+				<th>Cost</th>
+				<th>Gives</th>
+				<th>Consumes</th>
+				<th>Provides</th>
+				<th>Improves</th>
+				</tr>
+
+				{{# game.byComponent('goods') }}
+
+				{{>buildableRow}}
+
+				{{/game}}
+				</table>
+
+				
+				<h2>Buildings</h2>
+				
+				<p>Do some research to unlock buildings</p>
+				
+				<table>
+				<tr>
+				<th width="60px">Item</th>
+				<th width="60px"><!--volume dropdown --></th>
+				<th width="100px">Amount</th>
+				<th>Requires</th>
+				<th>Cost</th>
+				<th>Gives</th>
+				<th>Consumes</th>
+				<th>Provides</th>
+				<th>Improves</th>
+				</tr>
+
+				{{# game.byComponent('building') }}
+				{{>buildableRow}}
+				{{/game}}
+				</table>
+			</div>
+			
+			
+			
+
+			<div id="footer">
+
+			<div id="build-queue" class="queue-container">
+			{{#game.buildQueue}}
+			<div class="buildQueueItem">
+			<img title="{{item.name}}" src="{{item.icon}}" class="item-icon" /> 
+			<div class="buildProgress">
+			<progress max="{{totalSteps}}" value="{{currentStep}}"></progress>
+			</div>
+			</div>
+			{{/game.buildQueue}}
+			<div class="emptyfor spacing">&nbsp;</div>
+			</div>
+
+			<div id="messages" class="queue-container">
+			{{#game.messages}}
+			<div class="message {{class}}">
+			<span class="msg-time">{{time}}</span> {{message}}
+			</div>
+			{{/game.messages}}
+			<div class="emptyfor spacing">&nbsp;</div>
+			</div>
+
+			<div id="options" class="queue-container right-align-contents">
+			<div class="graphopts">
+			<select id="graphsrc">
+			<option value="amounts">Amounts</option>
+			<option value="rates">Rates</option>
+			<option value="totals">Total</option>
+			</select>
+			<button id="graphbtn">~</button>
+			</div>
+			<div>
+			<a href="#updates-page" class="dialog-link">Updates</a> .
+			<a href="#about-page" class="dialog-link">About</a> . 
+			<button id="restart">Restart</button>
+			<button id="load">load</button>
+			<button id="save">save</button>
+
+			</div>
+			</div>
+
+			</div>
+		</script>
+
+		<script type="text/javascript" src="js/jquery-2.0.0.min.js"></script>
+		<script type="text/javascript" src="js/jquery.sparkline.js"></script>
+		<script type="text/javascript" src="js/ractive.js"></script>
+		<script type="text/javascript" src="js/ractive-events-tap.js"></script>
+		<script type="text/javascript" src="app/js/game.js"></script>
+		<script type="text/javascript" src="app/js/agents.js"></script>
+		<script type="text/javascript" src="app/js/types.js"></script>
+		<script type="text/javascript" src="app/js/commands.js"></script>
+		<script type="text/javascript" src="app/js/dorong.js"></script>
+	</body>
+</html>

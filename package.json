@@ -5,5 +5,8 @@
     "react": "~0.14.7",
     "babel-preset-react": "~6.5.0",
     "react-bootstrap": "~0.28.4"
+  },
+  "devDependencies": {
+    "webpack": "~1.2.0-beta6"
   }
 }

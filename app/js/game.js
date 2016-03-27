@@ -31,18 +31,19 @@
 		
 		this.initters = [];
 
-		this.ractive = new Ractive({
-			// The `el` option can be a node, an ID, or a CSS selector.
-			el: 'container',
-			// We could pass in a string, but for the sake of convenience
-			// we're passing the ID of the <script> tag above.
-			template: '#template',
-			// Here, we're passing in some initial data
-			data: {
-				game: game,
-				types: types,
-			}
-		});
+		// TODO RACTIVE
+//		this.ractive = new Ractive({
+//			// The `el` option can be a node, an ID, or a CSS selector.
+//			el: 'container',
+//			// We could pass in a string, but for the sake of convenience
+//			// we're passing the ID of the <script> tag above.
+//			template: '#template',
+//			// Here, we're passing in some initial data
+//			data: {
+//				game: game,
+//				types: types,
+//			}
+//		});
 	};
 
 	ClickerGame.prototype = {
@@ -72,9 +73,11 @@
 			
 			
 			// delete observers
-			for (var i = 0; i < ractiveObservers.length; i++) {
-				ractiveObservers[i].cancel();
-			}
+			
+			// TODO RACTIVE
+//			for (var i = 0; i < ractiveObservers.length; i++) {
+//				ractiveObservers[i].cancel();
+//			}
 			
 			ractiveObservers = [];
 			itemsByComponent = {};
@@ -117,7 +120,7 @@
 				this.initters[i].call(this);
 			}
 		},
-		start: function () {
+		start: function (redrawFunc) {
 			var clicker = this;
 
 			gameLoop = setInterval(function () {
@@ -126,6 +129,9 @@
 
 			commandLoop = setInterval(function () {
 				clicker.processCommands();
+				if (redrawFunc) {
+					redrawFunc.call();
+				}
 			}, 100);
 		},
 		types: function () {
@@ -149,8 +155,6 @@
 				item.description = item.name;
 			}
 			
-//			types.items[item.name] = item;
-
 			var rates = {};
 			for (var c in item.components) {
 				if (item.components[c].rate) {
@@ -193,8 +197,8 @@
 				percentage: 0
 			};
 			
-			ractiveObservers.push(this.ractive.observe('game.topics.' + topic.name +'.active', this.updateTopics));
-//			this.ractive.set('game', game);
+			// TODO RACTIVE
+//			ractiveObservers.push(this.ractive.observe('game.topics.' + topic.name +'.active', this.updateTopics));
 		},
 		updateTopics: function () {
 			var currentAmount = 0;
@@ -224,13 +228,6 @@
 		},
 		addCommand: function (command) {
 			availableCommands[command.name] = command;
-
-			ractiveObservers.push(this.ractive.on(command.name, function (button) {
-				if (button.context) {
-					var cmd = Clicker.newCommand(command.name, button.context);
-					Clicker.runCommand(cmd);
-				}
-			}));
 		},
 		newCommand: function (name, context) {
 			var cmd = availableCommands[name];
@@ -285,7 +282,8 @@
 				}
 			}
 
-			this.ractive.set('types', types);
+			// TODO RACTIVE
+//			this.ractive.set('types', types);
 		},
 		// process any command and fast tickers
 		processCommands: function () {
@@ -310,7 +308,8 @@
 					ticker.tick();
 				}
 			}
-			this.ractive.set('game', game);
+			// TODO RACTIVE
+//			this.ractive.set('game', game);
 		},
 		save: function () {
 			var data = JSON.stringify(game);

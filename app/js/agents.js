@@ -245,10 +245,6 @@ Clicker.onInit(function() {
 					return;
 				}
 				this.current = Clicker.game().buildQueue[this.buildIndex];
-//			if (!this.payFor(this.current.item)) {
-//				this.finalise();
-//				return;
-//			}
 			}
 
 			this.current.currentStep++;
