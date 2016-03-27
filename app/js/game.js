@@ -240,6 +240,12 @@
 		runCommand: function (command) {
 			this.commands.push(command);
 		},
+		runInContext: function (name, context) {
+			var cmd = this.newCommand(name, context);
+			if (cmd) {
+				this.runCommand(cmd);
+			}
+		},
 		queueBuild: function (item, volume) {
 			for (var i = 0, c = fastTickers.length; i < c; i++) {
 				if (fastTickers[i].name == 'Builder') {

@@ -53,18 +53,18 @@ body {
 	font-family: sans-serif;
 }
 
-#container {
+#reactgine {
 	padding-top: 120px;
 	padding-bottom: 100px;
 	position: relative;
 }
 
 
-#container table {
+#reactgine table {
 	width: 100%;
 }
 
-#container table td {
+#reactgine table td {
 	padding: 5px;
 }
 

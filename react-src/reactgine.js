@@ -1,3 +1,5 @@
+var ActionBar = require('./components/actionbar');
+var PeopleGroup = require('./components/population');
 
 var AppLayout = React.createClass({
 	componentDidMount: function () {
@@ -13,16 +15,18 @@ var AppLayout = React.createClass({
 		return (
 			<div id="app-layout">
 			<ActionBar game={game} />
+			<PeopleGroup game={game} />
 			</div>
 		);
 	}
 });
 
 
+
 var redrawAll = function () {
 	ReactDOM.render(
 		<AppLayout />,
-		document.getElementById('dorongine')
+		document.getElementById('reactgine')
 	);
 }
 redrawAll();

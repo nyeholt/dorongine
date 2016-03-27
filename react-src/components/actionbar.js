@@ -26,10 +26,7 @@ var ActionBar = React.createClass({
 
 var CommandButton = React.createClass({
 	clickType: function () {
-		var cmd = Clicker.newCommand(this.props.commandName, this.props.item);
-		if (cmd) {
-			Clicker.runCommand(cmd);
-		}
+		Clicker.runInContext(this.props.commandName, this.props.item);
 	},
 	render: function () {
 		var item = this.props.item;
@@ -50,3 +47,5 @@ var CommandButton = React.createClass({
 		);
 	}
 });
+
+module.exports = ActionBar
