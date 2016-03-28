@@ -28,6 +28,7 @@ var CommandButton = React.createClass({
 	clickType: function () {
 		Clicker.runInContext(this.props.commandName, this.props.item);
 	},
+	
 	render: function () {
 		var item = this.props.item;
 		

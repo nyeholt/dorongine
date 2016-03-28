@@ -536,7 +536,7 @@ Clicker.onInit(function() {
 			'mined': { rate: 5 },
 			
 			market: {
-				base: 500
+				base: 1000
 			}
 		}
 	});

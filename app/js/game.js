@@ -130,7 +130,7 @@
 			commandLoop = setInterval(function () {
 				clicker.processCommands();
 				if (redrawFunc) {
-					redrawFunc.call();
+					redrawFunc.call((new Date).getTime());
 				}
 			}, 100);
 		},

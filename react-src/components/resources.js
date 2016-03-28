@@ -1,5 +1,7 @@
 
 var ItemBuyButton = require('./items').ItemBuyButton;
+var ItemVolumeSelect = require('./items').ItemVolumeSelect;
+var ItemSellButton = require('./items').ItemSellButton;
 
 var ResourceTable = React.createClass({
 	render: function () {
@@ -60,14 +62,14 @@ var ResourceRow = React.createClass({
 				</td>
 
 				<td>
-				todo select buyvolume
+				<ItemVolumeSelect item={res} />
 				</td>
 
 				<td>
-				todo amount volume 
+				<ItemSellButton item={res} />
 				</td>
 
-				</tr>
+			</tr>
 		)
 	}
 })
