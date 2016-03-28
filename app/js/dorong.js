@@ -1,39 +1,9 @@
-
-
 ;(function ($) {
-	
-	Clicker.init();
-	Clicker.load();
-	Clicker.start();
-	
 	$(function () {
 		
 		var dialogDiv;
-		
 		var graphDiv;
-		
 		var data = {};
-		
-		$(document).on('click', '#restart', function () {
-			Clicker.init();
-			Clicker.save();
-			Clicker.start();
-		})
-		
-		$(document).on('click', '#save', function () {
-			Clicker.save();
-		})
-
-		$(document).on('click', '#load', function () {
-			Clicker.load();
-		})
-		
-		$(document).on('click', function () {
-			
-		})
-
-		
-		
 		
 		var closeDialog = function () {
 			dialogDiv.hide();
@@ -64,7 +34,6 @@
 
 					drawn = true;
 				}
-				
 			});
 		}
 		
@@ -75,9 +44,9 @@
 			var src = $('#graphsrc').val();
 			data = Clicker.game().stats[src];
 			if (!data) {
+				Clicker.log("Couldn't find stats for " + src);
 				return;
 			}
-
 			if (!graphDiv) {
 				graphDiv = $('#graphdiv-container');
 			}
