@@ -6,7 +6,7 @@
 	var gameLoop;
 	var commandLoop;
 
-	var ractiveObservers = [];
+	var renderFunction;
 
 	var game = {};
 	
@@ -120,7 +120,10 @@
 				this.initters[i].call(this);
 			}
 		},
-		start: function (redrawFunc) {
+		setRenderFunction: function (renderer) {
+			renderFunction = renderer;
+		},
+		start: function () {
 			var clicker = this;
 
 			gameLoop = setInterval(function () {
@@ -129,8 +132,8 @@
 
 			commandLoop = setInterval(function () {
 				clicker.processCommands();
-				if (redrawFunc) {
-					redrawFunc.call((new Date).getTime());
+				if (renderFunction) {
+					renderFunction.call((new Date).getTime());
 				}
 			}, 100);
 		},

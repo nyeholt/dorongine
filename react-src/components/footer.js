@@ -1,5 +1,16 @@
 
 var FooterBar = React.createClass({
+	restart: function () {
+		Clicker.init();
+		Clicker.save();
+		Clicker.start();
+	},
+	save: function () {
+		Clicker.save();
+	},
+	load: function () {
+		Clicker.load();
+	},
 	render: function () {
 		var game = this.props.game;
 		if (!game) {
@@ -46,13 +57,13 @@ var FooterBar = React.createClass({
 					</select>
 					<button id="graphbtn">~</button>
 				</div>
-		
+
 				<div>
 					<a href="#updates-page" className="dialog-link">Updates</a> .
 					<a href="#about-page" className="dialog-link">About</a> . 
-					<button id="restart">Restart</button>
-					<button id="load">load</button>
-					<button id="save">save</button>
+					<button id="restart" onClick={this.restart}>Restart</button>
+					<button id="load" onClick={this.load}>load</button>
+					<button id="save" onClick={this.save}>save</button>
 				</div>
 	
 			</div>

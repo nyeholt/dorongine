@@ -101,6 +101,9 @@ var ItemDisplay = function (item) {
 	var topicReqs;
 	var itemReqs;
 	
+	var deleteHandler = function () {
+		Clicker.runInContext('destroy', item);
+	};
 	
 	var renderNeeds = function (props) {
 		var needs = [];
@@ -138,8 +141,13 @@ var ItemDisplay = function (item) {
 		}
 	}
 	
+	var allowDelete;
+	if (item.amount >= 1 && !item.components.employable) {
+		allowDelete = <button onClick={deleteHandler}>X</button>
+	}
+	
 	return [
-		<td key="item-td-one"><span className="item-amount">{item.amount} / {item.maximum}</span></td>,
+		<td key="item-td-one"><span className="item-amount">{item.amount} / {item.maximum} {allowDelete}</span></td>,
 		<td key="item-td-two"><div>{ topicReqs } { itemReqs }</div></td>,
 		<td key="item-td-three">{ renderNeeds(['created', 'cost'])}</td>,
 		<td key="item-td-four">{ renderNeeds(['created', 'gives'])}</td>,

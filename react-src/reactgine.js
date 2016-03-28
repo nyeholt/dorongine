@@ -9,7 +9,8 @@ var AppLayout = React.createClass({
 	componentDidMount: function () {
 		Clicker.init();
 		Clicker.load();
-		Clicker.start(redrawAll);
+		Clicker.setRenderFunction(redrawAll);
+		Clicker.start();
 		var game = Clicker.game();
 		this.setState({game: game})
 	},
